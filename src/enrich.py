@@ -13,6 +13,7 @@
   3. 對不到的用 Nominatim 查地址：完整地址 → 去掉樓層括號 → 只到「號」→ 路名＋行政區 → 館名
      （Nominatim 規定每秒最多 1 次，要帶 User-Agent）
   4. OSM 有、我們沒列的地點放進 osm_unmatched，網頁上用灰色標示「未人工確認」
+  5. 算出每間館的 price_min（成人一次入場的最低價，含星光、離峰時段），網頁的價格排序和預算篩選用
 
 只用 Python 內建套件。容器／本機連不到 OSM 時會保留上一次 gyms.json 的座標。
 用法：python src/enrich.py
@@ -197,6 +198,23 @@ def geocode(gym):
     return None
 
 
+# 不算「一次入場」的價格項目：租借、課程、會費、學生／兒童票、計時、套票、起價
+NOT_ENTRY = re.compile(r"租|體驗|課|入會|會費|陪同|學生|兒童|幼兒|計時|起價|三個月|包場|持照")
+PER_HOUR = re.compile(r"／\s*小?時|/\s*h", re.I)   # 價格寫「50／小時」的是計時，不是一次入場
+
+
+def price_min(gym):
+    """成人一次入場的最低價（含星光、離峰時段）→ {"price": 數字, "item": 項目名}；沒有就回傳 None"""
+    best = None
+    for p in gym.get("prices") or []:
+        if NOT_ENTRY.search(p.get("item", "")) or PER_HOUR.search(str(p.get("price", ""))):
+            continue
+        m = re.search(r"\d+", str(p.get("price", "")))   # 「250–300」「約 160–190」取前面較低的數字
+        if m and (best is None or int(m.group()) < best["price"]):
+            best = {"price": int(m.group()), "item": p["item"]}
+    return best
+
+
 def load_sources():
     """data/raw/sources.csv → {代號: {title, url, published}}（網頁的「資料來源」用）"""
     with open(SOURCES, encoding="utf-8-sig") as f:
@@ -245,6 +263,7 @@ def main():
                         g[k] = old[g["id"]][k]
             else:
                 g.update({"lat": None, "lng": None, "coord_source": "none"})
+        g["price_min"] = price_min(g)
         gyms.append(g)
         print(f"{g['id']:24s} {g.get('coord_source')}")
 

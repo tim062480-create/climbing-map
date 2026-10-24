@@ -26,6 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 讀 seed 和 sources.csv，先用 Overpass 比對 OSM 的館名，對不到再用 Nominatim 查地址（門牌 → 地址括號裡的地標 → 路段 → 地標 → 館名）。
    - 只有縣市或行政區的地址不拿來定位。
    - 輸出 `data/processed/gyms.json` 和 `docs/enrich_report.md`。座標可信度看 `coord_source`。
+   - `price_min`：成人一次入場的最低價（含星光、離峰時段；排除租借、課程、學生票、計時、起價），網頁的價格排序和預算篩選用。
    - 連不到 OSM 時沿用上一次的座標。
 2. `src/youbike_near.py`：
    - 用全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API）和臺北市開放資料，記錄每館 1 公里內最近 4 站的車數。
@@ -34,6 +35,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 3. `src/export_table.py`：把 gyms.json 匯出成 `output/vN/gyms.csv` 和 `summary.md`，N 自動遞增。
 4. 網頁（`index.html`、`web/app.js`）：
    - 沒有建置步驟，Leaflet 和 OSM 底圖從 unpkg 載入。
+   - 搜尋條件（縣市、範圍、預算、排序、顯示間數、只看有抱石、顯示待確認）可以疊加，存在瀏覽器的 localStorage。範圍內不到 5 間時補列範圍外最近的館。
    - 交通時間用直線距離乘繞路係數估算，路線本身交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。
    - 留言用 giscus：`web/config.js` 的 `repoId`、`categoryId` 空著時不顯示。
 

@@ -15,7 +15,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
-  me: null, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -77,7 +77,11 @@ async function init() {
     L.circleMarker([p.lat, p.lng], { radius: 5, color: "#868e96", fillOpacity: 0.6, weight: 1 })
       .bindPopup(`<b>${esc(p.name || "（無名稱）")}</b><br>OpenStreetMap 上的攀岩地點，未人工確認<br><a href="${esc(p.url)}" target="_blank" rel="noopener">OSM</a>`)));
 
-  ["radius", "boulderOnly", "showUnverified", "showOsm"].forEach((id) => $(id).addEventListener("change", render));
+  fillCityOptions();
+  loadFilters();
+  if (matchMedia("(max-width: 899px)").matches) $("filterBox").open = false;   // 手機上先收起來，清單才看得到
+  FILTER_IDS.forEach((id) => $(id).addEventListener("change", () => { saveFilters(); render(); }));
+  $("resetFilters").addEventListener("click", () => { setFilters(FILTER_DEFAULTS); saveFilters(); render(); });
   $("locate").addEventListener("click", locate);
   $("handle").addEventListener("click", () => $("panel").classList.toggle("expanded"));
   $("closeDetail").addEventListener("click", closeDetail);
@@ -86,6 +90,41 @@ async function init() {
   render();
   locate();
   if (location.hash.length > 1) openDetail(location.hash.slice(1), false);
+}
+
+// ---------- 搜尋條件（可以疊加；記在這台裝置的瀏覽器裡，下次打開沿用） ----------
+const FILTER_DEFAULTS = { city: "", radius: "10", budget: "0", sort: "dist", limit: "0", boulderOnly: true, showUnverified: true, showOsm: false };
+const FILTER_IDS = Object.keys(FILTER_DEFAULTS);
+const FILTER_KEY = "climbing-map:filters";
+// 縣市選單由北到南排
+const CITY_ORDER = ["基隆市", "臺北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣", "臺中市", "彰化縣", "南投縣", "雲林縣",
+  "嘉義市", "嘉義縣", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"];
+
+function fillCityOptions() {
+  const count = {};
+  state.gyms.filter((g) => g.status !== "已停業").forEach((g) => { count[g.city] = (count[g.city] || 0) + 1; });
+  const cities = Object.keys(count).sort((a, b) => (CITY_ORDER.indexOf(a) + 1 || 99) - (CITY_ORDER.indexOf(b) + 1 || 99));
+  $("city").insertAdjacentHTML("beforeend", cities.map((c) => `<option value="${esc(c)}">${esc(c)}（${count[c]}）</option>`).join(""));
+}
+
+function getFilters() {
+  return Object.fromEntries(FILTER_IDS.map((id) => [id, $(id).type === "checkbox" ? $(id).checked : $(id).value]));
+}
+
+function setFilters(f) {
+  for (const id of FILTER_IDS) {
+    if (!(id in f)) continue;
+    if ($(id).type === "checkbox") $(id).checked = Boolean(f[id]);
+    else if ([...$(id).options].some((o) => o.value === String(f[id]))) $(id).value = String(f[id]);
+  }
+}
+
+function loadFilters() {
+  try { setFilters(JSON.parse(localStorage.getItem(FILTER_KEY)) || {}); } catch { /* 沒有或讀不到就用預設值 */ }
+}
+
+function saveFilters() {
+  try { localStorage.setItem(FILTER_KEY, JSON.stringify(getFilters())); } catch { /* 無痕模式等存不了就算了 */ }
 }
 
 function markerStyle(g) {
@@ -100,7 +139,7 @@ function setStatus(msg, isError = false) {
 
 // ---------- 定位 ----------
 function locate() {
-  if (!navigator.geolocation) { setStatus("這個瀏覽器不支援定位，清單依縣市排列。"); return; }
+  if (!navigator.geolocation) { state.geoError = "這個瀏覽器不支援定位"; render(); return; }
   if (!$("detail").hidden) closeDetail();   // 詳細資訊會蓋住地圖
   if (state.me) {
     centerOnMe();   // 已經有位置就先移過去，不等手機回報新位置
@@ -111,8 +150,8 @@ function locate() {
   if (state.watchId != null) return;   // 只開一個定位監聽
   state.watchId = navigator.geolocation.watchPosition(onPosition, (err) => {
     if (state.me) return;   // 已經有位置時，偶爾的逾時不用提示
-    const why = { 1: "你拒絕了定位權限（可到瀏覽器設定開啟）", 2: "目前無法取得位置", 3: "定位逾時" }[err.code] || err.message;
-    setStatus(`${why}，清單依縣市排列。`, true);
+    state.geoError = { 1: "你拒絕了定位權限（可到瀏覽器設定開啟）", 2: "目前無法取得位置", 3: "定位逾時" }[err.code] || err.message;
+    render();
   }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 });
 }
 
@@ -129,6 +168,7 @@ function centerOnMe() {
 
 function onPosition(pos) {
   state.me = { lat: pos.coords.latitude, lng: pos.coords.longitude, acc: pos.coords.accuracy };
+  state.geoError = "";
   meMarker.setLatLng(state.me).addTo(map);
   meCircle.setLatLng(state.me).setRadius(state.me.acc).addTo(map);
   if (state.firstFix) {
@@ -139,56 +179,81 @@ function onPosition(pos) {
 }
 
 // ---------- 清單 ----------
-function visibleGyms() {
-  const boulderOnly = $("boulderOnly").checked, showUnverified = $("showUnverified").checked;
+const minPrice = (g) => (g.price_min ? g.price_min.price : null);
+
+// 縣市、預算、只看有抱石、顯示待確認：這幾個條件不需要定位
+function visibleGyms(f) {
+  const budget = Number(f.budget);
   return state.gyms.filter((g) =>
     g.status !== "已停業" &&
-    (!boulderOnly || hasBoulder(g)) &&
-    (showUnverified || g.status === "營業中"));
+    (!f.boulderOnly || hasBoulder(g)) &&
+    (f.showUnverified || g.status === "營業中") &&
+    (!f.city || g.city === f.city) &&
+    (!budget || (minPrice(g) != null && minPrice(g) <= budget)));
 }
 
+const byName = (a, b) => a.g.name.localeCompare(b.g.name, "zh-Hant");
+const byDist = (a, b) => a.d - b.d;
+const SORTERS = {
+  dist: byDist,
+  // 沒有價格的排最後；同價時有定位就近的先
+  price: (a, b) => (minPrice(a.g) ?? Infinity) - (minPrice(b.g) ?? Infinity) || (a.d != null ? byDist(a, b) : byName(a, b)),
+  city: (a, b) => ((CITY_ORDER.indexOf(a.g.city) + 1 || 99) - (CITY_ORDER.indexOf(b.g.city) + 1 || 99)) || byName(a, b),
+};
+
 function render() {
-  const radiusKm = Number($("radius").value);
-  const gyms = visibleGyms();
+  const f = getFilters();
+  const radiusKm = Number(f.radius), limit = Number(f.limit);
+  const gyms = visibleGyms(f);
   const withCoord = gyms.filter((g) => g.lat != null);
   let shown = withCoord.map((g) => ({ g, d: state.me ? distM(state.me, g) : null }));
-  let outside = [];   // 範圍內太少時，補列範圍外最近的館
-  if (state.me) {
-    shown.sort((a, b) => a.d - b.d);
-    if (radiusKm > 0) {
-      const inRange = shown.filter((x) => x.d <= radiusKm * 1000);
-      if (inRange.length < MIN_LISTED) outside = shown.slice(inRange.length, MIN_LISTED);
-      shown = inRange;
+  const sortBy = f.sort === "dist" && !state.me ? "city" : f.sort;   // 還沒定位就先依縣市
+  shown.sort(SORTERS[sortBy]);
+  let outside = [];   // 範圍內太少時，補列範圍外最近的館（一樣要符合其他條件）
+  if (state.me && radiusKm > 0) {
+    const inRange = shown.filter((x) => x.d <= radiusKm * 1000);
+    const want = Math.min(limit || MIN_LISTED, MIN_LISTED);
+    if (inRange.length < want) {
+      outside = shown.filter((x) => x.d > radiusKm * 1000).sort(byDist).slice(0, want - inRange.length);
     }
-  } else {
-    shown.sort((a, b) => (a.g.city + a.g.name).localeCompare(b.g.city + b.g.name, "zh-Hant"));
+    shown = inRange;
   }
+  if (limit) shown = shown.slice(0, limit);
+  const changed = FILTER_IDS.filter((id) => String(f[id]) !== String(FILTER_DEFAULTS[id])).length;
+  $("resetFilters").hidden = !changed;
+  $("filterSummary").textContent = changed ? `篩選與排序（改了 ${changed} 項）` : "篩選與排序";
 
   const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
   $("showOsm").checked ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
-    `<li class="sub">這個範圍內沒有抱石館。</li>`) +
+    `<li class="sub">沒有符合條件的館。</li>`) +
     (outside.length ? `<li class="divider">${radiusKm} 公里外最近的館</li>` + outside.map(({ g, d }) => listItem(g, d)).join("") : "");
   const noCoord = gyms.filter((g) => g.lat == null);
   $("nocoord").hidden = !noCoord.length;
   $("nocoordList").innerHTML = noCoord.map((g) => listItem(g, null)).join("");
   document.querySelectorAll(".list li[data-id]").forEach((li) => li.addEventListener("click", () => openDetail(li.dataset.id)));
 
+  const conds = [f.city, Number(f.budget) ? `${f.budget} 元以下` : "", limit ? `前 ${limit} 間` : "",
+    { dist: "", price: "價格低到高", city: "" }[f.sort]].filter(Boolean);
+  const condText = conds.length ? `（${conds.join("、")}）` : "";
   if (state.me) {
-    const where = radiusKm > 0 ? `${radiusKm} 公里內` : "全台";
+    const where = radiusKm > 0 ? `${radiusKm} 公里內` : "符合條件";
     const more = outside.length ? `，另列範圍外最近 ${outside.length} 間` : "";
-    setStatus(`${where}有 ${shown.length} 間${more}（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
-  } else if (!$("status").classList.contains("error")) {
-    setStatus(`共 ${shown.length} 間；開啟定位後會依距離排序。`);
+    setStatus(`${where}有 ${shown.length} 間${condText}${more}（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
+  } else if (state.geoError) {
+    setStatus(`${state.geoError}，無法依距離排序。共 ${shown.length} 間${condText}`, true);
+  } else {
+    setStatus(`共 ${shown.length} 間${condText}；開啟定位後可以依距離排序。`);
   }
 }
 
 function listItem(g, d) {
   const cls = STATUS_CLASS[g.status] || "warn";
-  const price = (g.prices || [])[0];
-  const sub = [g.city + (g.district || ""), price ? `${price.item} ${fmtPrice(price.price)}` : "", g.status !== "營業中" ? g.status : ""]
+  const first = (g.prices || [])[0];
+  const price = g.price_min ? `入場 $${g.price_min.price} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
+  const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : ""]
     .filter(Boolean).join("・");
   return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${esc(g.name)}</div>` +
     `<div class="sub">${esc(sub)}</div></div><span class="dist">${d != null ? fmtDist(d) : g.lat == null ? "位置待補" : ""}</span></li>`;
