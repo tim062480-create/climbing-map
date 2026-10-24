@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-24 18:09",
+ "generated": "2026-10-24 18:14",
  "checked": "2026-10-24",
  "osm_ok": true,
  "sources": {
@@ -502,14 +502,14 @@
      "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
      "phone": "+886 225218233"
     },
-    "dist_to_address_m": 366
+    "dist_to_address_m": 368
    },
    "coord_check": {
-    "lat": 25.0536596,
-    "lng": 121.5225186,
+    "lat": 25.0536414,
+    "lng": 121.5227443,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 民安里, 中山區, 南西商圈, 臺北市, 10450, 臺灣"
+    "coord_match": "中山北路二段, 康樂里, 中山區, 南西商圈, 臺北市, 10450, 臺灣"
    }
   },
   {
@@ -814,11 +814,11 @@
      "opening_hours": "Mo-Fr 12:00-23:00",
      "sport": "climbing"
     },
-    "dist_to_address_m": 512
+    "dist_to_address_m": 515
    },
    "coord_check": {
-    "lat": 25.1050597,
-    "lng": 121.5178912,
+    "lat": 25.1051566,
+    "lng": 121.5180389,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市北投區文林北路",
     "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112047, 臺灣"
@@ -1404,11 +1404,11 @@
      "price": "100"
     }
    ],
-   "lat": 25.0527582,
-   "lng": 121.6120803,
+   "lat": 25.0514209,
+   "lng": 121.6006277,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區忠孝東路七段",
-   "coord_match": "忠孝東路七段, 中南里, 南港區, 三重埔, 臺北市, 11571, 臺灣"
+   "coord_match": "忠孝東路七段, 新光里, 南港區, 三重埔, 臺北市, 115, 臺灣"
   },
   {
    "id": "redrock-shilin",
@@ -1482,11 +1482,11 @@
      "price": "100"
     }
    ],
-   "lat": 25.0894747,
-   "lng": 121.5199918,
+   "lat": 25.0866934,
+   "lng": 121.522978,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
-   "coord_match": "承德路四段, 後港里, 士林區, 社子, 臺北市, 111056, 臺灣"
+   "coord_match": "承德路四段, 義信里, 士林區, 社子, 臺北市, 111052, 臺灣"
   },
   {
    "id": "redrock-hsinchu",
@@ -1793,14 +1793,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 938
+    "dist_to_address_m": 188
    },
    "coord_check": {
-    "lat": 25.1163267,
-    "lng": 121.5341003,
+    "lat": 25.1104056,
+    "lng": 121.5305186,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市士林區忠誠路二段",
-    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11154, 臺灣"
+    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11147, 臺灣"
    }
   },
   {
@@ -2932,8 +2932,8 @@
      "price": "80"
     }
    ],
-   "lat": 24.1640524,
-   "lng": 120.7225341,
+   "lat": 24.165916,
+   "lng": 120.7236858,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市北屯區建和路一段",
    "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣"
@@ -3250,11 +3250,11 @@
     "S28（2026-02 Threads）只寫「嘉義唯一的岩館」沒寫館名，價格是否屬於這間待確認",
     "S27 原文已經 404"
    ],
-   "lat": 23.4839738,
-   "lng": 120.4413611,
+   "lat": 23.4838312,
+   "lng": 120.4416239,
    "coord_source": "nominatim:address",
    "coord_query": "嘉義市鐵道藝術村",
-   "coord_match": "鐵道藝術村, 北興街, 後驛里, 西區, 北社尾, 嘉義市, 600, 臺灣"
+   "coord_match": "鐵道藝術村, 博愛路二段, 後驛里, 西區, 北社尾, 嘉義市, 600, 臺灣"
   },
   {
    "id": "chiayi-sports-8a",
@@ -3692,8 +3692,8 @@
    ],
    "hours": "每日 11:00–22:00",
    "phone": "07-585-9999 分機 3027",
-   "lat": 22.6884726,
-   "lng": 120.3072642,
+   "lat": 22.688055,
+   "lng": 120.3061588,
    "coord_source": "nominatim:road",
    "coord_query": "高雄市左營區站前北路",
    "coord_match": "站前北路, 海光二村, 尾北里, 左營區, 高雄市, 813, 臺灣"
