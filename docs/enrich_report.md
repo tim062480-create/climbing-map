@@ -1,7 +1,7 @@
 # 座標與 OpenStreetMap 交叉比對報告
 
-產生時間：2026-10-24 16:33（由 `src/enrich.py` 在 GitHub Actions 上產生）
-OSM 連線：成功
+產生時間：2026-10-24 17:35（由 `src/enrich.py` 在 GitHub Actions 上產生）
+OSM 連線：失敗（沿用上次結果）
 
 座標來源說明：`osm` ＝ OSM 上有這間館（最準）；`nominatim:address` ＝ 用門牌定位；`nominatim:road` ＝ 只定位到路段（可能差幾百公尺）；`nominatim:place`／`nominatim:name` ＝ 用地標或館名定位；`none` ＝ 找不到，網頁上列在「位置待補」。
 

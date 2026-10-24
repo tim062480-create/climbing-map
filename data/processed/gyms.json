@@ -1,8 +1,8 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-24 16:33",
+ "generated": "2026-10-24 17:35",
  "checked": "2026-10-24",
- "osm_ok": true,
+ "osm_ok": false,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -408,13 +408,6 @@
      "phone": "+886 225218233"
     },
     "dist_to_address_m": 249
-   },
-   "coord_check": {
-    "lat": 25.0591497,
-    "lng": 121.5230267,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 中山北路婚紗街, 聚盛里, 中山區, 南西商圈, 臺北市, 104418, 臺灣"
    }
   },
   {
@@ -608,13 +601,6 @@
      "website": "https://tupclimbing.tw"
     },
     "dist_to_address_m": 309
-   },
-   "coord_check": {
-    "lat": 25.0345218,
-    "lng": 121.4999759,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市萬華區大理街",
-    "coord_match": "大理街, 富福里, 萬華區, 下崁, 臺北市, 108220, 臺灣"
    }
   },
   {
@@ -720,13 +706,6 @@
      "website": "https://www.tupclimbing.tw/"
     },
     "dist_to_address_m": 102
-   },
-   "coord_check": {
-    "lat": 25.1087094,
-    "lng": 121.5133136,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市北投區文林北路",
-    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112051, 臺灣"
    }
   },
   {
@@ -924,13 +903,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 42
-   },
-   "coord_check": {
-    "lat": 25.0060804,
-    "lng": 121.4864657,
-    "coord_source": "nominatim:road",
-    "coord_query": "新北市中和區立言街",
-    "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣"
    }
   },
   {
@@ -1689,13 +1661,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 938
-   },
-   "coord_check": {
-    "lat": 25.1163267,
-    "lng": 121.5341003,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市士林區忠誠路二段",
-    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11148, 臺灣"
    }
   },
   {
@@ -2349,13 +2314,6 @@
      "website": "www.iclimb.com.tw"
     },
     "dist_to_address_m": 57
-   },
-   "coord_check": {
-    "lat": 24.8195605,
-    "lng": 121.0246494,
-    "coord_source": "nominatim:road",
-    "coord_query": "新竹縣竹北市成功二街",
-    "coord_match": "成功二街, 鹿場, 鹿場里, 竹北市, 新竹縣, 30264, 臺灣"
    }
   },
   {
@@ -2842,13 +2800,6 @@
      "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
     },
     "dist_to_address_m": 0
-   },
-   "coord_check": {
-    "lat": 23.471551,
-    "lng": 120.4628704,
-    "coord_source": "nominatim:address",
-    "coord_query": "嘉義市國民運動中心",
-    "coord_match": "嘉義市國民運動中心, 15, 彌陀路327巷, 新開里, 東區, 草地尾, 嘉義市, 600, 臺灣"
    }
   },
   {
@@ -2936,13 +2887,6 @@
      "website": "https://highfun2017.com/"
     },
     "dist_to_address_m": 363
-   },
-   "coord_check": {
-    "lat": 23.0145341,
-    "lng": 120.1894238,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺南市北區大和路",
-    "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣"
    }
   },
   {
@@ -3309,13 +3253,6 @@
      "website": "https://www.portaly.cc/jioutauclimbimg"
     },
     "dist_to_address_m": 206
-   },
-   "coord_check": {
-    "lat": 24.7509237,
-    "lng": 121.7501518,
-    "coord_source": "nominatim:road",
-    "coord_query": "宜蘭縣宜蘭市健康路三段",
-    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
    }
   },
   {
@@ -3472,13 +3409,6 @@
      "website": "https://yilansports.com.tw/"
     },
     "dist_to_address_m": 2059
-   },
-   "coord_check": {
-    "lat": 24.7523027,
-    "lng": 121.7416776,
-    "coord_source": "nominatim:address",
-    "coord_query": "宜蘭縣宜蘭運動中心",
-    "coord_match": "宜蘭高中新建綜合室內運動場館, 8, 建軍里, 宜蘭市, 宜蘭縣, 260, 臺灣"
    }
   },
   {
@@ -3542,13 +3472,6 @@
      "website": "https://hualienbonus.tw/"
     },
     "dist_to_address_m": 123
-   },
-   "coord_check": {
-    "lat": 23.9887095,
-    "lng": 121.601192,
-    "coord_source": "nominatim:road",
-    "coord_query": "花蓮縣花蓮市國民一街",
-    "coord_match": "國民一街, 國聯里, 花蓮市, 花蓮縣, 970, 臺灣"
    }
   },
   {
