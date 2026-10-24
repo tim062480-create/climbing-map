@@ -15,7 +15,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
-  me: null, geoError: "", listed: [], firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", listed: [], detailId: null, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -146,21 +146,19 @@ function parseQuery(q) {
   take(/營業中|有開/g, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
   take(/全日|整天|不限時|包日/g, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
   take(/osm/gi, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
+  // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
+  for (const p of PLACES) {
+    if (!s.includes(p.key)) continue;
+    s = s.replace(p.key, " ");
+    if (p.city) { const all = PLACES.filter((x) => x.key === p.key && x.city).map((x) => x.city); c.cities.push(...all); c.chips.push({ raw: p.key, label: `📍 ${all.join("、")}` }); }
+    else { c.districts.push(p.district); c.chips.push({ raw: p.key, label: `📍 ${p.district}` }); }
+  }
   s = s.replace(STOPWORDS, " ");
 
-  for (let word of s.split(/[\s,，、;；/]+/).filter(Boolean)) {
-    // 地名可以黏在一起打，例如「臺中西屯」，長的地名先比
-    for (const p of PLACES) {
-      if (!word.includes(p.key)) continue;
-      word = word.replace(p.key, " ");
-      if (p.city) { const all = PLACES.filter((x) => x.key === p.key && x.city).map((x) => x.city); c.cities.push(...all); c.chips.push({ raw: p.key, label: `📍 ${all.join("、")}` }); }
-      else { c.districts.push(p.district); c.chips.push({ raw: p.key, label: `📍 ${p.district}` }); }
-    }
-    for (const rest of word.split(" ").filter(Boolean)) {
-      const t = rest.toLowerCase();
-      if (state.gyms.some((g) => gymText(g).includes(t))) { c.names.push(t); c.chips.push({ raw: rest, label: `館名含「${rest}」` }); }
-      else c.chips.push({ raw: rest, label: `看不懂「${rest}」`, unknown: true });
-    }
+  for (const word of s.split(/[\s,，、;；/]+/).filter(Boolean)) {
+    const t = word.toLowerCase();
+    if (state.gyms.some((g) => gymText(g).includes(t))) { c.names.push(t); c.chips.push({ raw: word, label: `館名含「${word}」` }); }
+    else c.chips.push({ raw: word, label: `看不懂「${word}」`, unknown: true });
   }
   c.cities = [...new Set(c.cities)];
   // 沒指定地點、館名或範圍時，有定位就先看附近
@@ -259,7 +257,10 @@ function onPosition(pos) {
   meCircle.setLatLng(state.me).setRadius(state.me.acc).addTo(map);
   if (state.firstFix) {
     state.firstFix = false;
-    if (!searchesPlace(parseQuery($("q").value))) centerOnMe();   // 正在看搜尋的地點時不要跳走
+    // 正在看某間館的詳細資訊：補算交通路線，地圖不跳走
+    const open = state.detailId && state.gyms.find((x) => x.id === state.detailId);
+    if (open) { $("transit").innerHTML = transitHTML(open); enhanceTransit(open); }
+    else if (!searchesPlace(parseQuery($("q").value))) centerOnMe();   // 正在看搜尋的地點時不要跳走
   }
   render();
 }
@@ -350,6 +351,7 @@ function listItem(g, d) {
 function openDetail(id, pushHash = true) {
   const g = state.gyms.find((x) => x.id === id);
   if (!g) return;
+  state.detailId = id;
   if (pushHash) history.replaceState(null, "", `#${id}`);
   if (g.lat != null) map.setView([g.lat, g.lng], Math.max(map.getZoom(), 15));
   const cls = STATUS_CLASS[g.status] || "warn";
@@ -392,6 +394,7 @@ function openDetail(id, pushHash = true) {
 
 function closeDetail() {
   $("detail").hidden = true;
+  state.detailId = null;   // 地圖上的路線留著，按「在地圖上看路線」就是要看它
   history.replaceState(null, "", location.pathname + location.search);
 }
 
@@ -409,18 +412,84 @@ function sourcesHTML(g) {
 }
 
 // ---------- 交通 ----------
+// 步行、單車、開車的實際路線用 FOSSGIS 架的 OSRM（OpenStreetMap 資料，免金鑰，請勿大量呼叫）。
+// 大眾運輸沒有免費免金鑰的路線服務（要 TDX 帳號＋中繼），只做粗估，路線交給 Google 地圖。
+const ROUTER = "https://routing.openstreetmap.de";
+const YB_DOCK_MIN = 2;   // 借車、還車各約 1 分鐘
+const MODES = [
+  { id: "youbike", icon: "🚲", name: "YouBike" },
+  { id: "walk", icon: "🚶", name: "步行" },
+  { id: "car", icon: "🚗", name: "開車" },
+  { id: "transit", icon: "🚇", name: "大眾運輸" },
+];
+const LEG_STYLE = {
+  foot: { color: "#1c7ed6", weight: 5, dashArray: "2 9", lineCap: "round" },
+  bike: { color: "#2b8a3e", weight: 6 },
+  car: { color: "#d9480f", weight: 6 },
+};
+const routeLayer = L.layerGroup().addTo(map);
+const routeCache = new Map();
+
+// profile：foot／bike／car；pts：[{lat,lng}, …]。失敗回傳 null
+async function osrmRoute(profile, pts) {
+  const key = profile + pts.map((p) => `${p.lng.toFixed(5)},${p.lat.toFixed(5)}`).join(";");
+  if (routeCache.has(key)) return routeCache.get(key);
+  let out = null;
+  try {
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 12000);
+    const url = `${ROUTER}/routed-${profile}/route/v1/driving/${pts.map((p) => `${p.lng},${p.lat}`).join(";")}?overview=full&geometries=geojson&steps=true`;
+    const r = await (await fetch(url, { signal: ctrl.signal })).json();
+    const rt = r.code === "Ok" && r.routes[0];
+    if (rt) out = { profile, distance: rt.distance, minutes: rt.duration / 60,
+      coords: rt.geometry.coordinates.map(([lng, lat]) => [lat, lng]), steps: rt.legs.flatMap((l) => l.steps) };
+  } catch { /* 逾時或連不到 */ }
+  routeCache.set(key, out);
+  return out;
+}
+
+// 連不到路線服務時，用直線距離估
+const straightLeg = (profile, a, b) => {
+  const d = distM(a, b) * DETOUR;
+  return { profile, distance: d, minutes: d / (profile === "foot" ? WALK_M_PER_MIN : profile === "bike" ? BIKE_M_PER_MIN : 500),
+    coords: [[a.lat, a.lng], [b.lat, b.lng]], steps: [], estimated: true };
+};
+
+const BEARING = ["北", "東北", "東", "東南", "南", "西南", "西", "西北"];
+const TURN = { left: "左轉", right: "右轉", "slight left": "靠左", "slight right": "靠右", "sharp left": "向左急轉",
+  "sharp right": "向右急轉", straight: "直走", uturn: "迴轉" };
+
+// OSRM 的轉彎步驟 → 中文；太短又沒路名的小段合併掉
+function stepTexts(steps) {
+  const out = [];
+  for (const s of steps) {
+    const m = s.maneuver || {}, name = s.name || "";
+    if (m.type === "arrive") { out.push({ text: "抵達", d: 0 }); continue; }
+    let text;
+    if (m.type === "depart") text = `往${BEARING[Math.round((m.bearing_after || 0) / 45) % 8]}出發`;
+    else if (m.type === "roundabout" || m.type === "rotary") text = "進入圓環";
+    else if (m.type === "new name" || m.type === "continue") text = "繼續直走";
+    else text = TURN[m.modifier] || "繼續";
+    const last = out[out.length - 1];
+    if (last && s.distance < 25 && !name) { last.d += s.distance; continue; }
+    if (last && name && last.name === name && (m.type === "new name" || m.type === "continue")) { last.d += s.distance; continue; }
+    out.push({ text: name ? `${text}，走${name}` : text, name, d: s.distance });
+  }
+  return out;
+}
+
+const clock = (min) => { const t = new Date(Date.now() + min * 60000); return `${t.getHours()}:${String(t.getMinutes()).padStart(2, "0")}`; };
+
 function transitHTML(g) {
   if (g.lat == null) return `<p class="note">這間館還沒有座標，<a href="${gmapsSearch(g)}" target="_blank" rel="noopener">用 Google 地圖查路線</a>。</p>`;
-  const me = state.me;
-  const d = me ? distM(me, g) : null;
-  return `
-    ${me ? `<p>直線距離 ${fmtDist(d)}</p>` : `<p class="note">開啟定位後可以算出從你的位置出發的建議。</p>`}
-    <div class="row">
-      <a class="btn small" href="${gmapsDir(g, "transit", me)}" target="_blank" rel="noopener">🚇 大眾運輸</a>
-      <a class="btn small" href="${gmapsDir(g, "bicycling", me)}" target="_blank" rel="noopener">🚲 騎車</a>
-      <a class="btn small" href="${gmapsDir(g, "walking", me)}" target="_blank" rel="noopener">🚶 步行</a>
-    </div>
-    <div id="ybPlan"><p class="note">正在計算 YouBike 路線…</p></div>`;
+  if (!state.me) {
+    return `<p class="note">開啟定位後，會算出從你的位置過去的 YouBike、步行、開車路線和時間。</p>
+      <div class="row"><button type="button" class="btn small" id="transitLocate">📍 開啟定位</button>
+      <a class="btn small" href="${gmapsDir(g, "transit")}" target="_blank" rel="noopener">用 Google 地圖查路線</a></div>`;
+  }
+  return `<div class="modes" role="tablist">${MODES.map((m) =>
+    `<button type="button" role="tab" data-mode="${m.id}"><span>${m.icon} ${m.name}</span><b>…</b></button>`).join("")}</div>
+    <div id="modeBody"><p class="note">正在算路線…</p></div>`;
 }
 
 async function ensureStations() {
@@ -467,52 +536,124 @@ function stationCounts(sno, live) {
   return null;
 }
 
+// 打開館的詳細資訊時算四種方式的路線，填進分頁；預設選最合適的那個
 async function enhanceTransit(g) {
-  const box = $("ybPlan");
-  if (!box || g.lat == null) return;
-  if (!state.me) { box.innerHTML = ybNearGymHTML(g, null); return; }
+  const tl = $("transitLocate");
+  if (tl) tl.addEventListener("click", locate);
+  routeLayer.clearLayers();
+  if (!state.me || g.lat == null || !document.querySelector("#transit .modes")) return;
+  const me = { ...state.me };
   const [stations, live] = await Promise.all([ensureStations(), tryLive()]);
-  if (!$("ybPlan")) return;
-  const total = distM(state.me, g);
+  const plans = { transit: transitPlan(g, me) };
+  const [walk, car, yb] = await Promise.all([
+    osrmRoute("foot", [me, g]).then((r) => r || straightLeg("foot", me, g)),
+    osrmRoute("car", [me, g]).then((r) => r || straightLeg("car", me, g)),
+    youbikePlan(g, me, stations, live),
+  ]);
+  if (state.detailId !== g.id) return;   // 算完時使用者已經換看別間
+  plans.walk = { legs: [walk], minutes: walk.minutes, distance: walk.distance };
+  plans.car = { legs: [car], minutes: car.minutes * 1.3, distance: car.distance };   // OSRM 不含塞車、找車位，多抓三成
+  plans.youbike = yb;
+
+  const tabs = document.querySelectorAll("#transit [data-mode]");
+  tabs.forEach((btn) => {
+    const p = plans[btn.dataset.mode];
+    btn.querySelector("b").textContent = p.minutes ? `${p.approx ? "約 " : ""}${fmtMin(p.minutes)}` : "—";
+    btn.addEventListener("click", () => showMode(g, plans, btn.dataset.mode));
+  });
+  // 預設：2 公里內步行，YouBike 可以就 YouBike，不然大眾運輸
+  const dist = walk.distance;
+  showMode(g, plans, dist <= 2000 ? "walk" : yb.minutes ? "youbike" : "transit");
+}
+
+function transitPlan(g, me) {
+  const d = distM(me, g);
+  return { approx: true, minutes: (d * 1.4) / 350 + 10, distance: d * 1.4 };   // 粗估：市區大眾運輸約 21 km/h＋候車 10 分
+}
+
+async function youbikePlan(g, me, stations, live) {
+  const total = distM(me, g);
+  if (total > YOUBIKE_MAX_KM * 1000) return { reason: `距離超過 ${YOUBIKE_MAX_KM} 公里，騎 YouBike 太遠，建議搭大眾運輸。` };
   const nearGym = ((state.near && state.near.gyms[g.id]) || []).map(([sno, d]) => ({ sno, d, ...(state.near.stations[sno] || {}) }));
-  const nearMe = stations.map((s) => ({ ...s, d: distM(state.me, s) })).sort((a, b) => a.d - b.d).slice(0, 3).filter((s) => s.d <= 1000);
-
-  if (total > YOUBIKE_MAX_KM * 1000) {
-    box.innerHTML = `<div class="plan">距離超過 ${YOUBIKE_MAX_KM} 公里，建議搭大眾運輸（上方按鈕），到站後再看館附近的 YouBike。</div>${ybNearGymHTML(g, live)}`;
-    return;
-  }
+  const nearMe = stations.map((s) => ({ ...s, d: distM(me, s) })).sort((a, b) => a.d - b.d).slice(0, 3).filter((s) => s.d <= 1000);
   if (!nearMe.length || !nearGym.length) {
-    const why = !stations.length ? "YouBike 站點資料還沒產生" : !nearMe.length ? "你附近 1 公里內沒有 YouBike 站" : "這間館附近 1 公里內沒有 YouBike 站";
-    box.innerHTML = `<div class="plan">${why}，建議用上方的大眾運輸或步行路線。</div>`;
-    return;
+    return { reason: !stations.length ? "YouBike 站點資料還沒產生。" : !nearMe.length ? "你附近 1 公里內沒有 YouBike 站。" : "這間館附近 1 公里內沒有 YouBike 站。" };
   }
-
   // 起點站：優先選有車的；終點站：優先選有空位的
   const pick = (list, key) => list.find((s) => { const c = stationCounts(s.sno, live); return c && c[key] > 0; }) || list[0];
   const a = pick(nearMe, "rent"), b = pick(nearGym, "ret");
-  const walk1 = (a.d * DETOUR) / WALK_M_PER_MIN;
-  const ride = (distM(a, b) * DETOUR) / BIKE_M_PER_MIN;
-  const walk2 = (b.d * DETOUR) / WALK_M_PER_MIN;
-  const now = new Date();
-  const tPick = new Date(now.getTime() + walk1 * 60000), tDrop = new Date(tPick.getTime() + ride * 60000);
-  const transitMin = (total * 1.4) / 350 + 10;   // 粗估：市區大眾運輸約 21 km/h＋候車 10 分
+  const legs = await Promise.all([
+    osrmRoute("foot", [me, a]).then((r) => r || straightLeg("foot", me, a)),
+    osrmRoute("bike", [a, b]).then((r) => r || straightLeg("bike", a, b)),
+    osrmRoute("foot", [b, g]).then((r) => r || straightLeg("foot", b, g)),
+  ]);
+  const minutes = legs.reduce((s, l) => s + l.minutes, 0) + YB_DOCK_MIN;
+  return { legs, minutes, distance: legs.reduce((s, l) => s + l.distance, 0), a, b, live };
+}
 
-  box.innerHTML = `
-    <div class="plan">
-      <div class="total">YouBike 方案：約 ${fmtMin(walk1 + ride + walk2)}</div>
-      <ol>
-        <li>步行 ${fmtDist(a.d)}（約 ${fmtMin(walk1)}）到 <b>${esc(a.name)}</b> 借車<br>${countsLine(a.sno, live, tPick, "rent")}</li>
-        <li>騎 ${fmtDist(distM(a, b) * DETOUR)}（約 ${fmtMin(ride)}）到 <b>${esc(b.name)}</b> 還車<br>${countsLine(b.sno, live, tDrop, "ret")}</li>
-        <li>步行 ${fmtDist(b.d)}（約 ${fmtMin(walk2)}）到館</li>
-      </ol>
-      <div class="row">
-        <a class="btn small" href="${gmapsDir(a, "walking", state.me)}" target="_blank" rel="noopener">走到借車站</a>
-        <a class="btn small" href="${gmapsDir(b, "bicycling", a)}" target="_blank" rel="noopener">騎車路線</a>
-        <a class="btn small" href="${gmapsDir(g, "walking", b)}" target="_blank" rel="noopener">走到館</a>
-      </div>
-      <p class="note">時間用直線距離 ×${DETOUR} 估算（步行 4.5、騎車 12 公里／小時）；同距離大眾運輸粗估約 ${fmtMin(transitMin)}，實際以 Google 地圖為準。</p>
-    </div>
-    ${ybNearGymHTML(g, live)}`;
+function showMode(g, plans, mode) {
+  document.querySelectorAll("#transit [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === mode));
+  const p = plans[mode], body = $("modeBody");
+  routeLayer.clearLayers();
+  if (mode === "transit") {
+    body.innerHTML = `<div class="plan">
+      <div class="total">約 ${fmtMin(p.minutes)}<span class="note">（粗估，約 ${clock(p.minutes)} 到）</span></div>
+      <p>公車、捷運要轉哪幾班，請用 Google 地圖查：</p>
+      <a class="btn primary" href="${gmapsDir(g, "transit", state.me)}" target="_blank" rel="noopener">🚇 用 Google 地圖看大眾運輸路線</a>
+      <p class="note">這裡沒有接公車捷運的路線資料（要申請交通部 TDX 帳號），時間是用距離粗估：市區約每小時 21 公里，加候車 10 分鐘。</p>
+    </div>${ybNearGymHTML(g, plans.youbike.live)}`;
+    return;
+  }
+  if (!p.minutes) { body.innerHTML = `<div class="plan">${esc(p.reason)}</div>${ybNearGymHTML(g, null)}`; return; }
+
+  const estimated = p.legs.some((l) => l.estimated);
+  const head = `<div class="total">${fmtMin(p.minutes)}<span class="note">・${fmtDist(p.distance)}・約 ${clock(p.minutes)} 到</span></div>`;
+  let legsHTML;
+  if (mode === "youbike") {
+    const [w1, bike, w2] = p.legs;
+    const tPick = new Date(Date.now() + w1.minutes * 60000), tDrop = new Date(tPick.getTime() + (bike.minutes + 1) * 60000);
+    const near = (leg) => leg.distance < 40;   // 站就在旁邊，不用另外寫步行
+    legsHTML = `<ol class="legs">
+      <li>${near(w1) ? `<b>${esc(p.a.name)}</b> 就在你旁邊，借車` : `<b>🚶 步行 ${fmtMin(w1.minutes)}</b>（${fmtDist(w1.distance)}）到 <b>${esc(p.a.name)}</b> 借車`}<br>${countsLine(p.a.sno, p.live, tPick, "rent")}${near(w1) ? "" : stepsHTML(w1)}</li>
+      <li><b>🚲 騎車 ${fmtMin(bike.minutes)}</b>（${fmtDist(bike.distance)}）到 <b>${esc(p.b.name)}</b> 還車<br>${countsLine(p.b.sno, p.live, tDrop, "ret")}${stepsHTML(bike)}</li>
+      <li>${near(w2) ? "還車站就在館旁邊" : `<b>🚶 步行 ${fmtMin(w2.minutes)}</b>（${fmtDist(w2.distance)}）到館${stepsHTML(w2)}`}</li>
+    </ol>
+    <div class="row"><a class="btn small" href="${gmapsDir(p.a, "walking", state.me)}" target="_blank" rel="noopener">Google：走到借車站</a>
+      <a class="btn small" href="${gmapsDir(p.b, "bicycling", p.a)}" target="_blank" rel="noopener">Google：騎到還車站</a>
+      <a class="btn small" href="${gmapsDir(g, "walking", p.b)}" target="_blank" rel="noopener">Google：走到館</a></div>`;
+  } else {
+    const gm = { walk: "walking", car: "driving" }[mode];
+    legsHTML = `${stepsHTML(p.legs[0], true)}
+      <div class="row"><a class="btn small" href="${gmapsDir(g, gm, state.me)}" target="_blank" rel="noopener">用 Google 地圖導航</a></div>
+      ${mode === "car" ? `<p class="note">開車時間多抓三成，路線服務沒有算塞車和找車位。</p>` : ""}`;
+  }
+  body.innerHTML = `<div class="plan">${head}
+    <button type="button" class="btn small" id="showRoute">🗺 在地圖上看路線</button>
+    ${legsHTML}
+    <p class="note">${estimated ? "路線服務暫時連不到，以直線距離估算。" : "路線：OpenStreetMap（FOSSGIS OSRM），實際以現場為準。"}</p>
+  </div>${mode === "youbike" ? ybNearGymHTML(g, p.live) : ""}`;
+
+  // 地圖上畫路線：步行虛線、騎車綠線、開車橘線，借還車站標出來
+  for (const l of p.legs) L.polyline(l.coords, LEG_STYLE[l.profile]).addTo(routeLayer);
+  if (mode === "youbike") {
+    [[p.a, "借"], [p.b, "還"]].forEach(([s, t]) => L.marker([s.lat, s.lng], {
+      icon: L.divIcon({ className: "", html: `<div class="yb-pin">${t}</div>`, iconSize: [24, 24] }) }).bindTooltip(s.name).addTo(routeLayer));
+  }
+  $("showRoute").addEventListener("click", () => {
+    closeDetail();
+    const panel = $("panel");
+    const covered = getComputedStyle(panel).position === "absolute" ? panel.offsetHeight : 0;
+    map.stop();
+    map.fitBounds(L.latLngBounds(p.legs.flatMap((l) => l.coords)), { paddingTopLeft: [30, 30], paddingBottomRight: [30, covered + 30] });
+  });
+}
+
+// 轉彎步驟收在「詳細路線」裡，像 Google 地圖那樣點開才看
+function stepsHTML(leg, open = false) {
+  const list = stepTexts(leg.steps || []);
+  if (list.length < 2) return "";
+  return `<details class="steps"${open ? " open" : ""}><summary>詳細路線（${list.length} 步）</summary><ol>${
+    list.map((s) => `<li>${esc(s.text)}${s.d >= 10 ? `<span class="note">　${fmtDist(s.d)}</span>` : ""}</li>`).join("")}</ol></details>`;
 }
 
 function countsLine(sno, live, when, key) {

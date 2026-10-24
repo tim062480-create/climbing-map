@@ -152,7 +152,23 @@ a { color: var(--accent); }
 .embed { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 8px; }
 .plan { background: var(--surface); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
 .plan ol { margin: 4px 0; padding-left: 20px; }
-.plan .total { font-weight: 600; }
+.plan .total { font-weight: 700; font-size: 20px; }
+.plan .total .note { font-size: 13px; font-weight: 400; }
+.plan .legs > li { margin-bottom: 8px; }
+.plan .btn.primary { display: inline-flex; margin: 4px 0; }
+/* 交通方式分頁，像 Google 地圖上方的 🚲 🚶 🚗 🚇 */
+.modes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 6px 0; }
+.modes button {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-size: 12px; cursor: pointer;
+}
+.modes button b { font-size: 13px; }
+.modes button[aria-selected="true"] { border-color: var(--accent); background: var(--bg); box-shadow: inset 0 0 0 1px var(--accent); }
+.steps { margin: 4px 0; font-size: 13px; }
+.steps summary { cursor: pointer; color: var(--accent); }
+.steps ol { margin: 4px 0; padding-left: 20px; }
+.yb-pin { width: 24px; height: 24px; border-radius: 50%; background: #2b8a3e; color: #fff; font-size: 12px; font-weight: 700;
+  display: grid; place-items: center; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35); }
 .sources li { font-size: 13px; margin: 2px 0; }
 .verify { color: var(--warn); font-size: 13px; }
 
