@@ -19,6 +19,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - output/：每次分析或匯出另存新版本資料夾 output/v1/、output/v2/…，**舊版不覆蓋、不刪除**。使用者決定採用的版本才複製到 output/final/，未經使用者同意不得改動 final。
 - docs/：AI 自動產生的報告（`enrich_report.md`）和使用者親手寫的文件。`資料來源紀錄.md` 是資料來源與驗證的總紀錄，補資料時要在「操作紀錄」加一段並註明日期。不得改寫使用者親手寫的文件。
 - logs/：過程紀錄，由紀錄系統自動寫入。
+- relay/：放在 Cloudflare 上跑的中繼程式（JavaScript，不是 Python），目前只有 TDX 大眾運輸路線。
 - 根目錄的 `index.html` 和 `web/` 是網頁。GitHub Pages 從根目錄發布，網頁用相對路徑讀 `data/processed/`。
 
 ## 資料流
@@ -38,7 +39,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 改了 `web/` 的 JS 或 CSS，要一起改 `index.html` 裡的 `?v=日期` 版本號，不然手機可能拿到新 HTML 配舊 JS（GitHub Pages 會快取 10 分鐘）。
    - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。搜尋字串存在網址 `?q=` 和 localStorage。
    - 沒指定地點、館名、範圍時，有定位就只列 10 公里內；範圍內不到 5 間時補列範圍外最近的館。
-   - 交通分頁（YouBike／步行／開車／大眾運輸）：前三種用 FOSSGIS 的 OSRM（`routing.openstreetmap.de`，免金鑰、可跨網域，只在打開館的詳細資訊時呼叫）算實際路線、時間和中文轉彎步驟，畫在地圖上；連不到時退回直線距離 ×1.3 估算。大眾運輸沒有免費路線服務，只粗估時間，路線交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。
+   - 交通分頁（YouBike／步行／開車／大眾運輸）：前三種用 FOSSGIS 的 OSRM（`routing.openstreetmap.de`，免金鑰、可跨網域，只在打開館的詳細資訊時呼叫）算實際路線、時間和中文轉彎步驟，畫在地圖上；連不到時退回直線距離 ×1.3 估算。大眾運輸用交通部 TDX 旅運規劃（`/api/maas/routing`），經過 `relay/tdx-worker.js`（Cloudflare Worker，金鑰存在 Cloudflare 加密變數，不進 repo）；`web/config.js` 的 `transitRelay` 空著時只粗估時間，路線交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。設定步驟見 `docs/TDX大眾運輸設定步驟.md`。改了 Worker 要手動貼到 Cloudflare 重新部署。
    - 留言用 giscus：`web/config.js` 的 `repoId`、`categoryId` 空著時不顯示。
 
 `.github/workflows/update-data.yml`：YouBike 每 20 分鐘、補座標每週一次或改了 seed、來源、程式之後自動跑，結果 commit 回 repo。schedule 只在 main 上執行。排程會一直 commit，所以本機 push 前要先 pull。

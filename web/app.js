@@ -596,12 +596,14 @@ function showMode(g, plans, mode) {
   const p = plans[mode], body = $("modeBody");
   routeLayer.clearLayers();
   if (mode === "transit") {
-    body.innerHTML = `<div class="plan">
+    const relay = (window.CLIMBING_CONFIG || {}).transitRelay;
+    body.innerHTML = `<div id="tdxBox">${relay ? `<p class="note">正在查公車、捷運路線…</p>` : `<div class="plan">
       <div class="total">約 ${fmtMin(p.minutes)}<span class="note">（粗估，約 ${clock(p.minutes)} 到）</span></div>
       <p>公車、捷運要轉哪幾班，請用 Google 地圖查：</p>
       <a class="btn primary" href="${gmapsDir(g, "transit", state.me)}" target="_blank" rel="noopener">🚇 用 Google 地圖看大眾運輸路線</a>
-      <p class="note">這裡沒有接公車捷運的路線資料（要申請交通部 TDX 帳號），時間是用距離粗估：市區約每小時 21 公里，加候車 10 分鐘。</p>
-    </div>${ybNearGymHTML(g, plans.youbike.live)}`;
+      <p class="note">時間是用距離粗估：市區約每小時 21 公里，加候車 10 分鐘。</p>
+    </div>`}</div>${ybNearGymHTML(g, plans.youbike.live)}`;
+    if (relay) showTransitRoutes(g, p, relay);
     return;
   }
   if (!p.minutes) { body.innerHTML = `<div class="plan">${esc(p.reason)}</div>${ybNearGymHTML(g, null)}`; return; }
@@ -646,6 +648,74 @@ function showMode(g, plans, mode) {
     map.stop();
     map.fitBounds(L.latLngBounds(p.legs.flatMap((l) => l.coords)), { paddingTopLeft: [30, 30], paddingBottomRight: [30, covered + 30] });
   });
+}
+
+// ---------- 大眾運輸（TDX 旅運規劃，經過 relay/tdx-worker.js） ----------
+const TRANSIT_ICON = { bus: "🚌", intercityBus: "🚌", subway: "🚇", metro: "🚇", lightRail: "🚊", train: "🚆", regionalTrain: "🚆",
+  highSpeedTrain: "🚄", ferry: "⛴", aerial: "🚡", bicycle: "🚲", bikeShare: "🚲", pedestrian: "🚶", walk: "🚶" };
+const localISO = (d) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 19);
+const hhmm = (t) => { const d = new Date(t); return Number.isNaN(d.getTime()) ? "" : `${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`; };
+
+// TDX 的回傳格式只看過文件描述（類似 HERE 的 routes → sections），欄位名稱都多試幾種，讀不懂就退回粗估
+function parseTdxRoutes(j) {
+  const routes = j?.data?.routes || j?.routes || j?.data || [];
+  return (Array.isArray(routes) ? routes : []).map((r) => {
+    const sections = (r.sections || r.legs || []).map((s) => {
+      const t = s.transport || {};
+      const mode = s.type === "pedestrian" ? "pedestrian" : t.mode || s.mode || s.type || "";
+      const dur = s.travelSummary?.duration ?? s.travel_summary?.duration ?? s.summary?.duration ?? s.duration;
+      return {
+        mode, line: t.shortName || t.name || t.longName || s.route_name || "", headsign: t.headsign || "",
+        from: s.departure?.place?.name || s.departure?.name || "", to: s.arrival?.place?.name || s.arrival?.name || "",
+        dep: s.departure?.time, arr: s.arrival?.time, minutes: dur != null ? dur / 60 : null,
+        length: s.travelSummary?.length ?? s.travel_summary?.length ?? s.length ?? null,
+      };
+    });
+    const first = sections[0], last = sections[sections.length - 1];
+    let minutes = r.travel_time != null ? r.travel_time / 60 : null;
+    if (minutes == null && first?.dep && last?.arr) minutes = (new Date(last.arr) - new Date(first.dep)) / 60000;
+    if (minutes == null) minutes = sections.reduce((s, x) => s + (x.minutes || 0), 0) || null;
+    return { minutes, price: r.total_price ?? r.price ?? null, dep: first?.dep, arr: last?.arr, sections };
+  }).filter((r) => r.minutes && r.sections.length);
+}
+
+async function showTransitRoutes(g, estimate, relay) {
+  const box = $("tdxBox");
+  const fallback = (why) => {
+    if (!$("tdxBox")) return;
+    $("tdxBox").innerHTML = `<div class="plan"><div class="total">約 ${fmtMin(estimate.minutes)}<span class="note">（粗估）</span></div>
+      <p class="note">${esc(why)}</p>
+      <a class="btn primary" href="${gmapsDir(g, "transit", state.me)}" target="_blank" rel="noopener">🚇 用 Google 地圖看大眾運輸路線</a></div>`;
+  };
+  let routes = [];
+  try {
+    const u = new URL("/route", relay);
+    u.search = new URLSearchParams({ from: `${state.me.lat},${state.me.lng}`, to: `${g.lat},${g.lng}`, depart: localISO(new Date()) });
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 15000);
+    const j = await (await fetch(u, { signal: ctrl.signal })).json();
+    if (j.error) return fallback(`公車捷運路線查詢失敗（${j.error}），先用粗估。`);
+    routes = parseTdxRoutes(j);
+  } catch { return fallback("公車捷運路線服務暫時連不到，先用粗估。"); }
+  if (!box.isConnected) return;
+  if (!routes.length) return fallback("查不到這段的公車捷運路線（可能太近、太遠或沒有班次），先用粗估。");
+
+  box.innerHTML = routes.map((r, i) => {
+    const chips = r.sections.map((s) => `${TRANSIT_ICON[s.mode] || "🚍"}${s.mode === "pedestrian" ? (s.minutes ? ` ${Math.round(s.minutes)}` : "") : ` ${esc(s.line)}`}`).join(" › ");
+    const detail = r.sections.map((s) => s.mode === "pedestrian"
+      ? `<li>🚶 步行${s.minutes ? ` ${fmtMin(s.minutes)}` : ""}${s.length ? `（${fmtDist(s.length)}）` : ""}${s.to ? ` 到 ${esc(s.to)}` : ""}</li>`
+      : `<li>${TRANSIT_ICON[s.mode] || "🚍"} <b>${esc(s.line)}</b>${s.headsign ? `（往${esc(s.headsign)}）` : ""}<br>
+          ${hhmm(s.dep)} ${esc(s.from)} 上車 → ${hhmm(s.arr)} ${esc(s.to)} 下車${s.minutes ? `<span class="note">　${fmtMin(s.minutes)}</span>` : ""}</li>`).join("");
+    return `<div class="plan">
+      <div class="total">${fmtMin(r.minutes)}<span class="note">${r.dep ? `・${hhmm(r.dep)} 出發` : ""}${r.arr ? `・${hhmm(r.arr)} 到` : ""}${r.price != null ? `・$${r.price}` : ""}</span></div>
+      <div class="transit-chips">${chips}</div>
+      <details class="steps"${i === 0 ? " open" : ""}><summary>怎麼搭</summary><ol>${detail}</ol></details>
+    </div>`;
+  }).join("") + `<div class="row"><a class="btn small" href="${gmapsDir(g, "transit", state.me)}" target="_blank" rel="noopener">用 Google 地圖對照</a></div>
+    <p class="note">路線：交通部 TDX 旅運規劃，班次以現場為準。</p>`;
+  const best = routes[0].minutes;
+  const tab = document.querySelector('#transit [data-mode="transit"] b');
+  if (tab) tab.textContent = fmtMin(best);
 }
 
 // 轉彎步驟收在「詳細路線」裡，像 Google 地圖那樣點開才看

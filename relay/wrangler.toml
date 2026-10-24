@@ -1,0 +1,5 @@
+# Cloudflare Worker 設定（部署：在這個資料夾執行 npx wrangler deploy）
+# 金鑰不要寫在這裡，用 npx wrangler secret put TDX_CLIENT_ID／TDX_CLIENT_SECRET 存進 Cloudflare
+name = "climbing-map-tdx"
+main = "tdx-worker.js"
+compatibility_date = "2026-10-01"
