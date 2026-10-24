@@ -15,7 +15,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
-  me: null, firstFix: true, markers: new Map(), osmLayer: null,
+  me: null, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -101,12 +101,30 @@ function setStatus(msg, isError = false) {
 // ---------- 定位 ----------
 function locate() {
   if (!navigator.geolocation) { setStatus("這個瀏覽器不支援定位，清單依縣市排列。"); return; }
-  setStatus("正在取得你的位置…");
-  state.firstFix = true;
-  navigator.geolocation.watchPosition(onPosition, (err) => {
+  if (!$("detail").hidden) closeDetail();   // 詳細資訊會蓋住地圖
+  if (state.me) {
+    centerOnMe();   // 已經有位置就先移過去，不等手機回報新位置
+  } else {
+    setStatus("正在取得你的位置…");
+    state.firstFix = true;
+  }
+  if (state.watchId != null) return;   // 只開一個定位監聽
+  state.watchId = navigator.geolocation.watchPosition(onPosition, (err) => {
+    if (state.me) return;   // 已經有位置時，偶爾的逾時不用提示
     const why = { 1: "你拒絕了定位權限（可到瀏覽器設定開啟）", 2: "目前無法取得位置", 3: "定位逾時" }[err.code] || err.message;
     setStatus(`${why}，清單依縣市排列。`, true);
   }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 });
+}
+
+// 把地圖移到自己的位置，範圍跟清單的距離篩選一致；手機上扣掉下方清單蓋住的高度，藍點才不會被擋住
+function centerOnMe() {
+  const r = Number($("radius").value) || 10;
+  const panel = $("panel");
+  const covered = panel.offsetParent && getComputedStyle(panel).position === "absolute" ? panel.offsetHeight : 0;
+  const go = () => map.fitBounds(L.latLng(state.me).toBounds(r * 2000), { paddingBottomRight: [0, covered] });
+  // 剛點開某間館時地圖還在縮放動畫中，這時移動會被動畫蓋掉，等動畫結束再移
+  if (map._animatingZoom) map.once("zoomend", go);
+  else { map.stop(); go(); }
 }
 
 function onPosition(pos) {
@@ -115,8 +133,7 @@ function onPosition(pos) {
   meCircle.setLatLng(state.me).setRadius(state.me.acc).addTo(map);
   if (state.firstFix) {
     state.firstFix = false;
-    const r = Number($("radius").value) || 10;
-    map.fitBounds(L.latLng(state.me).toBounds(r * 2000));
+    centerOnMe();
   }
   render();
 }
