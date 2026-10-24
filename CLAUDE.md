@@ -37,7 +37,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 4. 網頁（`index.html`、`web/app.js`）：
    - 沒有建置步驟，Leaflet 和 OSM 底圖從 unpkg 載入。
    - 改了 `web/` 的 JS 或 CSS，要一起改 `index.html` 裡的 `?v=日期` 版本號，不然手機可能拿到新 HTML 配舊 JS（GitHub Pages 會快取 10 分鐘）。
-   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。搜尋字串存在網址 `?q=` 和 localStorage。
+   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。點搜尋框會展開下拉選單（`renderSuggest`）列出可選條件，打字時改列符合的地區和館名；關鍵字的正規表示式統一放在 `Q_RE`，解析和選單共用。搜尋字串存在網址 `?q=` 和 localStorage。
    - 沒指定地點、館名、範圍時，有定位就只列 10 公里內；範圍內不到 5 間時補列範圍外最近的館。
    - 交通分頁（YouBike／步行／開車／大眾運輸）：前三種用 FOSSGIS 的 OSRM（`routing.openstreetmap.de`，免金鑰、可跨網域，只在打開館的詳細資訊時呼叫）算實際路線、時間和中文轉彎步驟，畫在地圖上；連不到時退回直線距離 ×1.3 估算。大眾運輸用交通部 TDX 旅運規劃（`/api/maas/routing`），經過 `relay/tdx-worker.js`（Cloudflare Worker，金鑰存在 Cloudflare 加密變數，不進 repo）；`web/config.js` 的 `transitRelay` 空著時只粗估時間，路線交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。設定步驟見 `docs/TDX大眾運輸設定步驟.md`。改了 Worker 要手動貼到 Cloudflare 重新部署。
    - 留言用 giscus：`web/config.js` 的 `repoId`、`categoryId` 空著時不顯示。

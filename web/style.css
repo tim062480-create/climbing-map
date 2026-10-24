@@ -58,6 +58,27 @@ a { color: var(--accent); }
 }
 .search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; background: var(--bg); }
 .search input::-webkit-search-cancel-button { display: none; }   /* 右邊放搜尋按鈕，不要瀏覽器自帶的 ✕ 疊在一起 */
+/* 搜尋框下拉：可選的條件、打字時符合的地區和館名 */
+.suggest {
+  position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 1200;
+  max-height: min(70vh, 520px); overflow-y: auto; padding: 8px 12px 10px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+@media (max-width: 599px) {
+  .suggest { position: fixed; left: 8px; right: 8px; top: calc(env(safe-area-inset-top) + 58px); }
+}
+.suggest h4 { margin: 8px 0 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.suggest h4:first-child { margin-top: 0; }
+.suggest .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.suggest .opt {
+  font: inherit; font-size: 14px; padding: 4px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--text);
+}
+.suggest .opt[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.suggest .hit { display: block; width: 100%; text-align: left; font: inherit; padding: 8px 4px; border: 0; border-bottom: 1px solid var(--line);
+  background: none; color: var(--text); cursor: pointer; }
+.suggest .hit small { color: var(--muted); margin-left: 6px; }
+.suggest .done { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; color: var(--muted); }
 .search-btn {
   position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
   width: 36px; height: 32px; border: 0; border-radius: 999px; cursor: pointer;

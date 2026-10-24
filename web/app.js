@@ -15,7 +15,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
-  me: null, geoError: "", listed: [], detailId: null, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -80,8 +80,14 @@ async function init() {
   buildPlaceIndex();
   $("q").value = new URLSearchParams(location.search).get("q") ?? loadQuery();
   let timer;
-  $("q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(onQueryChange, 200); });
-  $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); $("q").blur(); });
+  $("q").addEventListener("input", () => { state.typing = true; renderSuggest(); clearTimeout(timer); timer = setTimeout(onQueryChange, 200); });
+  $("q").addEventListener("focus", openSuggest);
+  $("q").addEventListener("click", openSuggest);
+  $("q").addEventListener("keydown", (e) => { if (e.key === "Escape") { closeSuggest(); $("q").blur(); } });
+  $("suggest").addEventListener("mousedown", (e) => e.preventDefault());   // 點選項時不要讓搜尋框失去焦點
+  $("suggest").addEventListener("click", onSuggestClick);
+  document.addEventListener("pointerdown", (e) => { if (!$("searchForm").contains(e.target)) closeSuggest(); });
+  $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); closeSuggest(); $("q").blur(); });
   $("chips").addEventListener("click", onChipClick);
   $("locate").addEventListener("click", locate);
   $("handle").addEventListener("click", () => $("panel").classList.toggle("expanded"));
@@ -105,6 +111,19 @@ const CITY_ORDER = ["基隆市", "臺北市", "新北市", "桃園市", "新竹�
   "嘉義市", "嘉義縣", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"];
 const SUGGESTIONS = ["最近 5 間", "最便宜", "300 以下", "台北", "台中", "高雄"];
 const STOPWORDS = /抱石館|攀岩館|攀岩場|抱石|攀岩|岩館|我想|想要|幫我|找|的|在|有|和|跟|與|及|或|以及/g;
+// 搜尋框認得的關鍵字（解析和下拉選單共用）
+const Q_RE = {
+  budget: /(?:預算|低於|不超過|[<≤])\s*(\d{2,4})\s*(?:元|塊)?|(\d{2,4})\s*(?:元|塊)?\s*(?:以下|以內|內|有找)/g,
+  km: /(\d+(?:\.\d+)?)\s*(?:公里|km|k)(?:以內|內)?/gi,
+  anywhere: /全臺|全國|不限距離|不限範圍|不限/g,
+  limit: /前\s*(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)?|(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)/g,
+  cheap: /最?便宜|價格|低價|划算|省錢/g,
+  near: /最近|附近|離我|距離/g,
+  lead: /上攀|先鋒|綁繩|top\s*rope|lead/gi,
+  open: /營業中|有開/g,
+  day: /全日|整天|不限時|包日/g,
+  osm: /osm/gi,
+};
 const CN_NUM = { 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 const toNum = (s) => (/^\d+$/.test(s) ? Number(s) : s.length === 2 && s[0] === "十" ? 10 + CN_NUM[s[1]] : s.length === 2 && s[1] === "十" ? CN_NUM[s[0]] * 10 : CN_NUM[s] || 0);
 
@@ -132,20 +151,16 @@ function parseQuery(q) {
   const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openOnly: false, osm: false, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
-  take(/(?:預算|低於|不超過|[<≤])\s*(\d{2,4})\s*(?:元|塊)?|(\d{2,4})\s*(?:元|塊)?\s*(?:以下|以內|內|有找)/g, (raw, a, b) => {
-    c.budget = Number(a || b); c.chips.push({ raw, label: `$${c.budget} 以下` });
-  });
-  take(/(\d+(?:\.\d+)?)\s*(?:公里|km|k)(?:以內|內)?/gi, (raw, n) => { c.radius = Number(n); c.chips.push({ raw, label: `${n} 公里內` }); });
-  take(/全臺|全國|不限距離|不限範圍|不限/g, (raw) => { c.radius = 0; c.chips.push({ raw, label: "不限距離" }); });
-  take(/前\s*(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)?|(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)/g, (raw, a, b) => {
-    c.limit = toNum(a || b); if (c.limit) c.chips.push({ raw, label: `前 ${c.limit} 間` });
-  });
-  take(/最?便宜|價格|低價|划算|省錢/g, (raw) => { c.sort = "price"; c.chips.push({ raw, label: "價格低到高" }); });
-  take(/最近|附近|離我|距離/g, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
-  take(/上攀|先鋒|綁繩|top\s*rope|lead/gi, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
-  take(/營業中|有開/g, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
-  take(/全日|整天|不限時|包日/g, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
-  take(/osm/gi, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
+  take(Q_RE.budget, (raw, a, b) => { c.budget = Number(a || b); c.chips.push({ raw, label: `$${c.budget} 以下` }); });
+  take(Q_RE.km, (raw, n) => { c.radius = Number(n); c.chips.push({ raw, label: `${n} 公里內` }); });
+  take(Q_RE.anywhere, (raw) => { c.radius = 0; c.chips.push({ raw, label: "不限距離" }); });
+  take(Q_RE.limit, (raw, a, b) => { c.limit = toNum(a || b); if (c.limit) c.chips.push({ raw, label: `前 ${c.limit} 間` }); });
+  take(Q_RE.cheap, (raw) => { c.sort = "price"; c.chips.push({ raw, label: "價格低到高" }); });
+  take(Q_RE.near, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
+  take(Q_RE.lead, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
+  take(Q_RE.open, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
+  take(Q_RE.day, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
+  take(Q_RE.osm, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
   // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
   for (const p of PLACES) {
     if (!s.includes(p.key)) continue;
@@ -197,6 +212,101 @@ function onChipClick(e) {
   if (chip.dataset.add) $("q").value = `${$("q").value} ${chip.dataset.add}`.trim();
   else $("q").value = normalizeQuery($("q").value).replace(chip.dataset.raw, " ").replace(/\s+/g, " ").trim();
   onQueryChange();
+}
+
+// ---------- 搜尋框下拉選單 ----------
+// 點搜尋框：列出可以選的條件（再點一次取消，同一組只能選一個）；打字時：列出符合的地區、館名
+const toRe = (s) => new RegExp(s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
+function suggestGroups() {
+  const count = {};
+  state.gyms.filter((g) => g.status !== "已停業").forEach((g) => { count[g.city] = (count[g.city] || 0) + 1; });
+  const cities = Object.keys(count).sort((a, b) => (CITY_ORDER.indexOf(a) + 1 || 99) - (CITY_ORDER.indexOf(b) + 1 || 99));
+  return [
+    { title: "排序", one: [Q_RE.cheap, Q_RE.near], items: [
+      { label: "最便宜", on: (c) => c.sort === "price" }, { label: "最近", on: (c) => c.sort === "dist" }] },
+    { title: "預算（一次入場）", one: [Q_RE.budget], items: [200, 250, 300, 350, 400].map((n) => ({ label: `${n} 以下`, on: (c) => c.budget === n })) },
+    { title: "顯示幾間", one: [Q_RE.limit], items: [3, 5, 10].map((n) => ({ label: `前 ${n} 間`, on: (c) => c.limit === n })) },
+    { title: "距離（開定位後）", one: [Q_RE.km, Q_RE.anywhere], items: [
+      ...[3, 5, 10, 30].map((n) => ({ label: `${n} 公里`, on: (c) => !c.radiusAuto && c.radius === n })),
+      { label: "不限距離", on: (c, q) => toRe("不限").test(q) }] },
+    { title: "其他", items: [
+      { label: "營業中", re: Q_RE.open, on: (c) => c.openOnly },
+      { label: "上攀", re: Q_RE.lead, on: (c) => c.lead },
+      { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly }] },
+    // 短名稱（台北）重複時（新竹市、新竹縣）用全名
+    { title: "地區", items: cities.map((city) => {
+      const short = cities.filter((x) => x.slice(0, 2) === city.slice(0, 2)).length > 1 ? city : city.slice(0, 2);
+      return { label: short.replace("臺", "台"), count: count[city], re: new RegExp(short === city ? city : `${short}(?:${city.slice(2)})?`, "g"),
+        on: (c) => c.cities.includes(city) };
+    }) },
+  ];
+}
+
+function openSuggest() { if ($("suggest").hidden) state.typing = false; $("suggest").hidden = false; renderSuggest(); }
+function closeSuggest() { $("suggest").hidden = true; }
+
+function renderSuggest() {
+  const box = $("suggest");
+  if (box.hidden) return;
+  const raw = $("q").value;
+  const q = normalizeQuery(raw), c = parseQuery(raw);
+  // 正在打的那個字（剛從選單選完、或結尾是空白時就不算）
+  const partial = !state.typing || /\s$/.test(raw) ? "" : normalizeQuery(raw.split(/\s+/).pop() || "");
+  const groups = suggestGroups();
+  let html = "";
+
+  // 打字中：先列符合的地區、館名（點館名直接打開那間）
+  if (partial) {
+    const seen = new Set(), places = [];
+    for (const p of PLACES) {
+      const target = p.city || p.district;
+      if (!p.key.includes(partial) || seen.has(target)) continue;
+      seen.add(target);
+      const city = p.city || (state.gyms.find((g) => g.district === p.district) || {}).city;
+      places.push({ key: p.key, label: p.city ? p.city : `${p.district}（${city}）` });
+    }
+    const t = partial.toLowerCase();
+    const gyms = state.gyms.filter((g) => g.status !== "已停業" && gymText(g).includes(t)).slice(0, 6);
+    html += places.slice(0, 5).map((p) => `<button type="button" class="hit" data-replace="${esc(p.key)}">📍 ${esc(p.label)}</button>`).join("");
+    html += gyms.map((g) => `<button type="button" class="hit" data-gym="${esc(g.id)}">🧗 ${esc(g.name)}<small>${esc(g.city + (g.district || ""))}</small></button>`).join("");
+  }
+  // 打字中只列名稱符合或已選的條件；什麼都沒對到就全部列出來
+  const keywordHit = groups.some((gr) => gr.items.some((it) => normalizeQuery(it.label).includes(partial)));
+  const showAll = !partial || (!html && !keywordHit);
+  html += groups.map((gr, gi) => {
+    const items = gr.items.map((it, ii) => ({ it, ii })).filter(({ it }) => showAll || it.on(c, q) || normalizeQuery(it.label).includes(partial));
+    if (!items.length) return "";
+    return `<h4>${esc(gr.title)}</h4><div class="opts">${items.map(({ it, ii }) =>
+      `<button type="button" class="opt" data-g="${gi}" data-i="${ii}" aria-pressed="${Boolean(it.on(c, q))}">${esc(it.label)}${it.count ? ` <small>${it.count}</small>` : ""}</button>`).join("")}</div>`;
+  }).join("");
+  const n = c.chips.filter((x) => !x.unknown).length;
+  html += `<div class="done"><span>${n ? `已選 ${n} 個條件` : "可以選很多個，會疊加"}</span><span>
+    ${n ? `<button type="button" class="opt" data-clear>清除全部</button> ` : ""}<button type="button" class="opt" data-close aria-pressed="true">完成</button></span></div>`;
+  box.innerHTML = html;
+}
+
+function onSuggestClick(e) {
+  const b = e.target.closest("button");
+  if (!b) return;
+  const input = $("q");
+  state.typing = false;
+  if (b.dataset.close != null) { closeSuggest(); input.blur(); return; }
+  if (b.dataset.clear != null) { input.value = ""; onQueryChange(); renderSuggest(); return; }
+  if (b.dataset.gym) { input.value = input.value.replace(/\S*$/, "").trim(); onQueryChange(); closeSuggest(); input.blur(); openDetail(b.dataset.gym); return; }
+  if (b.dataset.replace) {
+    input.value = `${input.value.replace(/\S*$/, "")}${b.dataset.replace} `;
+  } else {
+    const gr = suggestGroups()[b.dataset.g], it = gr.items[b.dataset.i];
+    let q = normalizeQuery(input.value);
+    const c = parseQuery(q);
+    const strip = (res) => { for (const re of res) q = q.replace(re, " "); };
+    if (it.on(c, q)) strip(gr.one || [it.re]);                        // 已選 → 取消
+    else { if (gr.one) strip(gr.one); q = `${q} ${it.label}`; }        // 同一組只留一個
+    input.value = q.replace(/\s+/g, " ").trim();
+    if (matchMedia("(max-width: 599px)").matches) input.blur();       // 手機收起鍵盤，選單才看得到
+  }
+  onQueryChange();
+  renderSuggest();
 }
 
 function renderChips(c) {
