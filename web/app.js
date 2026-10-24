@@ -144,6 +144,7 @@ function parseQuery(q) {
   take(/最近|附近|離我|距離/g, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
   take(/上攀|先鋒|綁繩|top\s*rope|lead/gi, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
   take(/營業中|有開/g, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
+  take(/全日|整天|不限時|包日/g, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
   take(/osm/gi, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
   s = s.replace(STOPWORDS, " ");
 
@@ -264,7 +265,9 @@ function onPosition(pos) {
 }
 
 // ---------- 清單 ----------
-const minPrice = (g) => (g.price_min ? g.price_min.price : null);
+// 價格用 price_min（含計時，以 1 小時算）；搜尋「全日」時改用 price_day（只看一次入場的票）
+const priceOf = (g) => (state.dayOnly ? g.price_day : g.price_min) || null;
+const minPrice = (g) => (priceOf(g) ? priceOf(g).price : null);
 
 // 地點、館名、預算、類型、狀態：這幾個條件不需要定位
 function visibleGyms(c) {
@@ -289,6 +292,7 @@ const SORTERS = {
 
 function render() {
   const c = parseQuery($("q").value);
+  state.dayOnly = Boolean(c.dayOnly);
   const radiusKm = c.radius, limit = c.limit;
   const gyms = visibleGyms(c);
   const withCoord = gyms.filter((g) => g.lat != null);
@@ -334,7 +338,8 @@ function render() {
 function listItem(g, d) {
   const cls = STATUS_CLASS[g.status] || "warn";
   const first = (g.prices || [])[0];
-  const price = g.price_min ? `入場 $${g.price_min.price} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
+  const p = priceOf(g);
+  const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
   const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : ""]
     .filter(Boolean).join("・");
   return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${esc(g.name)}</div>` +

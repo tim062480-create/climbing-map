@@ -13,7 +13,8 @@
   3. 對不到的用 Nominatim 查地址：完整地址 → 去掉樓層括號 → 只到「號」→ 路名＋行政區 → 館名
      （Nominatim 規定每秒最多 1 次，要帶 User-Agent）
   4. OSM 有、我們沒列的地點放進 osm_unmatched，網頁上用灰色標示「未人工確認」
-  5. 算出每間館的 price_min（成人一次入場的最低價，含星光、離峰時段），網頁的價格排序和預算篩選用
+  5. 算出每間館的 price_min（成人入場最低價，含星光、離峰時段和計時 1 小時）和 price_day（不含計時），
+     網頁的價格排序和預算篩選用
 
 只用 Python 內建套件。容器／本機連不到 OSM 時會保留上一次 gyms.json 的座標。
 用法：python src/enrich.py
@@ -198,20 +199,23 @@ def geocode(gym):
     return None
 
 
-# 不算「一次入場」的價格項目：租借、課程、會費、學生／兒童票、計時、套票、起價
-NOT_ENTRY = re.compile(r"租|體驗|課|入會|會費|陪同|學生|兒童|幼兒|計時|起價|三個月|包場|持照")
-PER_HOUR = re.compile(r"／\s*小?時|/\s*h", re.I)   # 價格寫「50／小時」的是計時，不是一次入場
+# 不算「入場」的價格項目：租借、課程、會費、學生／兒童票、套票、起價
+NOT_ENTRY = re.compile(r"租|體驗|課|入會|會費|陪同|學生|兒童|幼兒|起價|三個月|包場|持照")
+PER_HOUR = re.compile(r"／\s*小?時|/\s*h", re.I)   # 價格寫「50／小時」的是計時
 
 
-def price_min(gym):
-    """成人一次入場的最低價（含星光、離峰時段）→ {"price": 數字, "item": 項目名}；沒有就回傳 None"""
+def price_min(gym, hourly=True):
+    """成人入場的最低價（含星光、離峰時段）→ {"price": 數字, "item": 項目名, "per_hour": 是否計時}；沒有就回傳 None
+    hourly=True 時計時收費也算（以 1 小時計），所以永和「50／小時」會比別館的全日票便宜；False 只看一次入場的票"""
     best = None
     for p in gym.get("prices") or []:
-        if NOT_ENTRY.search(p.get("item", "")) or PER_HOUR.search(str(p.get("price", ""))):
+        item, price = p.get("item", ""), str(p.get("price", ""))
+        per_hour = bool(PER_HOUR.search(price)) or "計時" in item
+        if NOT_ENTRY.search(item) or (per_hour and not hourly):
             continue
-        m = re.search(r"\d+", str(p.get("price", "")))   # 「250–300」「約 160–190」取前面較低的數字
+        m = re.search(r"\d+", price)   # 「250–300」「約 160–190」取前面較低的數字
         if m and (best is None or int(m.group()) < best["price"]):
-            best = {"price": int(m.group()), "item": p["item"]}
+            best = {"price": int(m.group()), "item": item, "per_hour": per_hour}
     return best
 
 
@@ -263,7 +267,8 @@ def main():
                         g[k] = old[g["id"]][k]
             else:
                 g.update({"lat": None, "lng": None, "coord_source": "none"})
-        g["price_min"] = price_min(g)
+        g["price_min"] = price_min(g)                  # 含計時（1 小時）
+        g["price_day"] = price_min(g, hourly=False)    # 只看一次入場的票，搜尋「全日」時用
         gyms.append(g)
         print(f"{g['id']:24s} {g.get('coord_source')}")
 

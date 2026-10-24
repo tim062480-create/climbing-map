@@ -26,7 +26,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 讀 seed 和 sources.csv，先用 Overpass 比對 OSM 的館名，對不到再用 Nominatim 查地址（門牌 → 地址括號裡的地標 → 路段 → 地標 → 館名）。
    - 只有縣市或行政區的地址不拿來定位。
    - 輸出 `data/processed/gyms.json` 和 `docs/enrich_report.md`。座標可信度看 `coord_source`。
-   - `price_min`：成人一次入場的最低價（含星光、離峰時段；排除租借、課程、學生票、計時、起價），網頁的價格排序和預算篩選用。
+   - `price_min`：成人入場的最低價（含星光、離峰時段和計時 1 小時，`per_hour` 標示計時；排除租借、課程、學生票、起價），`price_day` 不含計時。網頁的價格排序和預算篩選用。
    - 連不到 OSM 時沿用上一次的座標。
 2. `src/youbike_near.py`：
    - 用全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API）和臺北市開放資料，記錄每館 1 公里內最近 4 站的車數。
@@ -36,7 +36,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 4. 網頁（`index.html`、`web/app.js`）：
    - 沒有建置步驟，Leaflet 和 OSM 底圖從 unpkg 載入。
    - 改了 `web/` 的 JS 或 CSS，要一起改 `index.html` 裡的 `?v=日期` 版本號，不然手機可能拿到新 HTML 配舊 JS（GitHub Pages 會快取 10 分鐘）。
-   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。搜尋字串存在網址 `?q=` 和 localStorage。
+   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。搜尋字串存在網址 `?q=` 和 localStorage。
    - 沒指定地點、館名、範圍時，有定位就只列 10 公里內；範圍內不到 5 間時補列範圍外最近的館。
    - 交通時間用直線距離乘繞路係數估算，路線本身交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。
    - 留言用 giscus：`web/config.js` 的 `repoId`、`categoryId` 空著時不顯示。
