@@ -11,7 +11,11 @@
 <body>
 <header class="topbar">
   <h1>附近抱石館</h1>
-  <button id="locate" class="btn primary" type="button">📍 定位</button>
+  <form id="searchForm" class="search" role="search" autocomplete="off">
+    <input id="q" type="search" enterkeyhint="search" aria-label="搜尋抱石館"
+      placeholder="搜尋：台中 300 以下 最便宜、最近 5 間、原岩…">
+  </form>
+  <button id="locate" class="btn primary" type="button" aria-label="定位">📍<span class="label"> 定位</span></button>
 </header>
 
 <div class="layout">
@@ -21,51 +25,18 @@
     <div class="handle" id="handle" aria-hidden="true"></div>
     <div id="status" class="status">正在載入資料…</div>
 
-    <details id="filterBox" class="filter-box" open>
-    <summary id="filterSummary">篩選與排序</summary>
-    <div class="filters">
-      <label>縣市
-        <select id="city"><option value="">全部</option></select>
-      </label>
-      <label>範圍
-        <select id="radius">
-          <option value="3">3 公里</option>
-          <option value="5">5 公里</option>
-          <option value="10" selected>10 公里</option>
-          <option value="30">30 公里</option>
-          <option value="0">不限</option>
-        </select>
-      </label>
-      <label>預算
-        <select id="budget">
-          <option value="0">不限</option>
-          <option value="200">200 以下</option>
-          <option value="250">250 以下</option>
-          <option value="300">300 以下</option>
-          <option value="350">350 以下</option>
-          <option value="400">400 以下</option>
-        </select>
-      </label>
-      <label>排序
-        <select id="sort">
-          <option value="dist">距離近到遠</option>
-          <option value="price">價格低到高</option>
-          <option value="city">依縣市</option>
-        </select>
-      </label>
-      <label>顯示
-        <select id="limit">
-          <option value="0">全部</option>
-          <option value="5">前 5 間</option>
-          <option value="10">前 10 間</option>
-        </select>
-      </label>
-      <label><input type="checkbox" id="boulderOnly" checked> 只看有抱石</label>
-      <label><input type="checkbox" id="showUnverified" checked> 顯示待確認</label>
-      <label><input type="checkbox" id="showOsm"> OSM 上其他攀岩地點（未確認）</label>
-      <button id="resetFilters" class="linklike" type="button" hidden>清除條件</button>
-    </div>
-    <p class="note filter-note">價格是成人一次入場的最低價（含星光、離峰時段），不含租鞋。</p>
+    <div id="chips" class="chips" aria-live="polite"></div>
+    <details class="search-help">
+      <summary>可以搜什麼？</summary>
+      <ul>
+        <li><b>地點</b>：縣市或行政區，例如「台北」「新竹」「內湖」「左營」</li>
+        <li><b>館名</b>：例如「原岩」「角」「iClimb」</li>
+        <li><b>預算</b>：「300 以下」「250 內」</li>
+        <li><b>排序</b>：「最便宜」依價格，「最近」「附近」依距離</li>
+        <li><b>間數、範圍</b>：「5 間」「前 10」「3 公里」</li>
+        <li><b>類型、狀態</b>：「上攀」（也列只有上攀的館）、「營業中」（不列待確認）、「OSM」（顯示 OSM 上其他攀岩地點）</li>
+      </ul>
+      <p>價格是成人一次入場的最低價（含星光、離峰時段），不含租鞋。條件可以混著打，空白隔開。</p>
     </details>
 
     <ul id="list" class="list"></ul>

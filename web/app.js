@@ -15,7 +15,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
-  me: null, geoError: "", firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", listed: [], firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -77,54 +77,139 @@ async function init() {
     L.circleMarker([p.lat, p.lng], { radius: 5, color: "#868e96", fillOpacity: 0.6, weight: 1 })
       .bindPopup(`<b>${esc(p.name || "（無名稱）")}</b><br>OpenStreetMap 上的攀岩地點，未人工確認<br><a href="${esc(p.url)}" target="_blank" rel="noopener">OSM</a>`)));
 
-  fillCityOptions();
-  loadFilters();
-  if (matchMedia("(max-width: 899px)").matches) $("filterBox").open = false;   // 手機上先收起來，清單才看得到
-  FILTER_IDS.forEach((id) => $(id).addEventListener("change", () => { saveFilters(); render(); }));
-  $("resetFilters").addEventListener("click", () => { setFilters(FILTER_DEFAULTS); saveFilters(); render(); });
+  buildPlaceIndex();
+  $("q").value = new URLSearchParams(location.search).get("q") ?? loadQuery();
+  let timer;
+  $("q").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(onQueryChange, 200); });
+  $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); $("q").blur(); });
+  $("chips").addEventListener("click", onChipClick);
   $("locate").addEventListener("click", locate);
   $("handle").addEventListener("click", () => $("panel").classList.toggle("expanded"));
   $("closeDetail").addEventListener("click", closeDetail);
   window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id) openDetail(id, false); });
 
   render();
+  if (searchesPlace(parseQuery($("q").value))) fitToGyms(state.listed);
   locate();
   if (location.hash.length > 1) openDetail(location.hash.slice(1), false);
 }
 
-// ---------- 搜尋條件（可以疊加；記在這台裝置的瀏覽器裡，下次打開沿用） ----------
-const FILTER_DEFAULTS = { city: "", radius: "10", budget: "0", sort: "dist", limit: "0", boulderOnly: true, showUnverified: true, showOsm: false };
-const FILTER_IDS = Object.keys(FILTER_DEFAULTS);
-const FILTER_KEY = "climbing-map:filters";
-// 縣市選單由北到南排
+const searchesPlace = (c) => c.cities.length || c.districts.length || c.names.length;
+
+// ---------- 搜尋框 ----------
+// 一個框打所有條件，例如「台中 300 以下 最便宜」「最近 5 間」「內湖」「原岩」「上攀 3 公里」。
+// 搜尋字串記在網址 ?q=（可以分享）和這台裝置的瀏覽器裡（下次打開沿用）。
+const QUERY_KEY = "climbing-map:q";
+const DEFAULT_RADIUS_KM = 10;   // 沒指定地點、館名、範圍時，有定位就先看附近這麼遠
 const CITY_ORDER = ["基隆市", "臺北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣", "臺中市", "彰化縣", "南投縣", "雲林縣",
   "嘉義市", "嘉義縣", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"];
+const SUGGESTIONS = ["最近 5 間", "最便宜", "300 以下", "台北", "台中", "高雄"];
+const STOPWORDS = /抱石館|攀岩館|攀岩場|抱石|攀岩|岩館|我想|想要|幫我|找|的|在|有|和|跟|與|及|或|以及/g;
+const CN_NUM = { 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
+const toNum = (s) => (/^\d+$/.test(s) ? Number(s) : s.length === 2 && s[0] === "十" ? 10 + CN_NUM[s[1]] : s.length === 2 && s[1] === "十" ? CN_NUM[s[0]] * 10 : CN_NUM[s] || 0);
 
-function fillCityOptions() {
-  const count = {};
-  state.gyms.filter((g) => g.status !== "已停業").forEach((g) => { count[g.city] = (count[g.city] || 0) + 1; });
-  const cities = Object.keys(count).sort((a, b) => (CITY_ORDER.indexOf(a) + 1 || 99) - (CITY_ORDER.indexOf(b) + 1 || 99));
-  $("city").insertAdjacentHTML("beforeend", cities.map((c) => `<option value="${esc(c)}">${esc(c)}（${count[c]}）</option>`).join(""));
-}
-
-function getFilters() {
-  return Object.fromEntries(FILTER_IDS.map((id) => [id, $(id).type === "checkbox" ? $(id).checked : $(id).value]));
-}
-
-function setFilters(f) {
-  for (const id of FILTER_IDS) {
-    if (!(id in f)) continue;
-    if ($(id).type === "checkbox") $(id).checked = Boolean(f[id]);
-    else if ([...$(id).options].some((o) => o.value === String(f[id]))) $(id).value = String(f[id]);
+let PLACES = [];   // [{ key: 比對用的字, city?, district? }]，長的先比
+function buildPlaceIndex() {
+  const add = (key, v) => { if (key.length >= 2) PLACES.push({ key, ...v }); };
+  CITY_ORDER.forEach((c) => { add(c, { city: c }); add(c.slice(0, 2), { city: c }); });
+  for (const g of state.gyms) {
+    if (!g.district) continue;
+    add(g.district, { district: g.district });
+    add(g.district.replace(/[區市鄉鎮]$/, ""), { district: g.district });
   }
+  const seen = new Set();
+  PLACES = PLACES.filter((p) => { const k = p.key + (p.city || p.district); return !seen.has(k) && seen.add(k); })
+    .sort((a, b) => b.key.length - a.key.length);
 }
 
-function loadFilters() {
-  try { setFilters(JSON.parse(localStorage.getItem(FILTER_KEY)) || {}); } catch { /* 沒有或讀不到就用預設值 */ }
+const normalizeQuery = (q) => q
+  .replace(/[！-～]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))   // 全形英數轉半形
+  .replace(/台/g, "臺").replace(/　/g, " ").trim();
+
+// 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
+function parseQuery(q) {
+  let s = normalizeQuery(q);
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openOnly: false, osm: false, chips: [] };
+  const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
+
+  take(/(?:預算|低於|不超過|[<≤])\s*(\d{2,4})\s*(?:元|塊)?|(\d{2,4})\s*(?:元|塊)?\s*(?:以下|以內|內|有找)/g, (raw, a, b) => {
+    c.budget = Number(a || b); c.chips.push({ raw, label: `$${c.budget} 以下` });
+  });
+  take(/(\d+(?:\.\d+)?)\s*(?:公里|km|k)(?:以內|內)?/gi, (raw, n) => { c.radius = Number(n); c.chips.push({ raw, label: `${n} 公里內` }); });
+  take(/全臺|全國|不限距離|不限範圍|不限/g, (raw) => { c.radius = 0; c.chips.push({ raw, label: "不限距離" }); });
+  take(/前\s*(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)?|(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)/g, (raw, a, b) => {
+    c.limit = toNum(a || b); if (c.limit) c.chips.push({ raw, label: `前 ${c.limit} 間` });
+  });
+  take(/最?便宜|價格|低價|划算|省錢/g, (raw) => { c.sort = "price"; c.chips.push({ raw, label: "價格低到高" }); });
+  take(/最近|附近|離我|距離/g, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
+  take(/上攀|先鋒|綁繩|top\s*rope|lead/gi, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
+  take(/營業中|有開/g, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
+  take(/osm/gi, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
+  s = s.replace(STOPWORDS, " ");
+
+  for (let word of s.split(/[\s,，、;；/]+/).filter(Boolean)) {
+    // 地名可以黏在一起打，例如「臺中西屯」，長的地名先比
+    for (const p of PLACES) {
+      if (!word.includes(p.key)) continue;
+      word = word.replace(p.key, " ");
+      if (p.city) { const all = PLACES.filter((x) => x.key === p.key && x.city).map((x) => x.city); c.cities.push(...all); c.chips.push({ raw: p.key, label: `📍 ${all.join("、")}` }); }
+      else { c.districts.push(p.district); c.chips.push({ raw: p.key, label: `📍 ${p.district}` }); }
+    }
+    for (const rest of word.split(" ").filter(Boolean)) {
+      const t = rest.toLowerCase();
+      if (state.gyms.some((g) => gymText(g).includes(t))) { c.names.push(t); c.chips.push({ raw: rest, label: `館名含「${rest}」` }); }
+      else c.chips.push({ raw: rest, label: `看不懂「${rest}」`, unknown: true });
+    }
+  }
+  c.cities = [...new Set(c.cities)];
+  // 沒指定地點、館名或範圍時，有定位就先看附近
+  c.radiusAuto = c.radius == null && !c.cities.length && !c.districts.length && !c.names.length;
+  if (c.radius == null) c.radius = c.radiusAuto ? DEFAULT_RADIUS_KM : 0;
+  return c;
 }
 
-function saveFilters() {
-  try { localStorage.setItem(FILTER_KEY, JSON.stringify(getFilters())); } catch { /* 無痕模式等存不了就算了 */ }
+const gymText = (g) => [g.name, g.name_en, g.brand, g.address].join(" ").replace(/台/g, "臺").toLowerCase();
+
+function loadQuery() {
+  try { return localStorage.getItem(QUERY_KEY) || ""; } catch { return ""; }
+}
+
+function onQueryChange() {
+  const q = $("q").value.trim();
+  try { localStorage.setItem(QUERY_KEY, q); } catch { /* 無痕模式等存不了就算了 */ }
+  const url = new URL(location.href);
+  q ? url.searchParams.set("q", q) : url.searchParams.delete("q");
+  history.replaceState(null, "", url);
+  render();
+  if (searchesPlace(parseQuery(q))) fitToGyms(state.listed);   // 搜了地點或館名，地圖移到搜尋結果
+}
+
+function fitToGyms(gyms) {
+  if (!gyms.length) return;
+  const panel = $("panel");
+  const covered = getComputedStyle(panel).position === "absolute" ? panel.offsetHeight : 0;
+  map.stop();
+  map.fitBounds(L.latLngBounds(gyms.map((g) => [g.lat, g.lng])), { paddingTopLeft: [30, 30], paddingBottomRight: [30, covered + 30], maxZoom: 15 });
+}
+
+function onChipClick(e) {
+  const chip = e.target.closest("[data-raw], [data-add]");
+  if (!chip) return;
+  if (chip.dataset.add) $("q").value = `${$("q").value} ${chip.dataset.add}`.trim();
+  else $("q").value = normalizeQuery($("q").value).replace(chip.dataset.raw, " ").replace(/\s+/g, " ").trim();
+  onQueryChange();
+}
+
+function renderChips(c) {
+  const chips = c.chips.map((x) => `<span class="chip${x.unknown ? " unknown" : ""}">${esc(x.label)}` +
+    `<button type="button" data-raw="${esc(x.raw)}" aria-label="拿掉這個條件">✕</button></span>`);
+  if (state.me && c.radiusAuto) {
+    chips.push(`<span class="chip">附近 ${DEFAULT_RADIUS_KM} 公里<button type="button" data-add="不限距離" aria-label="不限距離">✕</button></span>`);
+  }
+  if (!c.chips.length) {
+    chips.push(...SUGGESTIONS.map((s) => `<button type="button" class="chip suggest" data-add="${esc(s)}">${esc(s)}</button>`));
+  }
+  $("chips").innerHTML = chips.join("");
 }
 
 function markerStyle(g) {
@@ -157,7 +242,7 @@ function locate() {
 
 // 把地圖移到自己的位置，範圍跟清單的距離篩選一致；手機上扣掉下方清單蓋住的高度，藍點才不會被擋住
 function centerOnMe() {
-  const r = Number($("radius").value) || 10;
+  const r = parseQuery($("q").value).radius || DEFAULT_RADIUS_KM;
   const panel = $("panel");
   const covered = panel.offsetParent && getComputedStyle(panel).position === "absolute" ? panel.offsetHeight : 0;
   const go = () => map.fitBounds(L.latLng(state.me).toBounds(r * 2000), { paddingBottomRight: [0, covered] });
@@ -173,7 +258,7 @@ function onPosition(pos) {
   meCircle.setLatLng(state.me).setRadius(state.me.acc).addTo(map);
   if (state.firstFix) {
     state.firstFix = false;
-    centerOnMe();
+    if (!searchesPlace(parseQuery($("q").value))) centerOnMe();   // 正在看搜尋的地點時不要跳走
   }
   render();
 }
@@ -181,15 +266,16 @@ function onPosition(pos) {
 // ---------- 清單 ----------
 const minPrice = (g) => (g.price_min ? g.price_min.price : null);
 
-// 縣市、預算、只看有抱石、顯示待確認：這幾個條件不需要定位
-function visibleGyms(f) {
-  const budget = Number(f.budget);
+// 地點、館名、預算、類型、狀態：這幾個條件不需要定位
+function visibleGyms(c) {
   return state.gyms.filter((g) =>
     g.status !== "已停業" &&
-    (!f.boulderOnly || hasBoulder(g)) &&
-    (f.showUnverified || g.status === "營業中") &&
-    (!f.city || g.city === f.city) &&
-    (!budget || (minPrice(g) != null && minPrice(g) <= budget)));
+    (c.lead || hasBoulder(g)) &&
+    (!c.openOnly || g.status === "營業中") &&
+    (!c.cities.length || c.cities.includes(g.city)) &&
+    (!c.districts.length || c.districts.includes(g.district)) &&
+    c.names.every((t) => gymText(g).includes(t)) &&
+    (!c.budget || (minPrice(g) != null && minPrice(g) <= c.budget)));
 }
 
 const byName = (a, b) => a.g.name.localeCompare(b.g.name, "zh-Hant");
@@ -202,12 +288,12 @@ const SORTERS = {
 };
 
 function render() {
-  const f = getFilters();
-  const radiusKm = Number(f.radius), limit = Number(f.limit);
-  const gyms = visibleGyms(f);
+  const c = parseQuery($("q").value);
+  const radiusKm = c.radius, limit = c.limit;
+  const gyms = visibleGyms(c);
   const withCoord = gyms.filter((g) => g.lat != null);
   let shown = withCoord.map((g) => ({ g, d: state.me ? distM(state.me, g) : null }));
-  const sortBy = f.sort === "dist" && !state.me ? "city" : f.sort;   // 還沒定位就先依縣市
+  const sortBy = c.sort === "price" ? "price" : state.me ? "dist" : "city";   // 預設有定位依距離，沒定位依縣市
   shown.sort(SORTERS[sortBy]);
   let outside = [];   // 範圍內太少時，補列範圍外最近的館（一樣要符合其他條件）
   if (state.me && radiusKm > 0) {
@@ -219,13 +305,12 @@ function render() {
     shown = inRange;
   }
   if (limit) shown = shown.slice(0, limit);
-  const changed = FILTER_IDS.filter((id) => String(f[id]) !== String(FILTER_DEFAULTS[id])).length;
-  $("resetFilters").hidden = !changed;
-  $("filterSummary").textContent = changed ? `篩選與排序（改了 ${changed} 項）` : "篩選與排序";
+  state.listed = shown.map((x) => x.g);
+  renderChips(c);
 
   const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
-  $("showOsm").checked ? state.osmLayer.addTo(map) : state.osmLayer.remove();
+  c.osm ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
     `<li class="sub">沒有符合條件的館。</li>`) +
@@ -235,17 +320,14 @@ function render() {
   $("nocoordList").innerHTML = noCoord.map((g) => listItem(g, null)).join("");
   document.querySelectorAll(".list li[data-id]").forEach((li) => li.addEventListener("click", () => openDetail(li.dataset.id)));
 
-  const conds = [f.city, Number(f.budget) ? `${f.budget} 元以下` : "", limit ? `前 ${limit} 間` : "",
-    { dist: "", price: "價格低到高", city: "" }[f.sort]].filter(Boolean);
-  const condText = conds.length ? `（${conds.join("、")}）` : "";
   if (state.me) {
-    const where = radiusKm > 0 ? `${radiusKm} 公里內` : "符合條件";
+    const where = radiusKm > 0 ? `${radiusKm} 公里內有` : "找到";
     const more = outside.length ? `，另列範圍外最近 ${outside.length} 間` : "";
-    setStatus(`${where}有 ${shown.length} 間${condText}${more}（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
+    setStatus(`${where} ${shown.length} 間${more}（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
   } else if (state.geoError) {
-    setStatus(`${state.geoError}，無法依距離排序。共 ${shown.length} 間${condText}`, true);
+    setStatus(`${state.geoError}，無法依距離排序。找到 ${shown.length} 間`, true);
   } else {
-    setStatus(`共 ${shown.length} 間${condText}；開啟定位後可以依距離排序。`);
+    setStatus(`找到 ${shown.length} 間；開啟定位後可以依距離排序。`);
   }
 }
 
