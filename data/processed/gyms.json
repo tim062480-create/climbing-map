@@ -1,8 +1,8 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-24 14:54",
+ "generated": "2026-10-24 16:33",
  "checked": "2026-10-24",
- "osm_ok": false,
+ "osm_ok": true,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -223,6 +223,81 @@
    "title": "Yelp：Climbing in Taiwan",
    "url": "https://www.yelp.com/search?cflt=climbing&find_loc=Taipei",
    "published": "2026-06"
+  },
+  "S45": {
+   "title": "原岩攀岩館官網：萬華店價目表",
+   "url": "https://tupclimbing.tw/pricing/84",
+   "published": "官網（2026-10-24 讀取，價目表未標生效日期）"
+  },
+  "S46": {
+   "title": "原岩攀岩館官網：南港店價目表",
+   "url": "https://tupclimbing.tw/pricing/86",
+   "published": "官網（2026-10-24 讀取，價目表未標生效日期）"
+  },
+  "S47": {
+   "title": "原岩攀岩館官網：中和店價目表",
+   "url": "https://tupclimbing.tw/pricing/83",
+   "published": "官網（2026-10-24 讀取，價目表未標生效日期）"
+  },
+  "S48": {
+   "title": "原岩攀岩館官網：新店店價目表",
+   "url": "https://tupclimbing.tw/pricing/87",
+   "published": "官網（2026-10-24 讀取，價目表未標生效日期）"
+  },
+  "S49": {
+   "title": "原岩攀岩館官網：明德店價目表",
+   "url": "https://tupclimbing.tw/pricing/111",
+   "published": "官網（2026-10-24 讀取，價目表未標生效日期）"
+  },
+  "S50": {
+   "title": "原岩攀岩館官網：原岩 A19 店結束營業公告",
+   "url": "https://tupclimbing.tw/news/announcement/584",
+   "published": "2026-07-23"
+  },
+  "S51": {
+   "title": "Twosevenths：Taiwan's Best Climbing Gyms（2026-10-24 重讀）",
+   "url": "https://www.twosevenths.com/en/indoors/rockclimbing-taiwan-fun/",
+   "published": "2024-04 發布，2025-12-19 更新"
+  },
+  "S52": {
+   "title": "Twosevenths：Taipei Rock Climbing Gyms（2026-10-24 重讀）",
+   "url": "https://www.twosevenths.com/en/indoors/rockclimbing-taipei-fun/",
+   "published": "2023-01 發布，2026-10-01 更新"
+  },
+  "S53": {
+   "title": "Twosevenths：Rock Climbing in Kaohsiung（2026-10-24 重讀）",
+   "url": "https://www.twosevenths.com/en/indoors/rockclimbing-kaohsiung-fun/",
+   "published": "2022-09 發布，2026-10-13 更新"
+  },
+  "S54": {
+   "title": "Twosevenths：Taichung Rock Climbing（2026-10-24 重讀）",
+   "url": "https://www.twosevenths.com/en/indoors/rockclimbing-taichung-fun/",
+   "published": "2020-06 發布，2026-08-05 更新"
+  },
+  "S55": {
+   "title": "轟菌體能：全台各地攀岩館及票價一覽（2026-10-24 重讀）",
+   "url": "https://shenlee799.com/climbinggyms-taiwan/",
+   "published": "2022-03-14 發布（內含到 2024-11 的停業註記；票價常並列新舊兩個數字）"
+  },
+  "S56": {
+   "title": "輕旅行：北部 10 間抱石攀岩館推薦（2026-10-24 重讀）",
+   "url": "https://travel.yam.com/article/122086",
+   "published": "最後更新 2026-01-26"
+  },
+  "S57": {
+   "title": "double8-Y17 岩究所攀岩館 預約頁：double8-Y17 岩究所攀岩館",
+   "url": "https://double8-y17.rezio.shop/en-US",
+   "published": "官方預約頁（2026-10-24 讀取）"
+  },
+  "S58": {
+   "title": "double8 大稻埕岩究所 預約頁：double8 大稻埕岩究所攀岩館",
+   "url": "https://double8.rezio.shop/en-US",
+   "published": "官方預約頁（2026-10-24 讀取）"
+  },
+  "S59": {
+   "title": "Twosevenths：Y17 Climbing Gym Review",
+   "url": "https://www.twosevenths.com/en/indoors/rockclimbing-taipei-y17/",
+   "published": "2022-02 發布，2026-06-30 更新"
   }
  },
  "gyms": [
@@ -241,13 +316,37 @@
    "hours": "平日 10:00–23:00；週末 09:00–21:00",
    "prices": [
     {
-     "item": "單次入場（平日）",
-     "price": "250–350",
-     "note": "依時段不同"
+     "item": "平日 10:00–12:00",
+     "price": "250"
     },
     {
-     "item": "單次入場（假日）",
+     "item": "平日 12:00–18:00",
      "price": "350"
+    },
+    {
+     "item": "平日 18:00–20:30",
+     "price": "400"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "250"
+    },
+    {
+     "item": "假日 09:00–18:30",
+     "price": "400"
+    },
+    {
+     "item": "假日星光 18:30–21:00",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    },
+    {
+     "item": "抱石體驗 50 分鐘",
+     "price": "700–900",
+     "note": "依人數，3 人以上每人 700"
     }
    ],
    "features": "岩牆採無主螺絲孔新工法；平衡牆高度較低，怕高的人也適合",
@@ -264,30 +363,32 @@
    ],
    "youtube": [
     {
-     "id": "rLSJcMAB1WI",
-     "title": "Corner Gym 中山（角 • 攀岩館 - 中山）"
-    },
-    {
      "id": "YcOZcCRUSJQ",
      "title": "角 · 攀岩館 - 黃色V4上野宇宙"
     }
    ],
    "src": {
     "address": [
-     "S03"
+     "S03",
+     "S52"
     ],
     "hours": [
-     "S03"
+     "S03",
+     "S52"
     ],
     "prices": [
-     "S03"
+     "S52"
     ],
     "features": [
      "S03",
      "S15"
+    ],
+    "phone": [
+     "S56"
     ]
    },
    "verify": [],
+   "phone": "02-2521-8233",
    "lat": 25.0569486,
    "lng": 121.5225824,
    "coord_source": "osm",
@@ -306,7 +407,14 @@
      "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
      "phone": "+886 225218233"
     },
-    "dist_to_address_m": 366
+    "dist_to_address_m": 249
+   },
+   "coord_check": {
+    "lat": 25.0591497,
+    "lng": 121.5230267,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市中山區中山北路二段",
+    "coord_match": "中山北路二段, 中山北路婚紗街, 聚盛里, 中山區, 南西商圈, 臺北市, 104418, 臺灣"
    }
   },
   {
@@ -325,9 +433,37 @@
    "hours": "週一至週五 10:00–23:00；週六、日 09:00–21:00",
    "prices": [
     {
-     "item": "單次入場",
-     "price": "約 300–350",
-     "note": "與中山店同品牌，價格以中山店資料推估，待確認"
+     "item": "平日 10:00–12:00",
+     "price": "250"
+    },
+    {
+     "item": "平日 12:00–18:00",
+     "price": "350"
+    },
+    {
+     "item": "平日 18:00–20:30",
+     "price": "400"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "250"
+    },
+    {
+     "item": "假日 09:00–18:30",
+     "price": "400"
+    },
+    {
+     "item": "假日星光 18:30–21:00",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    },
+    {
+     "item": "抱石體驗 50 分鐘",
+     "price": "700–900",
+     "note": "依人數，3 人以上每人 700"
     }
    ],
    "links": {},
@@ -349,18 +485,24 @@
    ],
    "src": {
     "address": [
-     "S10"
+     "S10",
+     "S51",
+     "S52",
+     "S56"
     ],
     "phone": [
-     "S10"
+     "S10",
+     "S56"
     ],
     "hours": [
-     "S10"
+     "S10",
+     "S52"
+    ],
+    "prices": [
+     "S52"
     ]
    },
-   "verify": [
-    "華山店價格"
-   ],
+   "verify": [],
    "lat": null,
    "lng": null,
    "coord_source": "none"
@@ -380,20 +522,42 @@
    "phone": "02-2308-8250",
    "prices": [
     {
-     "item": "全日票（平日）",
-     "price": "約 380–420",
-     "note": "原岩各店範圍"
+     "item": "平日全天（成人）",
+     "price": "450"
     },
     {
-     "item": "全日票（假日）",
-     "price": "約 450–550",
-     "note": "原岩各店範圍；另有星光票、3 小時票"
+     "item": "平日白天 10:00–18:00",
+     "price": "350"
+    },
+    {
+     "item": "平日晚上 17:00–23:00",
+     "price": "420"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "320"
+    },
+    {
+     "item": "假日全天（成人）",
+     "price": "500"
+    },
+    {
+     "item": "假日星光 18:30–21:00",
+     "price": "320"
+    },
+    {
+     "item": "學生全天（13–24 歲）",
+     "price": "350"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
     }
    ],
    "features": "新手友善；近捷運龍山寺站",
    "links": {
-    "website": "https://tupclimbing.tw/",
-    "price_page": "https://tupclimbing.tw/zh/wanhua_rate"
+    "website": "https://tupclimbing.tw/branch/wanhua",
+    "price_page": "https://tupclimbing.tw/pricing/84"
    },
    "osm_keywords": [
     [
@@ -405,12 +569,7 @@
      "Wanhua"
     ]
    ],
-   "youtube": [
-    {
-     "id": "ru88dhcANuk",
-     "title": "抱石室內攀岩初體驗Vlog！交通方便(捷運龍山寺站)｜Coco講（影片標題未寫館名，依龍山寺站推測為萬華店）"
-    }
-   ],
+   "youtube": [],
    "src": {
     "address": [
      "S08"
@@ -419,15 +578,17 @@
      "S08"
     ],
     "prices": [
-     "S05"
+     "S45"
     ],
     "features": [
      "S05"
+    ],
+    "hours": [
+     "S08"
     ]
    },
-   "verify": [
-    "萬華店官方價目表（S42）未能讀取，價格為原岩各店範圍"
-   ],
+   "verify": [],
+   "hours": "週一至週五 10:00–23:00；週六、日 09:00–21:00",
    "lat": 25.0342851,
    "lng": 121.496916,
    "coord_source": "osm",
@@ -446,7 +607,14 @@
      "phone": "+886 2 23088250",
      "website": "https://tupclimbing.tw"
     },
-    "dist_to_address_m": 60
+    "dist_to_address_m": 309
+   },
+   "coord_check": {
+    "lat": 25.0345218,
+    "lng": 121.4999759,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市萬華區大理街",
+    "coord_match": "大理街, 富福里, 萬華區, 下崁, 臺北市, 108220, 臺灣"
    }
   },
   {
@@ -464,19 +632,42 @@
    "hours": "平日 12:00–23:00；假日 10:00–22:00",
    "prices": [
     {
-     "item": "全日票（平日）",
-     "price": "約 380–420",
-     "note": "原岩各店範圍"
+     "item": "平日全天（成人）",
+     "price": "500"
     },
     {
-     "item": "全日票（假日）",
-     "price": "約 450–550",
-     "note": "原岩各店範圍"
+     "item": "平日下午 12:00–18:00",
+     "price": "350"
+    },
+    {
+     "item": "平日晚上 17:00–23:00",
+     "price": "450"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "320"
+    },
+    {
+     "item": "假日全天（成人）",
+     "price": "550"
+    },
+    {
+     "item": "假日星光 19:30–22:00",
+     "price": "320"
+    },
+    {
+     "item": "學生全天（13–24 歲）",
+     "price": "350"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
     }
    ],
    "features": "2024 年 2 月開幕，原岩面積最大的抱石館",
    "links": {
     "website": "https://tupclimbing.tw/branch/mingde",
+    "price_page": "https://tupclimbing.tw/pricing/111",
     "facebook": "https://www.facebook.com/tupclimbing.mingde/"
    },
    "osm_keywords": [
@@ -495,37 +686,47 @@
      "S39"
     ],
     "hours": [
+     "S08",
      "S39"
     ],
     "features": [
      "S39"
     ],
     "prices": [
-     "S05"
+     "S49"
+    ],
+    "phone": [
+     "S08"
     ]
    },
-   "verify": [
-    "明德店價格"
-   ],
-   "lat": 25.1082592,
-   "lng": 121.5142392,
+   "verify": [],
+   "phone": "02-2821-9988",
+   "lat": 25.1082962,
+   "lng": 121.5142184,
    "coord_source": "osm",
    "osm": {
-    "id": "node/13417522409",
-    "url": "https://www.openstreetmap.org/node/13417522409",
+    "id": "node/13447526001",
+    "url": "https://www.openstreetmap.org/node/13447526001",
     "name": "原岩攀岩館-明德店",
     "tags": {
      "addr:city": "臺北市",
      "addr:district": "北投區",
-     "addr:full": "112臺北市北投區文林北路222號B1樓",
+     "addr:full": "臺北市北投區文林北路222號B1樓",
      "addr:housenumber": "222",
      "addr:street": "文林北路",
-     "fee": "yes",
-     "leisure": "sports_centre",
-     "opening_hours": "Mo-Fr 12:00-23:00",
-     "sport": "climbing"
+     "leisure": "fitness_centre",
+     "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 10:00-22:00",
+     "phone": "+886 2 28219988",
+     "website": "https://www.tupclimbing.tw/"
     },
-    "dist_to_address_m": 515
+    "dist_to_address_m": 102
+   },
+   "coord_check": {
+    "lat": 25.1087094,
+    "lng": 121.5133136,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市北投區文林北路",
+    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112051, 臺灣"
    }
   },
   {
@@ -543,18 +744,41 @@
    "phone": "02-2651-9555",
    "prices": [
     {
-     "item": "全日票（平日）",
-     "price": "約 380–420",
-     "note": "原岩各店範圍"
+     "item": "平日全天（成人）",
+     "price": "450"
     },
     {
-     "item": "全日票（假日）",
-     "price": "約 450–550",
-     "note": "原岩各店範圍"
+     "item": "平日下午 12:00–18:00",
+     "price": "280"
+    },
+    {
+     "item": "平日晚上 17:00–23:00",
+     "price": "400"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "300"
+    },
+    {
+     "item": "假日全天（成人）",
+     "price": "450"
+    },
+    {
+     "item": "假日星光 18:30–21:00",
+     "price": "300"
+    },
+    {
+     "item": "學生全天（13–24 歲）",
+     "price": "350"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
     }
    ],
    "links": {
-    "website": "https://tupclimbing.tw/branch/nangang"
+    "website": "https://tupclimbing.tw/branch/nangang",
+    "price_page": "https://tupclimbing.tw/pricing/86"
    },
    "osm_keywords": [
     [
@@ -576,14 +800,16 @@
      "S08"
     ],
     "prices": [
-     "S05"
+     "S46"
+    ],
+    "hours": [
+     "S08"
     ]
    },
-   "verify": [
-    "南港店價格"
-   ],
-   "lat": 25.0537865,
-   "lng": 121.5984943,
+   "verify": [],
+   "hours": "週一至週五 12:00–23:00；週六、日 09:00–21:00",
+   "lat": 25.0539817,
+   "lng": 121.5978492,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區南港路二段",
    "coord_match": "南港路二段, 東明里, 南港區, 潭美, 臺北市, 11573, 臺灣"
@@ -604,18 +830,46 @@
    "phone": "02-8228-2555",
    "prices": [
     {
-     "item": "全日票（平日）",
-     "price": "約 380–420",
-     "note": "原岩各店範圍"
+     "item": "平日全天（成人）",
+     "price": "500"
     },
     {
-     "item": "全日票（假日）",
-     "price": "約 450–550",
-     "note": "原岩各店範圍"
+     "item": "平日下午 12:00–18:00",
+     "price": "350"
+    },
+    {
+     "item": "平日晚上 17:00–23:00",
+     "price": "450"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "320"
+    },
+    {
+     "item": "假日全天（成人）",
+     "price": "550"
+    },
+    {
+     "item": "假日晚上 19:00–22:00",
+     "price": "320"
+    },
+    {
+     "item": "學生全天（13–24 歲）",
+     "price": "400"
+    },
+    {
+     "item": "租吊帶",
+     "price": "100"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
     }
    ],
    "features": "以上攀為主（另有抱石區）",
    "links": {
+    "website": "https://tupclimbing.tw/branch/zhonghe",
+    "price_page": "https://tupclimbing.tw/pricing/83",
     "facebook": "https://www.facebook.com/TupClimbingZhongHe/"
    },
    "osm_keywords": [
@@ -640,12 +894,16 @@
      "S05"
     ],
     "prices": [
-     "S05"
+     "S47"
+    ],
+    "hours": [
+     "S08"
     ]
    },
    "verify": [
     "抱石區規模"
    ],
+   "hours": "週一至週五 12:00–23:00；週六、日 09:00–22:00",
    "lat": 25.0062525,
    "lng": 121.4860912,
    "coord_source": "osm",
@@ -666,6 +924,13 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 42
+   },
+   "coord_check": {
+    "lat": 25.0060804,
+    "lng": 121.4864657,
+    "coord_source": "nominatim:road",
+    "coord_query": "新北市中和區立言街",
+    "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣"
    }
   },
   {
@@ -680,22 +945,39 @@
     "bouldering"
    ],
    "status": "營業中",
-   "phone": "02-2821-9988",
+   "phone": "02-8914-7755",
    "prices": [
     {
-     "item": "全日票（平日）",
-     "price": "約 380–420",
-     "note": "原岩各店範圍"
+     "item": "平日全天（成人）",
+     "price": "500"
     },
     {
-     "item": "全日票（假日）",
-     "price": "約 450–550",
-     "note": "原岩各店範圍"
+     "item": "3 小時票",
+     "price": "400",
+     "note": "平假日相同，入場起算 3 小時"
+    },
+    {
+     "item": "平日星光 20:30–23:00",
+     "price": "300"
+    },
+    {
+     "item": "假日全天（成人）",
+     "price": "550"
+    },
+    {
+     "item": "假日星光",
+     "price": "300",
+     "note": "週六 19:30–22:00、週日 19:00–21:30"
+    },
+    {
+     "item": "學生全天（13–24 歲）",
+     "price": "400"
     }
    ],
    "features": "2023 年 10 月開幕，新店區第一間室內攀岩館",
    "links": {
-    "website": "https://tupclimbing.tw/branch/xindian"
+    "website": "https://tupclimbing.tw/branch/xindian",
+    "price_page": "https://tupclimbing.tw/pricing/87"
    },
    "osm_keywords": [
     [
@@ -725,21 +1007,25 @@
      "S08"
     ],
     "prices": [
-     "S05"
+     "S48"
+    ],
+    "hours": [
+     "S08"
     ]
    },
    "verify": [
     "新店店價格；抱石或上攀為主"
    ],
-   "lat": 24.9829405,
-   "lng": 121.5432895,
-   "coord_source": "nominatim:road",
-   "coord_query": "新北市新店區中興路三段",
-   "coord_match": "中興路三段, 寶安里, 新店區, 大坪林, 新北市, 231006, 臺灣"
+   "hours": "週一至週五 11:00–23:00；週六 11:00–22:00；週日 11:00–21:30",
+   "lat": 24.9781107,
+   "lng": 121.5467767,
+   "coord_source": "nominatim:place",
+   "coord_query": "新北市YES!LIFE 裕隆城",
+   "coord_match": "Yes!Life裕隆城, 70, 中興路三段, 寶福里, 新店區, 大坪林, 新北市, 231, 臺灣"
   },
   {
    "id": "tup-a19",
-   "name": "原岩攀岩館 A19店（搬遷中）",
+   "name": "原岩攀岩館 A19店",
    "name_en": "T-UP Climbing Gym A19",
    "brand": "原岩 T-UP",
    "city": "桃園市",
@@ -748,7 +1034,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "待確認",
+   "status": "已停業",
    "phone": "03-287-6850",
    "prices": [
     {
@@ -802,16 +1088,15 @@
     ],
     "features": [
      "S09"
+    ],
+    "status": [
+     "S50"
     ]
    },
-   "verify": [
-    "是否已搬遷到 A22 老街溪站、新地址"
-   ],
-   "lat": 25.0040726,
-   "lng": 121.2057451,
-   "coord_source": "nominatim:road",
-   "coord_query": "桃園市中壢區高鐵南路二段",
-   "coord_match": "高鐵南路二段, 頂洽溪, 青溪里, 中壢區, 桃園市, 320014, 臺灣"
+   "verify": [],
+   "lat": null,
+   "lng": null,
+   "coord_source": "none"
   },
   {
    "id": "tup-yangmei",
@@ -825,7 +1110,7 @@
     "bouldering",
     "lead"
    ],
-   "status": "可能已停業",
+   "status": "已停業",
    "phone": "03-478-8698",
    "features": "官網目前列出的 6 間分店（萬華、中和、A19、南港、新店、明德）沒有楊梅店",
    "links": {},
@@ -849,11 +1134,13 @@
     ],
     "features": [
      "S08"
+    ],
+    "status": [
+     "S55",
+     "S08"
     ]
    },
-   "verify": [
-    "是否仍營業"
-   ],
+   "verify": [],
    "lat": 24.9200421,
    "lng": 121.1451743,
    "coord_source": "osm",
@@ -869,8 +1156,7 @@
      "addr:street": "梅高路99巷",
      "leisure": "sports_centre",
      "sport": "climbing"
-    },
-    "dist_to_address_m": 445
+    }
    }
   },
   {
@@ -880,7 +1166,7 @@
    "brand": "市民抱石",
    "city": "臺北市",
    "district": "南港區",
-   "address": "臺北市南港區市民大道八段548號",
+   "address": "臺北市南港區市民大道八段552號2樓",
    "types": [
     "bouldering",
     "lead"
@@ -907,19 +1193,50 @@
    ],
    "src": {
     "address": [
-     "S01"
+     "S51",
+     "S52",
+     "S56"
     ],
     "hours": [
      "S01",
-     "S37"
+     "S37",
+     "S56"
     ],
     "features": [
      "S15",
      "S37"
+    ],
+    "phone": [
+     "S56"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "價格（搜尋結果都沒有）"
+    "價格是 2022 年資料",
+    "營業時間：S56 寫每日到 22:30、S52 寫到 22:00、S55 寫假日到 20:30"
+   ],
+   "phone": "02-2788-6220 分機 12",
+   "prices": [
+    {
+     "item": "平日 17:00 前入場",
+     "price": "300–350",
+     "note": "2022 年資料，原文並列兩個價格"
+    },
+    {
+     "item": "其他時段",
+     "price": "350–400",
+     "note": "2022 年資料，原文並列兩個價格"
+    },
+    {
+     "item": "星光票（營業結束前 2 小時）",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    }
    ],
    "lat": 25.0530574,
    "lng": 121.6059154,
@@ -934,7 +1251,7 @@
    "brand": "奇岩",
    "city": "臺北市",
    "district": "南港區",
-   "address": "臺北市南港區忠孝東路七段512號",
+   "address": "臺北市南港區忠孝東路七段512號1樓",
    "types": [
     "bouldering"
    ],
@@ -953,23 +1270,48 @@
    "youtube": [],
    "src": {
     "address": [
-     "S11"
+     "S51",
+     "S56"
     ],
     "phone": [
-     "S11"
+     "S11",
+     "S56"
     ],
     "features": [
      "S11"
+    ],
+    "hours": [
+     "S51",
+     "S55",
+     "S56"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "價格、營業時間"
+    "價格是 2022 年資料（2026 年報導寫單次約 300）"
    ],
-   "lat": 25.0514209,
-   "lng": 121.6006277,
+   "hours": "週一至週五 14:00–22:30；週六、日 10:00–20:00",
+   "prices": [
+    {
+     "item": "單次入場（平假日相同）",
+     "price": "300"
+    },
+    {
+     "item": "平日 18:00 前入場",
+     "price": "220"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    }
+   ],
+   "lat": 25.0521753,
+   "lng": 121.6072066,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區忠孝東路七段",
-   "coord_match": "忠孝東路七段, 新光里, 南港區, 三重埔, 臺北市, 115, 臺灣"
+   "coord_match": "忠孝東路七段, 中南里, 南港區, 三重埔, 臺北市, 115011, 臺灣"
   },
   {
    "id": "redrock-shilin",
@@ -984,7 +1326,7 @@
    ],
    "status": "營業中",
    "phone": "02-2883-7591",
-   "hours": "平日 15:00–23:00；週末 09:00–21:00",
+   "hours": "週一至週五 15:00–23:00；週六、日 09:00–18:00",
    "features": "地下室小型館，約 300 平方公尺、高 3.8 公尺，5–60 度抱石牆；有 MoonBoard、指力板、campus board；捷運劍潭站步行約 12 分鐘",
    "links": {},
    "osm_keywords": [
@@ -1007,25 +1349,44 @@
    ],
    "src": {
     "address": [
-     "S12"
+     "S12",
+     "S51",
+     "S55"
     ],
     "phone": [
      "S12"
     ],
     "hours": [
-     "S12"
+     "S51",
+     "S55"
     ],
     "features": [
      "S07",
      "S12",
      "S43"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "價格"
+    "價格來源未標日期",
+    "週日是否營業（S55 沒寫週日）",
+    "S12 寫週末到 21:00，較新的 S51 寫到 18:00"
    ],
-   "lat": 25.0904048,
-   "lng": 121.5174523,
+   "prices": [
+    {
+     "item": "單次入場（平假日相同）",
+     "price": "250–300",
+     "note": "原文並列兩個價格，新舊不明"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    }
+   ],
+   "lat": 25.0902764,
+   "lng": 121.5173712,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
    "coord_match": "承德路四段, 後港里, 士林區, 社子, 臺北市, 11169, 臺灣"
@@ -1036,8 +1397,8 @@
    "name_en": "Red Rock Hsinchu",
    "brand": "Red Rock 紅石",
    "city": "新竹市",
-   "district": "",
-   "address": "",
+   "district": "東區",
+   "address": "新竹市東區光復路一段75號B1",
    "types": [
     "bouldering"
    ],
@@ -1063,14 +1424,40 @@
    "src": {
     "name": [
      "S43"
+    ],
+    "address": [
+     "S51",
+     "S55"
+    ],
+    "hours": [
+     "S51",
+     "S55"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "地址、價格、營業時間（搜尋結果都沒有）"
+    "價格來源未標日期",
+    "週日是否營業（S55 沒寫週日）"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "週一至週五 15:00–23:00；週六、日 09:00–20:00",
+   "prices": [
+    {
+     "item": "單次入場（平假日相同）",
+     "price": "250–300",
+     "note": "原文並列兩個價格，新舊不明"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    }
+   ],
+   "lat": 24.7813784,
+   "lng": 121.019488,
+   "coord_source": "nominatim:road",
+   "coord_query": "新竹市東區光復路一段",
+   "coord_match": "世界高中, 257, 光復路一段, 仙水里, 東區, 新竹市, 300052, 臺灣"
   },
   {
    "id": "double8-datong",
@@ -1079,7 +1466,7 @@
    "brand": "double8",
    "city": "臺北市",
    "district": "大同區",
-   "address": "臺北市大同區迪化街（大稻埕老洋房內，門牌待確認）",
+   "address": "臺北市大同區迪化街一段251號",
    "types": [
     "bouldering",
     "lead"
@@ -1087,12 +1474,26 @@
    "status": "營業中",
    "prices": [
     {
-     "item": "假日全票",
-     "price": "380"
+     "item": "入場（平日）",
+     "price": "250",
+     "note": "預約制"
+    },
+    {
+     "item": "入場（假日）",
+     "price": "280",
+     "note": "預約制"
+    },
+    {
+     "item": "新手攀岩體驗（含教練、裝備）",
+     "price": "500 起",
+     "note": "官方預約頁"
     }
    ],
    "features": "迪化街老屋改造，天井上攀登頂可俯瞰大稻埕；新手友善；捷運大橋頭站 1 號出口步行約 8 分鐘",
-   "links": {},
+   "links": {
+    "booking": "https://double8.rezio.shop/en-US",
+    "website": "https://www.double8.com.tw/"
+   },
    "osm_keywords": [
     [
      "double8"
@@ -1109,24 +1510,35 @@
    ],
    "src": {
     "address": [
-     "S14"
+     "S51",
+     "S52",
+     "S56"
     ],
     "prices": [
-     "S05"
+     "S55",
+     "S58"
     ],
     "features": [
      "S14",
      "S37"
+    ],
+    "phone": [
+     "S56"
+    ],
+    "hours": [
+     "S52"
     ]
    },
    "verify": [
-    "門牌號碼"
+    "入場票價是 2022 年資料（官方預約頁只列體驗與課程）"
    ],
-   "lat": 25.0561728,
-   "lng": 121.5102161,
-   "coord_source": "nominatim:address",
-   "coord_query": "臺北市大同區迪化街",
-   "coord_match": "迪化街商圈, 永昌街, 永樂里, 大同區, 大稻埕, 臺北市, 10344, 臺灣"
+   "phone": "02-2550-8081",
+   "hours": "週一至週五 13:30–17:30、18:30–22:00；週六、日 10:00–12:00、13:00–18:30",
+   "lat": 25.0553267,
+   "lng": 121.5100443,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺北市大同區迪化街一段",
+   "coord_match": "迪化街一段, 永樂里, 大同區, 大稻埕, 臺北市, 103003, 臺灣"
   },
   {
    "id": "camp4-taipei",
@@ -1134,8 +1546,8 @@
    "name_en": "Camp4",
    "brand": "Camp4",
    "city": "臺北市",
-   "district": "",
-   "address": "",
+   "district": "北投區",
+   "address": "臺北市北投區石牌路一段39巷100號2樓（北投運動中心）",
    "types": [
     "bouldering",
     "lead"
@@ -1161,14 +1573,42 @@
      "S02",
      "S15",
      "S44"
+    ],
+    "address": [
+     "S52",
+     "S55",
+     "S56"
+    ],
+    "phone": [
+     "S56"
+    ],
+    "hours": [
+     "S56"
+    ],
+    "prices": [
+     "S52",
+     "S55"
     ]
    },
    "verify": [
-    "地址、價格、營業時間（搜尋結果都沒有）"
+    "是否有抱石區（S55 標為上攀館）",
+    "平日開館時間：S56 寫 13:00，S52 寫 10:00",
+    "與「北投運動中心攀岩場」應是同一處"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "phone": "02-2823-7808",
+   "hours": "週一至週五 13:00–22:00；週六、日 09:00–18:00",
+   "prices": [
+    {
+     "item": "綜合攀登",
+     "price": "約 160–190",
+     "note": "S55（2022）寫 160，S52 寫 190 起"
+    }
+   ],
+   "lat": 25.11666,
+   "lng": 121.50962,
+   "coord_source": "nominatim:place",
+   "coord_query": "臺北市北投運動中心",
+   "coord_match": "北投運動中心, 石牌路一段39巷, 吉利里, 北投區, 奇岩, 臺北市, 112034, 臺灣"
   },
   {
    "id": "littlerock-tianmu",
@@ -1177,7 +1617,7 @@
    "brand": "小岩館",
    "city": "臺北市",
    "district": "士林區",
-   "address": "",
+   "address": "臺北市士林區忠誠路二段12號1樓",
    "types": [
     "bouldering"
    ],
@@ -1200,10 +1640,42 @@
     ],
     "features": [
      "S36"
+    ],
+    "address": [
+     "S55",
+     "S56"
+    ],
+    "phone": [
+     "S56"
+    ],
+    "hours": [
+     "S55",
+     "S56"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "地址、價格（搜尋結果都沒有）"
+    "價格來源未標日期"
+   ],
+   "phone": "02-2834-7217",
+   "hours": "週一至週五 14:00–22:00；週六、日 10:00–19:00",
+   "prices": [
+    {
+     "item": "單次入場（平假日相同）",
+     "price": "280–330",
+     "note": "原文並列兩個價格，新舊不明"
+    },
+    {
+     "item": "平日星光",
+     "price": "200–250",
+     "note": "原文並列兩個價格，新舊不明"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
+    }
    ],
    "lat": 25.1088442,
    "lng": 121.5298068,
@@ -1216,22 +1688,31 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 14395
+    "dist_to_address_m": 938
+   },
+   "coord_check": {
+    "lat": 25.1163267,
+    "lng": 121.5341003,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市士林區忠誠路二段",
+    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11148, 臺灣"
    }
   },
   {
    "id": "y17-taipei",
    "name": "Y17 Climbing Gym",
    "name_en": "Y17 Climbing Gym",
-   "brand": "Y17",
+   "brand": "double8",
    "city": "臺北市",
-   "district": "",
-   "address": "",
+   "district": "中正區",
+   "address": "臺北市中正區仁愛路一段17號9樓（臺北市青年局）",
    "types": [
-    "bouldering"
+    "lead"
    ],
-   "status": "待確認",
-   "links": {},
+   "status": "營業中",
+   "links": {
+    "booking": "https://double8-y17.rezio.shop/en-US"
+   },
    "osm_keywords": [
     [
      "Y17"
@@ -1241,14 +1722,44 @@
    "src": {
     "name": [
      "S35"
+    ],
+    "address": [
+     "S56"
+    ],
+    "phone": [
+     "S56"
+    ],
+    "hours": [
+     "S57"
+    ],
+    "prices": [
+     "S57"
+    ],
+    "status": [
+     "S57",
+     "S59"
     ]
    },
    "verify": [
-    "只在 boulderinglist 出現，地址與是否營業都待確認"
+    "是否有抱石區（來源都只提到上攀，最高 12 公尺）"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "phone": "02-2351-5215",
+   "hours": "平日 08:30–21:30；假日 09:30–18:30（中午、傍晚各休息 1 小時；寒暑假會調整）",
+   "prices": [
+    {
+     "item": "持照上攀",
+     "price": "160 起"
+    },
+    {
+     "item": "新手攀岩體驗（含教練、裝備）",
+     "price": "500 起"
+    }
+   ],
+   "lat": 25.0247879,
+   "lng": 121.5055599,
+   "coord_source": "nominatim:place",
+   "coord_query": "臺北市青年局",
+   "coord_match": "民間劇場, 青年路, 騰雲里, 萬華區, 東園, 臺北市, 10877, 臺灣"
   },
   {
    "id": "neihu-sports",
@@ -1257,7 +1768,7 @@
    "brand": "運動中心",
    "city": "臺北市",
    "district": "內湖區",
-   "address": "臺北市內湖運動中心",
+   "address": "臺北市內湖區洲子街12號（內湖運動中心）",
    "types": [
     "bouldering",
     "lead"
@@ -1280,7 +1791,8 @@
    "youtube": [],
    "src": {
     "hours": [
-     "S15"
+     "S15",
+     "S56"
     ],
     "features": [
      "S03",
@@ -1289,14 +1801,43 @@
     "name": [
      "S07",
      "S38"
+    ],
+    "address": [
+     "S38",
+     "S56"
+    ],
+    "phone": [
+     "S38",
+     "S56"
+    ],
+    "prices": [
+     "S55",
+     "S56"
     ]
    },
    "verify": [
-    "價格；地址用運動中心名稱定位"
+    "官網的收費表放在 Facebook 相簿，未能讀取"
+   ],
+   "phone": "02-2656-0052",
+   "prices": [
+    {
+     "item": "室內抱石區",
+     "price": "50／小時",
+     "note": "不含教練"
+    },
+    {
+     "item": "綜合攀登",
+     "price": "200",
+     "note": "S55，2022 年資料"
+    },
+    {
+     "item": "上攀體驗（含教練、裝備）",
+     "price": "500"
+    }
    ],
    "lat": 25.0772346,
    "lng": 121.5753648,
-   "coord_source": "nominatim:address",
+   "coord_source": "nominatim:place",
    "coord_query": "臺北市內湖運動中心",
    "coord_match": "內湖運動中心, 港墘路, 港墘里, 內湖區, 下塔悠, 臺北市, 114063, 臺灣"
   },
@@ -1347,7 +1888,7 @@
    "brand": "運動中心",
    "city": "臺北市",
    "district": "萬華區",
-   "address": "臺北市萬華運動中心",
+   "address": "臺北市萬華區西寧南路6-1號（萬華運動中心）",
    "types": [
     "lead",
     "bouldering"
@@ -1369,14 +1910,22 @@
    "src": {
     "prices": [
      "S05"
+    ],
+    "address": [
+     "S55"
+    ],
+    "hours": [
+     "S55"
     ]
    },
    "verify": [
-    "抱石區規模"
+    "抱石區規模",
+    "地址與時間只有 S55（2022，當時由 Camp4 經營、預約制）"
    ],
+   "hours": "週一至週五 13:00–21:30；週六、日 09:00–18:00",
    "lat": 25.0474308,
    "lng": 121.5065669,
-   "coord_source": "nominatim:address",
+   "coord_source": "nominatim:place",
    "coord_query": "臺北市萬華運動中心",
    "coord_match": "萬華運動中心, 6-1, 西寧南路, 福星里, 萬華區, 城內, 臺北市, 10841, 臺灣"
   },
@@ -1406,7 +1955,7 @@
     ]
    },
    "verify": [
-    "只在舊的 Mountain Project 目錄出現，是否仍有攀岩場待確認"
+    "與「Camp4 達文西攀岩館」應是同一處（Camp4 就在北投運動中心 2 樓，S55、S56），可考慮刪掉這筆"
    ],
    "lat": 25.11666,
    "lng": 121.50962,
@@ -1421,7 +1970,7 @@
    "brand": "趣攀岩",
    "city": "新北市",
    "district": "永和區",
-   "address": "新北市永和國民運動中心6樓",
+   "address": "新北市永和區永利路250號6樓（永和國民運動中心）",
    "types": [
     "bouldering",
     "lead"
@@ -1429,9 +1978,38 @@
    "status": "營業中",
    "prices": [
     {
-     "item": "每小時（尖峰）",
-     "price": "80",
-     "note": "非尖峰與抱石專屬價格未知"
+     "item": "抱石計時（尖峰）",
+     "price": "80／小時",
+     "note": "平日晚上、假日下午與晚上"
+    },
+    {
+     "item": "抱石計時（離峰）",
+     "price": "50／小時",
+     "note": "平日下午、假日早上"
+    },
+    {
+     "item": "全日票（平日）",
+     "price": "200",
+     "note": "學生 180"
+    },
+    {
+     "item": "全日票（假日）",
+     "price": "250",
+     "note": "學生 230"
+    },
+    {
+     "item": "抱石體驗（含教練 1 小時）",
+     "price": "400",
+     "note": "2 人成行"
+    },
+    {
+     "item": "上攀體驗",
+     "price": "500",
+     "note": "含全日票、裝備、教練"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "100"
     }
    ],
    "features": "抱石、速度賽、難度賽場地",
@@ -1458,21 +2036,27 @@
    ],
    "src": {
     "address": [
-     "S17"
+     "S17",
+     "S51"
     ],
     "prices": [
      "S17"
     ],
     "features": [
      "S17"
+    ],
+    "hours": [
+     "S17",
+     "S52"
     ]
    },
    "verify": [
-    "完整價格"
+    "官網「基本資訊」寫每天 14:00–22:00，和同頁 Q&A 不一致"
    ],
+   "hours": "平日 13:00–22:00（17:00–18:00 休息）；假日 09:00–22:00",
    "lat": 25.00317,
    "lng": 121.52407,
-   "coord_source": "nominatim:address",
+   "coord_source": "nominatim:place",
    "coord_query": "新北市永和國民運動中心",
    "coord_match": "永和國民運動中心, 永利路, 秀林里, 永和區, 秀朗, 新北市, 234035, 臺灣"
   },
@@ -1489,7 +2073,7 @@
     "lead"
    ],
    "status": "營業中",
-   "hours": "平日營業到約 22:30",
+   "hours": "週一至週五 14:30–22:30；週六、日 10:00–20:00",
    "prices": [
     {
      "item": "平日",
@@ -1531,36 +2115,41 @@
     {
      "id": "HXiQmdCG6aE",
      "title": "攀岩抱石瞬間爆汗的運動｜新手教學｜Mega STONE【伊娃 Eva】"
-    },
-    {
-     "id": "39Fw5iEmnCg",
-     "title": "生活體驗「新莊攀岩抱石場/STONE Bouldering GYM」"
     }
    ],
    "src": {
     "address": [
-     "S04"
+     "S04",
+     "S51",
+     "S55",
+     "S56"
     ],
     "prices": [
      "S03"
     ],
     "hours": [
-     "S03"
+     "S51",
+     "S55",
+     "S56"
     ],
     "features": [
      "S03",
      "S21",
      "S01"
+    ],
+    "phone": [
+     "S56"
     ]
    },
    "verify": [
     "S04（較舊）寫平日 300／假日 330／租鞋 80，S03（2025-05）寫 360／400／100，採用較新的"
    ],
-   "lat": 25.0235594,
-   "lng": 121.4150269,
+   "phone": "02-8992-8991",
+   "lat": 25.0346843,
+   "lng": 121.4455471,
    "coord_source": "nominatim:road",
    "coord_query": "新北市新莊區中正路",
-   "coord_match": "中正路, 龍鳳里, 新莊區, 三角埔, 新北市, 242046, 臺灣"
+   "coord_match": "中正路, 忠孝里, 新莊區, 新庄(海山口), 新北市, 242009, 臺灣"
   },
   {
    "id": "pogo-xinzhuang",
@@ -1573,7 +2162,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "待確認",
+   "status": "已停業",
    "phone": "02-2908-2928",
    "features": "約 108 坪、牆高 4.5 公尺，每兩週換線；Dcard 舊文提到「預計結束營業」，未找到正式停業消息",
    "links": {},
@@ -1595,11 +2184,12 @@
     "features": [
      "S13",
      "S06"
+    ],
+    "status": [
+     "S55"
     ]
    },
-   "verify": [
-    "是否仍營業、門牌"
-   ],
+   "verify": [],
    "lat": null,
    "lng": null,
    "coord_source": "none"
@@ -1616,20 +2206,27 @@
     "bouldering"
    ],
    "status": "營業中",
-   "hours": "週一至週五 14:00–22:00",
+   "hours": "週一至週五 14:00–22:00；週六 10:00–21:00；週日 10:00–19:00",
    "prices": [
     {
-     "item": "入場",
-     "price": "300",
-     "note": "2021 開幕時價格"
+     "item": "平日票",
+     "price": "320"
     },
     {
-     "item": "租鞋",
+     "item": "假日票",
+     "price": "350"
+    },
+    {
+     "item": "平日 16:00 前入場",
+     "price": "280"
+    },
+    {
+     "item": "星光票（閉館前 2 小時）",
+     "price": "200"
+    },
+    {
+     "item": "租岩鞋",
      "price": "100"
-    },
-    {
-     "item": "體驗課（含入場、租鞋、教練）",
-     "price": "500"
     }
    ],
    "features": "2021 年 7 月開幕，只做抱石",
@@ -1649,10 +2246,10 @@
      "S05"
     ],
     "hours": [
-     "S05"
+     "S55"
     ],
     "prices": [
-     "S20"
+     "S55"
     ],
     "features": [
      "S20",
@@ -1660,7 +2257,8 @@
     ]
    },
    "verify": [
-    "價格是 2021 年的；週末營業時間"
+    "價格來源未標日期",
+    "週日時間：S51 寫週末都到 21:00"
    ],
    "lat": 25.0106703,
    "lng": 121.3875031,
@@ -1675,23 +2273,25 @@
    "brand": "iClimb",
    "city": "新竹縣",
    "district": "竹北市",
-   "address": "",
+   "address": "新竹縣竹北市成功二街98號",
    "types": [
     "bouldering",
     "lead"
    ],
    "status": "營業中",
-   "phone": "03-658-8588",
    "prices": [
     {
-     "item": "體驗（3–4 人，教練 50 分鐘）",
-     "price": "700",
-     "note": "含當日入場與裝備"
+     "item": "全日票（成功館）",
+     "price": "320",
+     "note": "首次需入會費 150"
     },
     {
-     "item": "單日入場",
-     "price": "約 200",
-     "note": "來源年份不明"
+     "item": "租岩鞋",
+     "price": "100"
+    },
+    {
+     "item": "租吊帶",
+     "price": "80"
     }
    ],
    "features": "分勝利館（抱石＋上攀體驗）和成功館（綜合館，抱石、上攀、先鋒）",
@@ -1713,15 +2313,25 @@
      "S18"
     ],
     "prices": [
-     "S18"
+     "S55"
     ],
     "features": [
      "S19"
+    ],
+    "address": [
+     "S51",
+     "S55"
+    ],
+    "hours": [
+     "S51"
     ]
    },
    "verify": [
-    "地址（搜尋結果沒有）、單日票價"
+    "成功館電話（先前的 03-658-8588 在原文找不到；S18 寫的 03-550-8066 是勝利館）",
+    "勝利館（竹北市勝利十五街66號，S18：平日 350、假日 380、離峰 299）是另一個場地，還沒分開收錄",
+    "成功館營業時間 S55 和 S51 不同"
    ],
+   "hours": "週一至週三 10:00–22:30；週四至週日 09:00–21:00（成功館）",
    "lat": 24.8197808,
    "lng": 121.0241394,
    "coord_source": "osm",
@@ -1737,7 +2347,15 @@
      "addr:street": "成功二街",
      "phone": "+886 3 6588588",
      "website": "www.iclimb.com.tw"
-    }
+    },
+    "dist_to_address_m": 57
+   },
+   "coord_check": {
+    "lat": 24.8195605,
+    "lng": 121.0246494,
+    "coord_source": "nominatim:road",
+    "coord_query": "新竹縣竹北市成功二街",
+    "coord_match": "成功二街, 鹿場, 鹿場里, 竹北市, 新竹縣, 30264, 臺灣"
    }
   },
   {
@@ -1755,9 +2373,12 @@
    "hours": "週二至週五 18:00–23:00；週六、日 13:00–21:00；週一公休",
    "prices": [
     {
-     "item": "單次入場",
-     "price": "200 起",
-     "note": "完整票價未公開；多為現金付款"
+     "item": "全日票",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "50"
     }
    ],
    "links": {},
@@ -1781,17 +2402,17 @@
      "S22"
     ],
     "prices": [
-     "S22"
+     "S55"
     ]
    },
    "verify": [
-    "完整票價"
+    "價格來源未標日期（S54 寫 200 起）"
    ],
-   "lat": 24.1853648,
-   "lng": 120.6370415,
+   "lat": 24.1791415,
+   "lng": 120.6348499,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
-   "coord_match": "環中路二段, 西墩里, 西屯區, 水湳經貿園區, 臺中市, 407110, 臺灣"
+   "coord_match": "環中路二段, 西墩里, 西屯區, 臺中七期, 臺中市, 407670, 臺灣"
   },
   {
    "id": "bplus-taiyuan",
@@ -1800,7 +2421,7 @@
    "brand": "B-Plus",
    "city": "臺中市",
    "district": "北屯區",
-   "address": "",
+   "address": "臺中市北屯區建和路一段123號",
    "types": [
     "bouldering"
    ],
@@ -1821,14 +2442,32 @@
     ],
     "features": [
      "S22"
+    ],
+    "address": [
+     "S55"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "地址（區別也是推測）"
+    "地址只有 S55 一個來源"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "prices": [
+    {
+     "item": "全日票",
+     "price": "350"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "80"
+    }
+   ],
+   "lat": 24.1640524,
+   "lng": 120.7225341,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺中市北屯區建和路一段",
+   "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣"
   },
   {
    "id": "dapro-nantun",
@@ -1853,6 +2492,10 @@
      "note": "整日不限進出"
     },
     {
+     "item": "星光票（21:00 後）",
+     "price": "380"
+    },
+    {
      "item": "租岩鞋",
      "price": "100"
     },
@@ -1871,35 +2514,38 @@
    "youtube": [
     {
      "id": "kZ9PSVKwslg",
-     "title": "新手也能輕鬆攀上5層樓？台灣最大最完整室內攀岩場！（依 15 米高牆推測為 Dapro）"
+     "title": "台中室內行程推薦！台灣最大最完整室內攀岩場！｜Dapro室內攀岩場"
     }
    ],
    "src": {
     "address": [
-     "S04"
+     "S04",
+     "S54",
+     "S55"
     ],
     "phone": [
      "S23"
     ],
     "hours": [
-     "S23"
+     "S23",
+     "S54",
+     "S55"
     ],
     "prices": [
-     "S04"
+     "S04",
+     "S55"
     ],
     "features": [
      "S24",
      "S37"
     ]
    },
-   "verify": [
-    "價格來源未標日期"
-   ],
-   "lat": 24.1304329,
-   "lng": 120.6301684,
+   "verify": [],
+   "lat": 24.1424284,
+   "lng": 120.6338892,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
-   "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣"
+   "coord_match": "永春東七路, 永定里, 南屯區, 田心, 臺中市, 408474, 臺灣"
   },
   {
    "id": "erchang-wuri",
@@ -1912,7 +2558,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "待確認",
+   "status": "已停業",
    "prices": [
     {
      "item": "個人全票",
@@ -1940,16 +2586,15 @@
     ],
     "features": [
      "S04"
+    ],
+    "status": [
+     "S55"
     ]
    },
-   "verify": [
-    "來源較舊，是否仍營業"
-   ],
-   "lat": 24.109511,
-   "lng": 120.600509,
-   "coord_source": "nominatim:road",
-   "coord_query": "臺中市烏日區健行路",
-   "coord_match": "健行路, 三和里, 烏日區, 烏日高鐵特區, 臺中市, 414, 臺灣"
+   "verify": [],
+   "lat": null,
+   "lng": null,
+   "coord_source": "none"
   },
   {
    "id": "panna-taichung",
@@ -1957,16 +2602,21 @@
    "name_en": "",
    "brand": "攀吶",
    "city": "臺中市",
-   "district": "",
-   "address": "",
+   "district": "東區",
+   "address": "臺中市東區進化路90-1號",
    "types": [
     "bouldering"
    ],
-   "status": "待確認",
+   "status": "營業中",
    "prices": [
     {
-     "item": "成人票",
-     "price": "270"
+     "item": "全日票",
+     "price": "250–300",
+     "note": "原文並列兩個價格；S54 寫 220 起"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "80"
     }
    ],
    "links": {},
@@ -1978,15 +2628,28 @@
    "youtube": [],
    "src": {
     "prices": [
-     "S05"
+     "S55"
+    ],
+    "address": [
+     "S54",
+     "S55"
+    ],
+    "hours": [
+     "S54"
+    ],
+    "status": [
+     "S54"
     ]
    },
    "verify": [
-    "地址（搜尋結果沒有）"
+    "價格來源未標日期"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "週一、二 18:00–23:00；週三至週五 14:00–23:00；週六、日 11:00–23:00",
+   "lat": 24.1534551,
+   "lng": 120.6943557,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺中市東區進化路",
+   "coord_match": "進化路, 錦村里, 北區, 臺中市, 404, 臺灣"
   },
   {
    "id": "depot-taichung",
@@ -2048,10 +2711,23 @@
     ],
     "hours": [
      "S05"
+    ],
+    "prices": [
+     "S55"
     ]
    },
    "verify": [
-    "價格"
+    "價格來源未標日期"
+   ],
+   "prices": [
+    {
+     "item": "全日票",
+     "price": "280"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "50"
+    }
    ],
    "lat": 23.9584466,
    "lng": 120.5677345,
@@ -2099,13 +2775,15 @@
     ]
    },
    "verify": [
-    "門牌、營業時間"
+    "門牌、營業時間",
+    "S28（2026-02 Threads）只寫「嘉義唯一的岩館」沒寫館名，價格是否屬於這間待確認",
+    "S27 原文已經 404"
    ],
-   "lat": 23.4838312,
-   "lng": 120.4416239,
+   "lat": 23.4839738,
+   "lng": 120.4413611,
    "coord_source": "nominatim:address",
    "coord_query": "嘉義市鐵道藝術村",
-   "coord_match": "鐵道藝術村, 博愛路二段, 後驛里, 西區, 北社尾, 嘉義市, 600, 臺灣"
+   "coord_match": "鐵道藝術村, 北興街, 後驛里, 西區, 北社尾, 嘉義市, 600, 臺灣"
   },
   {
    "id": "chiayi-sports-8a",
@@ -2164,6 +2842,13 @@
      "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
     },
     "dist_to_address_m": 0
+   },
+   "coord_check": {
+    "lat": 23.471551,
+    "lng": 120.4628704,
+    "coord_source": "nominatim:address",
+    "coord_query": "嘉義市國民運動中心",
+    "coord_match": "嘉義市國民運動中心, 15, 彌陀路327巷, 新開里, 東區, 草地尾, 嘉義市, 600, 臺灣"
    }
   },
   {
@@ -2210,7 +2895,8 @@
    "src": {
     "address": [
      "S25",
-     "S05"
+     "S05",
+     "S51"
     ],
     "phone": [
      "S25"
@@ -2225,7 +2911,9 @@
      "S25"
     ]
    },
-   "verify": [],
+   "verify": [
+    "營業時間：S05 寫週二至五 14:00–22:00、週末 10:00–18:00；S51（2025-12）寫週一至四 14:00–22:00、週五至日 10:00–18:00"
+   ],
    "lat": 23.011325,
    "lng": 120.1900737,
    "coord_source": "osm",
@@ -2248,6 +2936,13 @@
      "website": "https://highfun2017.com/"
     },
     "dist_to_address_m": 363
+   },
+   "coord_check": {
+    "lat": 23.0145341,
+    "lng": 120.1894238,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺南市北區大和路",
+    "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣"
    }
   },
   {
@@ -2296,28 +2991,31 @@
    "name_en": "B-topia Climbing Gym",
    "brand": "B-TOPIA",
    "city": "高雄市",
-   "district": "苓雅區",
-   "address": "高雄市（捷運三多商圈站 3 號出口步行約 1 分鐘，門牌待確認）",
+   "district": "前鎮區",
+   "address": "高雄市前鎮區文橫三路45號2樓",
    "types": [
     "bouldering"
    ],
    "status": "營業中",
    "prices": [
     {
-     "item": "全日票（成人）",
-     "price": "300"
+     "item": "全日票",
+     "price": "300–330",
+     "note": "原文並列兩個價格，新舊不明"
     },
     {
-     "item": "全日票（學生）",
-     "price": "250"
+     "item": "時段票 15:00–17:00",
+     "price": "200–230",
+     "note": "原文並列兩個價格；S30（2023-03）寫 200"
     },
     {
-     "item": "全日票（兒童）",
-     "price": "200"
+     "item": "星光票（閉店前 2 小時）",
+     "price": "200–230",
+     "note": "原文並列兩個價格"
     },
     {
-     "item": "新手抱石體驗",
-     "price": "600"
+     "item": "租岩鞋",
+     "price": "80"
     }
    ],
    "features": "牆面角度多：Slab、大斜板、內傾牆、Overhang；牆不高，初學者也適合",
@@ -2336,21 +3034,31 @@
    "youtube": [],
    "src": {
     "address": [
-     "S01"
+     "S51",
+     "S53",
+     "S55"
     ],
     "prices": [
+     "S55",
      "S30"
     ],
     "features": [
      "S30"
+    ],
+    "hours": [
+     "S53",
+     "S55"
     ]
    },
    "verify": [
-    "門牌；行政區（三多商圈站在苓雅與前鎮交界）"
+    "價格來源未標日期；先前的學生票、兒童票、新手體驗價在 S30 原文裡找不到，已拿掉"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "週一至週五 15:00–23:00；週六 10:00–21:00；週日 10:00–19:00",
+   "lat": 22.612859,
+   "lng": 120.3066707,
+   "coord_source": "nominatim:road",
+   "coord_query": "高雄市前鎮區文橫三路",
+   "coord_match": "文橫三路, 西甲里, 前鎮區, 高雄市, 806, 臺灣"
   },
   {
    "id": "basecamp-zuoying",
@@ -2359,7 +3067,7 @@
    "brand": "抱石基地",
    "city": "高雄市",
    "district": "左營區",
-   "address": "",
+   "address": "高雄市左營區重信路24巷11號",
    "types": [
     "bouldering"
    ],
@@ -2390,21 +3098,28 @@
    "src": {
     "prices": [
      "S31",
-     "S21"
+     "S21",
+     "S53"
     ],
     "features": [
      "S21",
      "S31"
+    ],
+    "address": [
+     "S53",
+     "S55"
+    ],
+    "hours": [
+     "S53"
     ]
    },
-   "verify": [
-    "門牌（搜尋結果沒有）"
-   ],
-   "lat": 22.6439399,
-   "lng": 120.3052953,
-   "coord_source": "nominatim:name",
-   "coord_query": "抱石基地 高雄市",
-   "coord_match": "湯包湯創始老店, 熱河一街, 達明里, 三民區, 高雄市, 807, 臺灣"
+   "verify": [],
+   "hours": "週一、二、四、五 14:00–22:30；週六、日 10:00–19:30；週三公休",
+   "lat": 22.6804411,
+   "lng": 120.3146273,
+   "coord_source": "nominatim:road",
+   "coord_query": "高雄市左營區重信路",
+   "coord_match": "高雄市立福山國民中學, 215, 重信路, 福山里, 左營區, 五塊厝, 高雄市, 81368, 臺灣"
   },
   {
    "id": "boulderspace-zuoying",
@@ -2413,7 +3128,7 @@
    "brand": "圓石空間",
    "city": "高雄市",
    "district": "左營區",
-   "address": "",
+   "address": "高雄市左營區站前北路1號3F（環球購物中心新左營車站）",
    "types": [
     "bouldering",
     "autobelay"
@@ -2421,8 +3136,17 @@
    "status": "營業中",
    "prices": [
     {
-     "item": "入場",
-     "price": "280 起"
+     "item": "全日票",
+     "price": "320",
+     "note": "S53 寫 280 起"
+    },
+    {
+     "item": "平日星光（20:30 後）",
+     "price": "230"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "80"
     }
    ],
    "features": "2026 年 2 月自動確保器事件後，館方暫停相關設備並送原廠檢修（TVBS）",
@@ -2439,27 +3163,39 @@
    "youtube": [],
    "src": {
     "prices": [
-     "S29"
+     "S55"
     ],
     "features": [
      "S24"
+    ],
+    "address": [
+     "S53",
+     "S55"
+    ],
+    "hours": [
+     "S53",
+     "S55"
     ]
    },
    "verify": [
-    "門牌（搜尋結果沒有）、自動確保器是否恢復"
+    "自動確保器是否恢復",
+    "價格來源未標日期"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "每日 11:00–22:00",
+   "lat": 22.688055,
+   "lng": 120.3061588,
+   "coord_source": "nominatim:road",
+   "coord_query": "高雄市左營區站前北路",
+   "coord_match": "站前北路, 海光二村, 尾北里, 左營區, 高雄市, 813, 臺灣"
   },
   {
    "id": "qingchang-kaohsiung",
-   "name": "Qingchang Climbing Life Center（中文名待確認）",
+   "name": "慶倡攀岩生活館",
    "name_en": "Qingchang Climbing Life Center",
    "brand": "",
    "city": "高雄市",
-   "district": "",
-   "address": "",
+   "district": "左營區",
+   "address": "高雄市左營區正德路510號",
    "types": [
     "bouldering"
    ],
@@ -2473,15 +3209,34 @@
    "youtube": [],
    "src": {
     "name": [
-     "S29"
+     "S53"
+    ],
+    "address": [
+     "S53"
+    ],
+    "hours": [
+     "S53"
+    ],
+    "prices": [
+     "S53"
     ]
    },
    "verify": [
-    "中文名、地址都待確認"
+    "是否有抱石、是否開放一般入場"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "週三、五 18:00–22:00；週六 10:00–12:00、14:00–17:00；週一、二、四、日公休",
+   "prices": [
+    {
+     "item": "起價",
+     "price": "600",
+     "note": "看起來是課程或體驗價"
+    }
+   ],
+   "lat": 22.6766101,
+   "lng": 120.2995524,
+   "coord_source": "nominatim:road",
+   "coord_query": "高雄市左營區正德路",
+   "coord_match": "政德路, 華夏新村, 新下里, 左營區, 高雄市, 813, 臺灣"
   },
   {
    "id": "jioutau-yilan",
@@ -2517,18 +3272,23 @@
    "youtube": [],
    "src": {
     "address": [
-     "S32"
+     "S55"
     ],
     "prices": [
-     "S32"
+     "S55"
     ],
     "features": [
      "S32"
+    ],
+    "hours": [
+     "S55"
     ]
    },
    "verify": [
-    "復興路舊館是否還在"
+    "價格來源未標日期",
+    "S32（2022-12）介紹的是復興路一段102號的舊館，舊館是否還在"
    ],
+   "hours": "每日 13:00–22:00",
    "lat": 24.7527054,
    "lng": 121.7496109,
    "coord_source": "osm",
@@ -2549,6 +3309,13 @@
      "website": "https://www.portaly.cc/jioutauclimbimg"
     },
     "dist_to_address_m": 206
+   },
+   "coord_check": {
+    "lat": 24.7509237,
+    "lng": 121.7501518,
+    "coord_source": "nominatim:road",
+    "coord_query": "宜蘭縣宜蘭市健康路三段",
+    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
    }
   },
   {
@@ -2558,11 +3325,11 @@
    "brand": "舞岩",
    "city": "宜蘭縣",
    "district": "冬山鄉",
-   "address": "宜蘭縣冬山鄉冬山路二段534號",
+   "address": "宜蘭縣冬山鄉香南路118巷3號",
    "types": [
     "bouldering"
    ],
-   "status": "待確認",
+   "status": "營業中",
    "links": {},
    "osm_keywords": [
     [
@@ -2572,17 +3339,38 @@
    "youtube": [],
    "src": {
     "address": [
-     "S06"
+     "S51"
+    ],
+    "hours": [
+     "S51"
+    ],
+    "prices": [
+     "S51",
+     "S55"
+    ],
+    "status": [
+     "S51"
     ]
    },
    "verify": [
-    "來源是約 2022 年的 Dcard，是否仍營業"
+    "地址：S06、S55 寫冬山路二段534號，S51（2025-12）寫香南路118巷3號，可能搬過"
    ],
-   "lat": 24.6355247,
-   "lng": 121.7875669,
+   "hours": "週二、三、五 13:00–21:00；週六、日 10:00–19:00；週一、四公休",
+   "prices": [
+    {
+     "item": "入場（平假日相同）",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "50"
+    }
+   ],
+   "lat": 24.6273923,
+   "lng": 121.7933572,
    "coord_source": "nominatim:road",
-   "coord_query": "宜蘭縣冬山鄉冬山路二段",
-   "coord_match": "冬山路二段, 太和村, 冬山鄉, 宜蘭縣, 269, 臺灣"
+   "coord_query": "宜蘭縣冬山鄉香南路",
+   "coord_match": "香南路, 南興村, 冬山鄉, 宜蘭縣, 269, 臺灣"
   },
   {
    "id": "yoy-yuanshan",
@@ -2591,11 +3379,11 @@
    "brand": "歪仔歪",
    "city": "宜蘭縣",
    "district": "員山鄉",
-   "address": "宜蘭縣員山鄉",
+   "address": "宜蘭縣員山鄉深溝村深洲路55巷33號",
    "types": [
     "bouldering"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "prices": [
     {
      "item": "門票",
@@ -2616,14 +3404,24 @@
     ],
     "features": [
      "S34"
+    ],
+    "address": [
+     "S34"
+    ],
+    "hours": [
+     "S34"
     ]
    },
    "verify": [
-    "門牌"
+    "唯一的來源 S34 是 2016 年的文章，是否仍營業",
+    "有搜尋摘要說業者「曾經營」這間館（沒有點進原文確認）"
    ],
-   "lat": null,
-   "lng": null,
-   "coord_source": "none"
+   "hours": "平日 18:00–21:00；週六 09:00–21:00；週日 09:00–18:00；週一公休",
+   "lat": 24.7111107,
+   "lng": 121.7219199,
+   "coord_source": "nominatim:road",
+   "coord_query": "宜蘭縣員山鄉深溝村深洲路",
+   "coord_match": "深洲路, 葫蘆堵, 深溝村, 員山鄉, 宜蘭縣, 264, 臺灣"
   },
   {
    "id": "yilan-sports",
@@ -2674,6 +3472,13 @@
      "website": "https://yilansports.com.tw/"
     },
     "dist_to_address_m": 2059
+   },
+   "coord_check": {
+    "lat": 24.7523027,
+    "lng": 121.7416776,
+    "coord_source": "nominatim:address",
+    "coord_query": "宜蘭縣宜蘭運動中心",
+    "coord_match": "宜蘭高中新建綜合室內運動場館, 8, 建軍里, 宜蘭市, 宜蘭縣, 260, 臺灣"
    }
   },
   {
@@ -2687,7 +3492,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "營業中",
+   "status": "可能已停業",
    "hours": "週一、二 18:00–22:00；週三 14:00–22:00；週四、五 18:00–22:00（週末未列）",
    "features": "花蓮火車站附近，抱石高 2.5 公尺；吉安鄉的「小窩活動共享空間」原為崩岩館民治店",
    "links": {},
@@ -2709,10 +3514,13 @@
     ],
     "features": [
      "S06"
+    ],
+    "status": [
+     "S55"
     ]
    },
    "verify": [
-    "來源約 2022 年，是否仍營業、價格"
+    "S55 寫崩岩館「站前店本館」和「民治店」都已歇業，不確定國民一街這間是哪一間"
    ],
    "lat": 23.9877651,
    "lng": 121.6018246,
@@ -2734,6 +3542,13 @@
      "website": "https://hualienbonus.tw/"
     },
     "dist_to_address_m": 123
+   },
+   "coord_check": {
+    "lat": 23.9887095,
+    "lng": 121.601192,
+    "coord_source": "nominatim:road",
+    "coord_query": "花蓮縣花蓮市國民一街",
+    "coord_match": "國民一街, 國聯里, 花蓮市, 花蓮縣, 970, 臺灣"
    }
   },
   {
@@ -2767,7 +3582,8 @@
     ]
    },
    "verify": [
-    "名稱、是否仍營業"
+    "名稱、是否仍營業",
+    "S55 在同一巷弄（自強路300巷30弄19號）列的是「小窩活動共享空間」（抱石＋上攀），可能是同一處改名"
    ],
    "lat": 23.9813111,
    "lng": 121.5892998,
@@ -2801,9 +3617,28 @@
     ],
     "features": [
      "S05"
+    ],
+    "hours": [
+     "S55"
+    ],
+    "prices": [
+     "S55"
     ]
    },
-   "verify": [],
+   "verify": [
+    "S55 標為抱石館，和 features 寫的「沒有抱石」不一致"
+   ],
+   "hours": "10:00–21:00（預約制）",
+   "prices": [
+    {
+     "item": "全日",
+     "price": "250"
+    },
+    {
+     "item": "租岩鞋",
+     "price": "50"
+    }
+   ],
    "lat": 22.7745057,
    "lng": 121.0877917,
    "coord_source": "nominatim:road",
@@ -3072,6 +3907,24 @@
    }
   },
   {
+   "osm": "node/13417522409",
+   "url": "https://www.openstreetmap.org/node/13417522409",
+   "name": "原岩攀岩館-明德店",
+   "lat": 25.1082592,
+   "lng": 121.5142392,
+   "tags": {
+    "addr:city": "臺北市",
+    "addr:district": "北投區",
+    "addr:full": "112臺北市北投區文林北路222號B1樓",
+    "addr:housenumber": "222",
+    "addr:street": "文林北路",
+    "fee": "yes",
+    "leisure": "sports_centre",
+    "opening_hours": "Mo-Fr 12:00-23:00",
+    "sport": "climbing"
+   }
+  },
+  {
    "osm": "node/13437893337",
    "url": "https://www.openstreetmap.org/node/13437893337",
    "name": "",
@@ -3080,24 +3933,6 @@
    "tags": {
     "leisure": "sports_centre",
     "sport": "climbing"
-   }
-  },
-  {
-   "osm": "node/13447526001",
-   "url": "https://www.openstreetmap.org/node/13447526001",
-   "name": "原岩攀岩館-明德店",
-   "lat": 25.1082962,
-   "lng": 121.5142184,
-   "tags": {
-    "addr:city": "臺北市",
-    "addr:district": "北投區",
-    "addr:full": "臺北市北投區文林北路222號B1樓",
-    "addr:housenumber": "222",
-    "addr:street": "文林北路",
-    "leisure": "fitness_centre",
-    "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 10:00-22:00",
-    "phone": "+886 2 28219988",
-    "website": "https://www.tupclimbing.tw/"
    }
   },
   {

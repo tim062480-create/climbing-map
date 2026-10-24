@@ -138,6 +138,8 @@ def match_osm(gym, places, geo=None, used=()):
 
 def address_candidates(gym):
     addr = gym.get("address", "") or ""
+    # 括號裡的地標（例如「（永和國民運動中心）」）比路段準，門牌查不到時先用它
+    landmarks = [a or b for a, b in re.findall(r"（(.*?)）|\((.*?)\)", addr)]
     addr = re.sub(r"（.*?）|\(.*?\)", "", addr).strip()
     out = []
     # 只有縣市、行政區（例如「新北市新莊區」）的地址會定位到區中心，不能用
@@ -150,6 +152,10 @@ def address_candidates(gym):
         m = re.match(r"(.*?\d+號)", addr)
         if m and m.group(1) not in (addr, no_floor):
             out.append(("address", m.group(1)))
+        for lm in landmarks:
+            if "待確認" not in lm and not re.search(r"步行|站\s*\d|出口", lm):
+                city = gym.get("city", "")
+                out.append(("place", lm if lm.startswith(city) else f"{city}{lm}"))
         m = re.match(r"(.*?[路街道](?:[一二三四五六七八九十]+段)?)", addr)
         if m:
             out.append(("road", m.group(1)))

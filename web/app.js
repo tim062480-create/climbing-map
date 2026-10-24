@@ -178,7 +178,7 @@ function openDetail(id, pushHash = true) {
   const cls = STATUS_CLASS[g.status] || "warn";
   const types = (g.types || []).map((t) => TYPE_NAME[t] || t).join("、");
   const links = Object.entries(g.links || {}).map(([k, url]) =>
-    `<a class="btn small" href="${esc(url)}" target="_blank" rel="noopener">${esc({ website: "官網", facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", price_page: "價目表" }[k] || k)}</a>`).join("");
+    `<a class="btn small" href="${esc(url)}" target="_blank" rel="noopener">${esc({ website: "官網", facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", price_page: "價目表", booking: "預約" }[k] || k)}</a>`).join("");
 
   $("detailBody").innerHTML = `
     <h2>${esc(g.name)}</h2>
