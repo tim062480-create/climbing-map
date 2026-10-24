@@ -30,7 +30,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. `src/youbike_near.py`：
    - 用全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API）和臺北市開放資料，記錄每館 1 公里內最近 4 站的車數。
    - 算出 `youbike_pattern.json`：站號 → 平日 `wd`／假日 `we` → `slot = 小時*2 + 分//30` → `[平均可借, 平均可還, 樣本數]`。
-   - 「可借、可還都是 0」視為沒有資料（2026-10-23 起北部資料源整批回傳 0），不記錄、不算平均。
+   - 「可借、可還都是 0」視為沒有資料（例如颱風暫停營運時；2026-10-23 起北部整批回傳 0），不記錄、不算平均。
 3. `src/export_table.py`：把 gyms.json 匯出成 `output/vN/gyms.csv` 和 `summary.md`，N 自動遞增。
 4. 網頁（`index.html`、`web/app.js`）：
    - 沒有建置步驟，Leaflet 和 OSM 底圖從 unpkg 載入。
