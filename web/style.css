@@ -50,13 +50,19 @@ a { color: var(--accent); }
   padding-top: max(8px, env(safe-area-inset-top));
 }
 .topbar h1 { font-size: 18px; margin: 0; white-space: nowrap; }
-.search { flex: 1; min-width: 0; max-width: 560px; }
+.search { flex: 1; min-width: 0; max-width: 560px; position: relative; }
 .search input {
   width: 100%; font: inherit; font-size: 16px; /* 16px 以上 iOS 才不會自動放大 */
-  padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 46px 7px 14px; border: 1px solid var(--line); border-radius: 999px;
   background: var(--surface); color: var(--text);
 }
 .search input:focus { outline: 2px solid var(--accent); outline-offset: 1px; background: var(--bg); }
+.search input::-webkit-search-cancel-button { display: none; }   /* 右邊放搜尋按鈕，不要瀏覽器自帶的 ✕ 疊在一起 */
+.search-btn {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 36px; height: 32px; border: 0; border-radius: 999px; cursor: pointer;
+  display: grid; place-items: center; background: var(--accent); color: var(--accent-text);
+}
 @media (max-width: 599px) {
   .topbar h1, .topbar .label { display: none; }   /* 手機上把位置讓給搜尋框 */
 }
