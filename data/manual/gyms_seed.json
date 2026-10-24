@@ -669,7 +669,8 @@
           "S09"
         ],
         "status": [
-          "S50"
+          "S50",
+          "S64"
         ]
       },
       "verify": []
@@ -754,7 +755,8 @@
         "address": [
           "S51",
           "S52",
-          "S56"
+          "S56",
+          "S67"
         ],
         "hours": [
           "S01",
@@ -766,7 +768,7 @@
           "S37"
         ],
         "phone": [
-          "S56"
+          "S67"
         ],
         "prices": [
           "S55"
@@ -776,7 +778,7 @@
         "價格是 2022 年資料",
         "營業時間：S56 寫每日到 22:30、S52 寫到 22:00、S55 寫假日到 20:30"
       ],
-      "phone": "02-2788-6220 分機 12",
+      "phone": "02-2788-0615",
       "prices": [
         {
           "item": "平日 17:00 前入場",
@@ -1076,8 +1078,8 @@
     },
     {
       "id": "camp4-taipei",
-      "name": "Camp4 達文西攀岩館",
-      "name_en": "Camp4",
+      "name": "Camp4 達文西攀岩館（北投運動中心）",
+      "name_en": "Camp4 (Taipei Beitou Sports Center)",
       "brand": "Camp4",
       "city": "臺北市",
       "district": "北投區",
@@ -1098,6 +1100,9 @@
         ],
         [
           "達文西"
+        ],
+        [
+          "北投運動中心"
         ]
       ],
       "youtube": [],
@@ -1106,7 +1111,9 @@
           "S01",
           "S02",
           "S15",
-          "S44"
+          "S44",
+          "S07",
+          "S64"
         ],
         "address": [
           "S52",
@@ -1126,8 +1133,7 @@
       },
       "verify": [
         "是否有抱石區（S55 標為上攀館）",
-        "平日開館時間：S56 寫 13:00，S52 寫 10:00",
-        "與「北投運動中心攀岩場」應是同一處"
+        "平日開館時間：S56 寫 13:00，S52 寫 10:00"
       ],
       "phone": "02-2823-7808",
       "hours": "週一至週五 13:00–22:00；週六、日 09:00–18:00",
@@ -1172,7 +1178,8 @@
         ],
         "address": [
           "S55",
-          "S56"
+          "S56",
+          "S70"
         ],
         "phone": [
           "S56"
@@ -1183,6 +1190,9 @@
         ],
         "prices": [
           "S55"
+        ],
+        "status": [
+          "S70"
         ]
       },
       "verify": [
@@ -1239,7 +1249,8 @@
           "S56"
         ],
         "hours": [
-          "S57"
+          "S57",
+          "S64"
         ],
         "prices": [
           "S57"
@@ -1250,7 +1261,8 @@
         ]
       },
       "verify": [
-        "是否有抱石區（來源都只提到上攀，最高 12 公尺）"
+        "是否有抱石區（來源都只提到上攀，最高 12 公尺）",
+        "營業時間：官方預約頁和 Facebook 一致；Instagram 簡介寫平日 13:00–21:30、假日 10:00–19:00"
       ],
       "phone": "02-2351-5215",
       "hours": "平日 08:30–21:30；假日 09:30–18:30（中午、傍晚各休息 1 小時；寒暑假會調整）",
@@ -1341,6 +1353,67 @@
       ]
     },
     {
+      "id": "flow-neihu",
+      "name": "心流抱石館",
+      "name_en": "Flow Bouldering Gym",
+      "brand": "心流",
+      "city": "臺北市",
+      "district": "內湖區",
+      "address": "臺北市內湖區瑞光路258巷55號1樓",
+      "types": [
+        "bouldering"
+      ],
+      "status": "營業中",
+      "links": {
+        "instagram": "https://www.instagram.com/flowboulderinggym/"
+      },
+      "osm_keywords": [
+        [
+          "心流"
+        ]
+      ],
+      "youtube": [],
+      "src": {
+        "name": [
+          "S55",
+          "S78"
+        ],
+        "address": [
+          "S55",
+          "S78"
+        ],
+        "hours": [
+          "S78"
+        ],
+        "prices": [
+          "S55"
+        ],
+        "features": [
+          "S55",
+          "S78"
+        ],
+        "status": [
+          "S78"
+        ]
+      },
+      "verify": [
+        "週末營業時間（IG 簡介被截斷；S55 寫平日 12:00–23:00、週末 10:00–19:00）",
+        "價格來源未標日期"
+      ],
+      "hours": "週一至週五 17:00–23:00；週末待確認",
+      "prices": [
+        {
+          "item": "全日票",
+          "price": "350"
+        },
+        {
+          "item": "平日星光（20:30 後入場）",
+          "price": "300"
+        }
+      ],
+      "features": "內湖科技園區的抱石館，2023-04-29 開幕（原小岩館內湖店）"
+    },
+    {
       "id": "nangang-sports",
       "name": "南港運動中心攀岩場",
       "name_en": "Nangang Sports Center Climbing",
@@ -1377,12 +1450,12 @@
     },
     {
       "id": "wanhua-sports",
-      "name": "萬華運動中心攀岩場",
+      "name": "萬華運動中心攀岩場（米開朗基羅攀岩館）",
       "name_en": "Wanhua Sports Center Climbing",
       "brand": "運動中心",
       "city": "臺北市",
       "district": "萬華區",
-      "address": "臺北市萬華區西寧南路6-1號（萬華運動中心）",
+      "address": "臺北市萬華區西寧南路6-1號4樓（萬華運動中心）",
       "types": [
         "lead",
         "bouldering"
@@ -1406,46 +1479,20 @@
           "S05"
         ],
         "address": [
-          "S55"
+          "S64"
         ],
         "hours": [
           "S55"
+        ],
+        "name": [
+          "S64"
         ]
       },
       "verify": [
         "抱石區規模",
-        "地址與時間只有 S55（2022，當時由 Camp4 經營、預約制）"
+        "營業時間只有 S55（2022，當時由 Camp4 經營）；現在粉專名稱是米開朗基羅攀岩館（蓋亞冒險學校與艾格探險合作）"
       ],
       "hours": "週一至週五 13:00–21:30；週六、日 09:00–18:00"
-    },
-    {
-      "id": "beitou-sports",
-      "name": "北投運動中心攀岩場",
-      "name_en": "Taipei Beitou Sports Center",
-      "brand": "運動中心",
-      "city": "臺北市",
-      "district": "北投區",
-      "address": "臺北市北投運動中心",
-      "types": [
-        "lead",
-        "bouldering"
-      ],
-      "status": "待確認",
-      "links": {},
-      "osm_keywords": [
-        [
-          "北投運動中心"
-        ]
-      ],
-      "youtube": [],
-      "src": {
-        "name": [
-          "S07"
-        ]
-      },
-      "verify": [
-        "與「Camp4 達文西攀岩館」應是同一處（Camp4 就在北投運動中心 2 樓，S55、S56），可考慮刪掉這筆"
-      ]
     },
     {
       "id": "yonghe-sports",
@@ -1733,16 +1780,106 @@
       ]
     },
     {
+      "id": "passion-taoyuan",
+      "name": "爬森攀岩館",
+      "name_en": "Passion Climbing Gym",
+      "brand": "爬森",
+      "city": "桃園市",
+      "district": "桃園區",
+      "address": "桃園市桃園區新埔七街139-1號",
+      "types": [
+        "bouldering",
+        "lead"
+      ],
+      "status": "營業中",
+      "links": {
+        "website": "https://passion.climbrock.vip/",
+        "instagram": "https://www.instagram.com/passion_climbing_gym/"
+      },
+      "osm_keywords": [
+        [
+          "爬森"
+        ],
+        [
+          "Passion",
+          "climbing"
+        ]
+      ],
+      "youtube": [],
+      "src": {
+        "name": [
+          "S55",
+          "S51",
+          "S73"
+        ],
+        "address": [
+          "S55",
+          "S51"
+        ],
+        "hours": [
+          "S55",
+          "S74"
+        ],
+        "prices": [
+          "S55"
+        ],
+        "features": [
+          "S55",
+          "S73"
+        ],
+        "status": [
+          "S73",
+          "S74"
+        ]
+      },
+      "verify": [
+        "價格來源未標日期",
+        "平日開館時間：S55 寫 15:00，S51（2025-12）寫 17:00"
+      ],
+      "hours": "週二至週五 15:00–23:00；週六、日 10:00–21:00；週一公休",
+      "prices": [
+        {
+          "item": "平日票",
+          "price": "320"
+        },
+        {
+          "item": "假日票",
+          "price": "350"
+        },
+        {
+          "item": "平日時段票 15:00–18:00",
+          "price": "250"
+        },
+        {
+          "item": "平日星光（閉館前 2.5 小時）",
+          "price": "200"
+        },
+        {
+          "item": "假日星光（閉館前 2.5 小時）",
+          "price": "250"
+        },
+        {
+          "item": "租岩鞋",
+          "price": "100"
+        },
+        {
+          "item": "租吊帶",
+          "price": "80"
+        }
+      ],
+      "features": "抱石與上攀；晚上常有駐場教練陪練"
+    },
+    {
       "id": "iclimb-zhubei",
-      "name": "iClimb 風城攀岩館",
-      "name_en": "iClimb Rock Climbing Gym",
+      "name": "iClimb 風城攀岩館 成功館",
+      "name_en": "iClimb Chenggong",
       "brand": "iClimb",
       "city": "新竹縣",
       "district": "竹北市",
       "address": "新竹縣竹北市成功二街98號",
       "types": [
-        "bouldering",
-        "lead"
+        "lead",
+        "bouldering"
       ],
       "status": "營業中",
       "prices": [
@@ -1760,17 +1897,17 @@
           "price": "80"
         }
       ],
-      "features": "分勝利館（抱石＋上攀體驗）和成功館（綜合館，抱石、上攀、先鋒）",
+      "features": "以上攀為主，有天花板地形；抱石在勝利館",
       "links": {
-        "youtube": "https://www.youtube.com/@iClimbRockClimbingGym/videos"
+        "youtube": "https://www.youtube.com/@iClimbRockClimbingGym/videos",
+        "instagram": "https://www.instagram.com/iclimb_chenggong/"
       },
       "osm_keywords": [
         [
-          "iClimb"
+          "成功館"
         ],
         [
-          "風城",
-          "攀岩"
+          "風城攀岩館"
         ]
       ],
       "youtube": [],
@@ -1782,22 +1919,178 @@
           "S55"
         ],
         "features": [
-          "S19"
+          "S71"
         ],
         "address": [
           "S51",
-          "S55"
+          "S55",
+          "S71"
         ],
         "hours": [
           "S51"
         ]
       },
       "verify": [
-        "成功館電話（先前的 03-658-8588 在原文找不到；S18 寫的 03-550-8066 是勝利館）",
-        "勝利館（竹北市勝利十五街66號，S18：平日 350、假日 380、離峰 299）是另一個場地，還沒分開收錄",
+        "成功館電話（先前的 03-658-8588 在原文找不到）",
         "成功館營業時間 S55 和 S51 不同"
       ],
       "hours": "週一至週三 10:00–22:30；週四至週日 09:00–21:00（成功館）"
+    },
+    {
+      "id": "iclimb-shengli",
+      "name": "iClimb 風城攀岩館 勝利館",
+      "name_en": "iClimb Shengli",
+      "brand": "iClimb",
+      "city": "新竹縣",
+      "district": "竹北市",
+      "address": "新竹縣竹北市勝利十五街66號",
+      "types": [
+        "bouldering"
+      ],
+      "status": "營業中",
+      "links": {
+        "instagram": "https://www.instagram.com/iclimb_shengli/"
+      },
+      "osm_keywords": [
+        [
+          "勝利館"
+        ]
+      ],
+      "youtube": [],
+      "src": {
+        "name": [
+          "S18",
+          "S51",
+          "S55",
+          "S77"
+        ],
+        "address": [
+          "S18",
+          "S51",
+          "S55"
+        ],
+        "phone": [
+          "S18"
+        ],
+        "hours": [
+          "S18",
+          "S77"
+        ],
+        "prices": [
+          "S18",
+          "S55"
+        ],
+        "features": [
+          "S71",
+          "S77"
+        ]
+      },
+      "verify": [
+        "價格是 2025-03 的資料"
+      ],
+      "phone": "03-550-8066",
+      "hours": "週一至週五 14:00–22:30；週六、日 10:00–21:00",
+      "prices": [
+        {
+          "item": "單日入場（平日）",
+          "price": "350",
+          "note": "不限時間"
+        },
+        {
+          "item": "單日入場（假日）",
+          "price": "380"
+        },
+        {
+          "item": "學生（平日／假日）",
+          "price": "280／300"
+        },
+        {
+          "item": "離峰票",
+          "price": "299",
+          "note": "平日 18:00 前離場、假日 18:00 後入場"
+        },
+        {
+          "item": "入會費",
+          "price": "150",
+          "note": "新辦會員或會員卡遺失"
+        },
+        {
+          "item": "體驗（含入場，3–4 人）",
+          "price": "700",
+          "note": "教練指導 50 分鐘"
+        },
+        {
+          "item": "租岩鞋",
+          "price": "100"
+        }
+      ],
+      "features": "iClimb 的抱石館（成功館以上攀為主）"
+    },
+    {
+      "id": "babo-hsinchu",
+      "name": "BABO PAPAK 攀岩登山訓練館",
+      "name_en": "BABO PAPAK",
+      "brand": "BABO PAPAK",
+      "city": "新竹市",
+      "district": "東區",
+      "address": "新竹市東區南大路2號1樓",
+      "types": [
+        "bouldering"
+      ],
+      "status": "營業中",
+      "links": {
+        "website": "https://babo.climbrock.vip/",
+        "instagram": "https://www.instagram.com/babopapak/"
+      },
+      "osm_keywords": [
+        [
+          "BABO"
+        ]
+      ],
+      "youtube": [],
+      "src": {
+        "name": [
+          "S55",
+          "S75"
+        ],
+        "address": [
+          "S55"
+        ],
+        "hours": [
+          "S55",
+          "S76"
+        ],
+        "prices": [
+          "S55"
+        ],
+        "features": [
+          "S75"
+        ],
+        "status": [
+          "S75",
+          "S76"
+        ]
+      },
+      "verify": [
+        "價格來源未標日期",
+        "週末開館時間：S55 寫 09:30，官網 2026-10-24（週六）顯示 10:00"
+      ],
+      "hours": "週一至週五 13:30–23:00；週六、日 10:00–19:00",
+      "prices": [
+        {
+          "item": "全日票",
+          "price": "320"
+        },
+        {
+          "item": "平日離峰 13:30–18:00",
+          "price": "250"
+        },
+        {
+          "item": "租岩鞋",
+          "price": "80"
+        }
+      ],
+      "features": "抱石、重訓、兒童課程；新竹火車站後站附近"
     },
     {
       "id": "bplus-xitun",
@@ -1811,7 +2104,7 @@
         "bouldering"
       ],
       "status": "營業中",
-      "hours": "週二至週五 18:00–23:00；週六、日 13:00–21:00；週一公休",
+      "hours": "週二至週五 18:00–23:00；週六 13:00–21:00；週日 13:00–19:00；週一公休",
       "prices": [
         {
           "item": "全日票",
@@ -1840,15 +2133,21 @@
           "S22"
         ],
         "hours": [
-          "S22"
+          "S64",
+          "S55"
         ],
         "prices": [
           "S55"
+        ],
+        "phone": [
+          "S64"
         ]
       },
       "verify": [
-        "價格來源未標日期（S54 寫 200 起）"
-      ]
+        "價格來源未標日期（S54 寫 200 起）",
+        "週日時間：S54 寫到 21:00，粉專簡介和 S55 寫到 19:00"
+      ],
+      "phone": "0933-324-381"
     },
     {
       "id": "bplus-taiyuan",
@@ -1880,15 +2179,14 @@
           "S22"
         ],
         "address": [
-          "S55"
+          "S55",
+          "S64"
         ],
         "prices": [
           "S55"
         ]
       },
-      "verify": [
-        "地址只有 S55 一個來源"
-      ],
+      "verify": [],
       "prices": [
         {
           "item": "全日票",
@@ -2055,13 +2353,15 @@
         ],
         "address": [
           "S54",
-          "S55"
+          "S55",
+          "S69"
         ],
         "hours": [
           "S54"
         ],
         "status": [
-          "S54"
+          "S54",
+          "S69"
         ]
       },
       "verify": [
@@ -2318,14 +2618,49 @@
       "youtube": [],
       "src": {
         "address": [
-          "S26"
+          "S26",
+          "S63"
         ],
         "features": [
           "S26"
+        ],
+        "hours": [
+          "S63"
+        ],
+        "phone": [
+          "S63"
+        ],
+        "prices": [
+          "S63"
         ]
       },
-      "verify": [
-        "價格、營業時間"
+      "verify": [],
+      "hours": "週一至週五 14:00–22:00；週六、日 10:00–18:00；週三公休",
+      "phone": "06-279-7386",
+      "prices": [
+        {
+          "item": "抱石入場（成人）",
+          "price": "350",
+          "note": "不限時間，不用預約"
+        },
+        {
+          "item": "抱石入場（學生）",
+          "price": "280"
+        },
+        {
+          "item": "平日星光（20:00 後）",
+          "price": "250",
+          "note": "學生 200"
+        },
+        {
+          "item": "租岩鞋",
+          "price": "80"
+        },
+        {
+          "item": "陪同大人",
+          "price": "免費",
+          "note": "12 歲以下每位小朋友可帶 2 位大人，第 3 位起 70"
+        }
       ]
     },
     {
@@ -2508,13 +2843,17 @@
         "hours": [
           "S53",
           "S55"
+        ],
+        "phone": [
+          "S64"
         ]
       },
       "verify": [
         "自動確保器是否恢復",
         "價格來源未標日期"
       ],
-      "hours": "每日 11:00–22:00"
+      "hours": "每日 11:00–22:00",
+      "phone": "07-585-9999 分機 3027"
     },
     {
       "id": "qingchang-kaohsiung",
@@ -2585,6 +2924,7 @@
       ],
       "features": "另有一間在宜蘭市復興路一段102號的舊館（是否仍營業待確認）；抱石高約 6 米以下，下方有軟墊",
       "links": {
+        "website": "https://jioutau-climbing.netlify.app/",
         "facebook": "https://www.facebook.com/jioutau.yilan/"
       },
       "osm_keywords": [
@@ -2595,7 +2935,9 @@
       "youtube": [],
       "src": {
         "address": [
-          "S55"
+          "S55",
+          "S61",
+          "S62"
         ],
         "prices": [
           "S55"
@@ -2604,14 +2946,18 @@
           "S32"
         ],
         "hours": [
-          "S55"
+          "S61",
+          "S62"
+        ],
+        "phone": [
+          "S62"
         ]
       },
       "verify": [
-        "價格來源未標日期",
-        "S32（2022-12）介紹的是復興路一段102號的舊館，舊館是否還在"
+        "價格：官網只寫「過往公開資訊約 300 元、租鞋約 80 元」"
       ],
-      "hours": "每日 13:00–22:00"
+      "hours": "平日 17:00–22:00；假日 14:00–22:00",
+      "phone": "0986-567-929"
     },
     {
       "id": "wuyan-dongshan",
@@ -2673,7 +3019,7 @@
       "types": [
         "bouldering"
       ],
-      "status": "待確認",
+      "status": "已停業",
       "prices": [
         {
           "item": "門票",
@@ -2700,12 +3046,12 @@
         ],
         "hours": [
           "S34"
+        ],
+        "status": [
+          "S65"
         ]
       },
-      "verify": [
-        "唯一的來源 S34 是 2016 年的文章，是否仍營業",
-        "有搜尋摘要說業者「曾經營」這間館（沒有點進原文確認）"
-      ],
+      "verify": [],
       "hours": "平日 18:00–21:00；週六 09:00–21:00；週日 09:00–18:00；週一公休"
     },
     {
@@ -2715,7 +3061,7 @@
       "brand": "運動中心",
       "city": "宜蘭縣",
       "district": "宜蘭市",
-      "address": "宜蘭縣宜蘭運動中心",
+      "address": "宜蘭縣宜蘭市公園路66號（宜蘭國民運動中心）",
       "types": [
         "lead"
       ],
@@ -2733,12 +3079,23 @@
       "youtube": [],
       "src": {
         "features": [
-          "S33"
+          "S33",
+          "S60"
+        ],
+        "address": [
+          "S60"
+        ],
+        "phone": [
+          "S60"
         ]
       },
       "verify": [
-        "是否有抱石區"
-      ]
+        "營業時間（粉專沒有設定）",
+        "是否有抱石區（粉專只寫 8 米上攀）",
+        "粉專看得到的最新貼文是 2022-05-06，是否仍營業",
+        "電話和久淘官網的電話相同，經營者可能是同一個"
+      ],
+      "phone": "0986-567-929"
     },
     {
       "id": "bonus-hualien",
@@ -2775,29 +3132,35 @@
           "S06"
         ],
         "status": [
-          "S55"
+          "S55",
+          "S66"
         ]
       },
       "verify": [
-        "S55 寫崩岩館「站前店本館」和「民治店」都已歇業，不確定國民一街這間是哪一間"
+        "S55 寫站前本館、民治店都已歇業；國民一街38號3樓現在的粉專名稱是「崩岩館站前店【戶外活動部門】」，看起來已不是岩館"
       ]
     },
     {
       "id": "bplus-hualien",
-      "name": "B-Plus 抱石館（花蓮吉安）",
-      "name_en": "",
-      "brand": "",
+      "name": "小窩活動共享空間（原 B-Plus 抱石館）",
+      "name_en": "Woo Climbing Space",
+      "brand": "小窩",
       "city": "花蓮縣",
       "district": "吉安鄉",
-      "address": "花蓮縣吉安鄉自強路300巷30弄",
+      "address": "花蓮縣吉安鄉自強路300巷30弄19號",
       "types": [
         "bouldering",
         "lead"
       ],
-      "status": "待確認",
-      "features": "抱石 3.8 公尺、上攀 9 公尺；名稱和台中 B-Plus 相同，是否同品牌待確認",
-      "links": {},
+      "status": "營業中",
+      "features": "抱石與上攀（S06：抱石 3.8 公尺、上攀 9 公尺）；另有瑜珈、綢吊、空間租借",
+      "links": {
+        "instagram": "https://www.instagram.com/wooclimbing_space/"
+      },
       "osm_keywords": [
+        [
+          "小窩"
+        ],
         [
           "吉安",
           "攀岩"
@@ -2806,15 +3169,42 @@
       "youtube": [],
       "src": {
         "address": [
-          "S06"
+          "S55"
         ],
         "features": [
-          "S06"
+          "S06",
+          "S72"
+        ],
+        "name": [
+          "S55",
+          "S72"
+        ],
+        "hours": [
+          "S55",
+          "S72"
+        ],
+        "prices": [
+          "S55"
+        ],
+        "status": [
+          "S72"
         ]
       },
       "verify": [
-        "名稱、是否仍營業",
-        "S55 在同一巷弄（自強路300巷30弄19號）列的是「小窩活動共享空間」（抱石＋上攀），可能是同一處改名"
+        "和 S06（約 2022）寫的 B-Plus 抱石館在同一巷弄，判斷是同一處改名（使用者 2026-10-24 同意合併）",
+        "價格來源未標日期"
+      ],
+      "hours": "週一至週五 17:30–23:00；週六 16:00–21:00；其他時段 5 人以上可預約",
+      "prices": [
+        {
+          "item": "全日票",
+          "price": "220–250",
+          "note": "原文並列兩個價格，新舊不明"
+        },
+        {
+          "item": "租岩鞋",
+          "price": "50"
+        }
       ]
     },
     {
