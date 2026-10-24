@@ -84,6 +84,8 @@ a { color: var(--accent); }
 .list { list-style: none; margin: 0; padding: 0; }
 .list li { padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
 .list li:hover { background: var(--surface); }
+.list li.divider { padding: 14px 0 6px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: default; }
+.list li.divider:hover, .list li.sub:hover { background: none; }
 .list .dist { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; white-space: nowrap; }
 .list .name { font-weight: 600; }
 .list .sub { font-size: 12px; color: var(--muted); }

@@ -8,6 +8,7 @@ const WALK_M_PER_MIN = 75;     // 步行約 4.5 km/h
 const BIKE_M_PER_MIN = 200;    // 騎 YouBike 約 12 km/h
 const DETOUR = 1.3;            // 直線距離換成實際路程的倍數（估計值）
 const YOUBIKE_MAX_KM = 12;     // 超過這個距離就不建議全程騎 YouBike
+const MIN_LISTED = 5;          // 範圍內不到這麼多間時，補列範圍外最近的館
 // 臺北市 YouBike 即時資料（可借、可還都是 0 時代表資料源沒給數字，不採用）
 const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json";
 
@@ -134,19 +135,25 @@ function render() {
   const gyms = visibleGyms();
   const withCoord = gyms.filter((g) => g.lat != null);
   let shown = withCoord.map((g) => ({ g, d: state.me ? distM(state.me, g) : null }));
+  let outside = [];   // 範圍內太少時，補列範圍外最近的館
   if (state.me) {
     shown.sort((a, b) => a.d - b.d);
-    if (radiusKm > 0) shown = shown.filter((x) => x.d <= radiusKm * 1000);
+    if (radiusKm > 0) {
+      const inRange = shown.filter((x) => x.d <= radiusKm * 1000);
+      if (inRange.length < MIN_LISTED) outside = shown.slice(inRange.length, MIN_LISTED);
+      shown = inRange;
+    }
   } else {
     shown.sort((a, b) => (a.g.city + a.g.name).localeCompare(b.g.city + b.g.name, "zh-Hant"));
   }
 
-  const ids = new Set(shown.map((x) => x.g.id));
+  const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
   $("showOsm").checked ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
-  $("list").innerHTML = shown.map(({ g, d }) => listItem(g, d)).join("") ||
-    `<li class="sub">這個範圍內沒有抱石館，試試把範圍調大。</li>`;
+  $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
+    `<li class="sub">這個範圍內沒有抱石館。</li>`) +
+    (outside.length ? `<li class="divider">${radiusKm} 公里外最近的館</li>` + outside.map(({ g, d }) => listItem(g, d)).join("") : "");
   const noCoord = gyms.filter((g) => g.lat == null);
   $("nocoord").hidden = !noCoord.length;
   $("nocoordList").innerHTML = noCoord.map((g) => listItem(g, null)).join("");
@@ -154,7 +161,8 @@ function render() {
 
   if (state.me) {
     const where = radiusKm > 0 ? `${radiusKm} 公里內` : "全台";
-    setStatus(`${where}有 ${shown.length} 間（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
+    const more = outside.length ? `，另列範圍外最近 ${outside.length} 間` : "";
+    setStatus(`${where}有 ${shown.length} 間${more}（定位誤差約 ${Math.round(state.me.acc)} 公尺）`);
   } else if (!$("status").classList.contains("error")) {
     setStatus(`共 ${shown.length} 間；開啟定位後會依距離排序。`);
   }
