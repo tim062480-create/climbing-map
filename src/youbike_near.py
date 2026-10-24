@@ -1,12 +1,12 @@
 """
 抓抱石館附近的 YouBike 站，記錄車數，算出「同時段歷史平均」給網頁做預測
 ------------------------------------------------
-輸入：climbing/data/gyms.json（要先有經緯度，見 enrich.py）
+輸入：data/processed/gyms.json（要先有經緯度，見 enrich.py）
 輸出：
-  climbing/data/youbike_stations.json   全台站點位置（網頁用來找「你附近」的站；加 --stations 或檔案不存在時才更新）
-  climbing/data/youbike_near.json       每間館附近的站和最新車數（網頁讀）
-  climbing/data/youbike_log/日期.csv     館附近站點的車數記錄（一天一個檔）
-  climbing/data/youbike_pattern.json    每站「平日／假日 × 每 30 分鐘」的平均可借、可還（網頁做到達時預測）
+  data/processed/youbike_stations.json   全台站點位置（網頁用來找「你附近」的站；加 --stations 或檔案不存在時才更新）
+  data/processed/youbike_near.json      每間館附近的站和最新車數（網頁讀）
+  data/raw/youbike_log/日期.csv          館附近站點的車數記錄（一天一個檔）
+  data/processed/youbike_pattern.json   每站「平日／假日 × 每 30 分鐘」的平均可借、可還（網頁做到達時預測）
 
 資料來源（兩個都抓，同一站以有車數的為準）：
   1. YouBike 官網用的全台站點 JSON（apis.youbike.com.tw，非正式公開 API，格式可能變）
@@ -14,7 +14,7 @@
 注意：2026-10-23 01:56 起，兩個來源的臺北、新北、桃園等站「可借、可還」都是 0（嘉義、高雄、台東正常），
 所以「兩個都是 0」一律當作沒有資料，不寫進記錄、不算進平均。
 只用 Python 內建套件。
-用法：python climbing/scripts/youbike_near.py [--stations]
+用法：python src/youbike_near.py [--stations]
 """
 
 import csv
@@ -27,12 +27,12 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data"
+DATA = ROOT / "data" / "processed"
 GYMS = DATA / "gyms.json"
 STATIONS_OUT = DATA / "youbike_stations.json"
 NEAR_OUT = DATA / "youbike_near.json"
 PATTERN_OUT = DATA / "youbike_pattern.json"
-LOG_DIR = DATA / "youbike_log"
+LOG_DIR = ROOT / "data" / "raw" / "youbike_log"
 
 NATIONAL_URL = "https://apis.youbike.com.tw/json/station-yb2.json"
 TAIPEI_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json"
@@ -160,7 +160,7 @@ def main():
     if "--stations" in sys.argv or not STATIONS_OUT.exists():
         rows = sorted([sno, s["name"], s["lat"], s["lng"], s["total"]] for sno, s in stations.items())
         STATIONS_OUT.write_text(json.dumps({
-            "_說明": "全台 YouBike 站點位置 [站號, 站名, 緯度, 經度, 總車位]，由 scripts/youbike_near.py 產生",
+            "_說明": "全台 YouBike 站點位置 [站號, 站名, 緯度, 經度, 總車位]，由 src/youbike_near.py 產生",
             "generated": datetime.now().strftime("%Y-%m-%d %H:%M"), "sources": used, "stations": rows,
         }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         print(f"已更新全台站點：{len(rows)} 站")
@@ -173,7 +173,7 @@ def main():
 
     now = datetime.now()
     NEAR_OUT.write_text(json.dumps({
-        "_說明": "抱石館附近 YouBike 站的最新車數，由 scripts/youbike_near.py 產生",
+        "_說明": "抱石館附近 YouBike 站的最新車數，由 src/youbike_near.py 產生",
         "updated": now.strftime("%Y-%m-%d %H:%M"), "sources": used,
         "stations": {sno: stations[sno] for sno in sorted(keep)},
         "gyms": near,

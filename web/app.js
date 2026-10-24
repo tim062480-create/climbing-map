@@ -1,5 +1,5 @@
 // 附近抱石館地圖
-// 資料：data/gyms.json（館）、data/youbike_*.json（YouBike），都由 GitHub Actions 定期更新。
+// 資料：data/processed/gyms.json（館）、data/processed/youbike_*.json（YouBike），都由 GitHub Actions 定期更新。
 "use strict";
 
 const STATUS_CLASS = { "營業中": "ok", "待確認": "warn", "可能已停業": "warn", "已停業": "bad" };
@@ -57,14 +57,14 @@ async function loadJSON(path) {
 
 // ---------- 載入 ----------
 async function init() {
-  const data = await loadJSON("data/gyms.json") || await loadJSON("data/gyms_seed.json");
+  const data = await loadJSON("data/processed/gyms.json");
   if (!data) { setStatus("資料載入失敗，請重新整理。", true); return; }
   state.gyms = data.gyms;
   state.sources = data.sources || {};
   state.osmExtra = data.osm_unmatched || [];
   state.checked = data.checked || "";
   $("checked").textContent = state.checked;
-  [state.near, state.pattern] = await Promise.all([loadJSON("data/youbike_near.json"), loadJSON("data/youbike_pattern.json")]);
+  [state.near, state.pattern] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json")]);
 
   for (const g of state.gyms) {
     if (g.lat == null) continue;
@@ -248,7 +248,7 @@ function transitHTML(g) {
 
 async function ensureStations() {
   if (!state.stations) {
-    const data = await loadJSON("data/youbike_stations.json");
+    const data = await loadJSON("data/processed/youbike_stations.json");
     state.stations = data ? data.stations.map(([sno, name, lat, lng, total]) => ({ sno, name, lat, lng, total })) : [];
   }
   return state.stations;

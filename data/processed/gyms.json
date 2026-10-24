@@ -1,8 +1,8 @@
 {
- "_說明": "由 scripts/enrich.py 產生，不要手動改；要改資料請改 gyms_seed.json",
- "generated": "2026-10-24 14:20",
+ "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
+ "generated": "2026-10-24 06:41",
  "checked": "2026-10-24",
- "osm_ok": true,
+ "osm_ok": false,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -40,12 +40,12 @@
    "published": "很舊（頁面顯示 3937 天前）"
   },
   "S08": {
-   "title": "原岩攀岩館官網（分店列表）",
+   "title": "原岩攀岩館官網（分店列表）：原岩攀岩館官網（分店列表）",
    "url": "https://tupclimbing.tw/",
    "published": "官網"
   },
   "S09": {
-   "title": "原岩 A19 店官網與粉專",
+   "title": "原岩 A19 店官網與粉專：原岩 A19 店官網與粉專",
    "url": "https://tupclimbing.tw/branch/a19",
    "published": "官網；粉專 https://www.facebook.com/TupClimbingA19/"
   },
@@ -85,7 +85,7 @@
    "published": "未標示"
   },
   "S17": {
-   "title": "趣健行｜趣攀岩（永和國民運動中心）",
+   "title": "趣健行｜趣攀岩（永和國民運動中心）：趣健行｜趣攀岩（永和國民運動中心）",
    "url": "https://www.titohiking.com.tw/titorock-climbing/",
    "published": "官網"
   },
@@ -95,12 +95,12 @@
    "published": "約 2025 初（搜尋結果顯示 583 天前）"
   },
   "S19": {
-   "title": "iClimb 風城攀岩館 YouTube 頻道",
+   "title": "iClimb 風城攀岩館 YouTube 頻道：iClimb 風城攀岩館 YouTube 頻道",
    "url": "https://www.youtube.com/@iClimbRockClimbingGym/videos",
    "published": "官方頻道"
   },
   "S20": {
-   "title": "千手抱石 Cave Bouldering 介紹",
+   "title": "千手抱石 Cave Bouldering 介紹：千手抱石 Cave Bouldering 介紹",
    "url": "https://msrocktheworld.com/cavebouldering/",
    "published": "約 2021（開幕時）"
   },
@@ -190,27 +190,27 @@
    "published": "2026-03-23"
   },
   "S38": {
-   "title": "台北內湖運動中心 攀岩館（光合作用）",
+   "title": "台北內湖運動中心 攀岩館（光合作用）：台北內湖運動中心 攀岩館（光合作用）",
    "url": "https://www.outdoor-taiwan.com/rock_center/pages/news.php",
    "published": "官網"
   },
   "S39": {
-   "title": "原岩明德店官網",
+   "title": "原岩明德店官網：原岩明德店官網",
    "url": "https://tupclimbing.tw/branch/mingde",
    "published": "官網"
   },
   "S40": {
-   "title": "原岩新店店官網",
+   "title": "原岩新店店官網：原岩新店店官網",
    "url": "https://tupclimbing.tw/branch/xindian",
    "published": "官網"
   },
   "S41": {
-   "title": "原岩南港店官網",
+   "title": "原岩南港店官網：原岩南港店官網",
    "url": "https://tupclimbing.tw/branch/nangang",
    "published": "官網"
   },
   "S42": {
-   "title": "原岩萬華店價目表",
+   "title": "原岩萬華店價目表：原岩萬華店價目表",
    "url": "https://tupclimbing.tw/zh/wanhua_rate",
    "published": "官網（價格未能讀到）"
   },
@@ -307,13 +307,6 @@
      "phone": "+886 225218233"
     },
     "dist_to_address_m": 366
-   },
-   "coord_check": {
-    "lat": 25.0536596,
-    "lng": 121.5225186,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 民安里, 中山區, 南西商圈, 臺北市, 10450, 臺灣"
    }
   },
   {
@@ -454,13 +447,6 @@
      "website": "https://tupclimbing.tw"
     },
     "dist_to_address_m": 60
-   },
-   "coord_check": {
-    "lat": 25.0340843,
-    "lng": 121.4963684,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市萬華區大理街",
-    "coord_match": "大理街, 糖廍里, 萬華區, 下崁, 臺北市, 10856, 臺灣"
    }
   },
   {
@@ -540,13 +526,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 515
-   },
-   "coord_check": {
-    "lat": 25.1051566,
-    "lng": 121.5180389,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市北投區文林北路",
-    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112047, 臺灣"
    }
   },
   {
@@ -687,13 +666,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 42
-   },
-   "coord_check": {
-    "lat": 25.0060804,
-    "lng": 121.4864657,
-    "coord_source": "nominatim:road",
-    "coord_query": "新北市中和區立言街",
-    "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣"
    }
   },
   {
@@ -899,13 +871,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 445
-   },
-   "coord_check": {
-    "lat": 24.9160791,
-    "lng": 121.1445629,
-    "coord_source": "nominatim:road",
-    "coord_query": "桃園市楊梅區梅高路",
-    "coord_match": "梅高路, 公館前, 楊梅里, 楊梅區, 桃園市, 326103, 臺灣"
    }
   },
   {
@@ -1252,13 +1217,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 14395
-   },
-   "coord_check": {
-    "lat": 24.984516,
-    "lng": 121.5696249,
-    "coord_source": "nominatim:name",
-    "coord_query": "小岩館 臺北市",
-    "coord_match": "燕樓小館, 116, 木新路二段, 木新里, 文山區, 臺北市, 116, 臺灣"
    }
   },
   {
@@ -2206,13 +2164,6 @@
      "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
     },
     "dist_to_address_m": 0
-   },
-   "coord_check": {
-    "lat": 23.471551,
-    "lng": 120.4628704,
-    "coord_source": "nominatim:address",
-    "coord_query": "嘉義市國民運動中心",
-    "coord_match": "嘉義市國民運動中心, 15, 彌陀路327巷, 新開里, 東區, 草地尾, 嘉義市, 600, 臺灣"
    }
   },
   {
@@ -2297,13 +2248,6 @@
      "website": "https://highfun2017.com/"
     },
     "dist_to_address_m": 363
-   },
-   "coord_check": {
-    "lat": 23.0145341,
-    "lng": 120.1894238,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺南市北區大和路",
-    "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣"
    }
   },
   {
@@ -2605,13 +2549,6 @@
      "website": "https://www.portaly.cc/jioutauclimbimg"
     },
     "dist_to_address_m": 206
-   },
-   "coord_check": {
-    "lat": 24.7509237,
-    "lng": 121.7501518,
-    "coord_source": "nominatim:road",
-    "coord_query": "宜蘭縣宜蘭市健康路三段",
-    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
    }
   },
   {
@@ -2737,13 +2674,6 @@
      "website": "https://yilansports.com.tw/"
     },
     "dist_to_address_m": 2059
-   },
-   "coord_check": {
-    "lat": 24.7523027,
-    "lng": 121.7416776,
-    "coord_source": "nominatim:address",
-    "coord_query": "宜蘭縣宜蘭運動中心",
-    "coord_match": "宜蘭高中新建綜合室內運動場館, 8, 建軍里, 宜蘭市, 宜蘭縣, 260, 臺灣"
    }
   },
   {
@@ -2804,13 +2734,6 @@
      "website": "https://hualienbonus.tw/"
     },
     "dist_to_address_m": 123
-   },
-   "coord_check": {
-    "lat": 23.9887095,
-    "lng": 121.601192,
-    "coord_source": "nominatim:road",
-    "coord_query": "花蓮縣花蓮市國民一街",
-    "coord_match": "國民一街, 國聯里, 花蓮市, 花蓮縣, 970, 臺灣"
    }
   },
   {

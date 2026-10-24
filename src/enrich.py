@@ -1,10 +1,11 @@
 """
 補上抱石館的經緯度，並用 OpenStreetMap 交叉比對
 ------------------------------------------------
-輸入：climbing/data/gyms_seed.json（人工整理，有來源）
+輸入：data/manual/gyms_seed.json（人工整理的館資料）、data/raw/sources.csv（來源清單）
 輸出：
-  climbing/data/gyms.json          網頁讀的資料（seed ＋ 經緯度 ＋ OSM 補充欄位 ＋ OSM 上有但我們沒列的地點）
-  climbing/data/enrich_report.md   每間館的座標怎麼來的、OSM 和地址定位差多少，給人工驗證
+  data/raw/osm/日期.json          Overpass 抓回來的原始 OSM 資料
+  data/processed/gyms.json       網頁讀的資料（seed ＋ 來源 ＋ 經緯度 ＋ OSM 上有但我們沒列的地點）
+  docs/enrich_report.md          每間館的座標怎麼來的、OSM 和地址定位差多少，給人工驗證
 
 做法：
   1. Overpass API 抓台灣所有 sport=climbing 或名稱有「攀岩／抱石／climb／boulder」的地點
@@ -14,9 +15,10 @@
   4. OSM 有、我們沒列的地點放進 osm_unmatched，網頁上用灰色標示「未人工確認」
 
 只用 Python 內建套件。容器／本機連不到 OSM 時會保留上一次 gyms.json 的座標。
-用法：python climbing/scripts/enrich.py
+用法：python src/enrich.py
 """
 
+import csv
 import json
 import math
 import re
@@ -28,11 +30,13 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SEED = ROOT / "data" / "gyms_seed.json"
-OUT = ROOT / "data" / "gyms.json"
-REPORT = ROOT / "data" / "enrich_report.md"
+SEED = ROOT / "data" / "manual" / "gyms_seed.json"
+SOURCES = ROOT / "data" / "raw" / "sources.csv"
+OSM_RAW_DIR = ROOT / "data" / "raw" / "osm"
+OUT = ROOT / "data" / "processed" / "gyms.json"
+REPORT = ROOT / "docs" / "enrich_report.md"
 
-UA = "ntu-youbike-climbing-map/1.0 (https://github.com/tim062480-create/ntu-youbike)"
+UA = "climbing-map/1.0 (https://github.com/tim062480-create/climbing-map)"
 OVERPASS_URLS = [
     "https://overpass-api.de/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
@@ -187,6 +191,13 @@ def geocode(gym):
     return None
 
 
+def load_sources():
+    """data/raw/sources.csv → {代號: {title, url, published}}（網頁的「資料來源」用）"""
+    with open(SOURCES, encoding="utf-8-sig") as f:
+        return {r["代號"]: {"title": f"{r['媒體']}：{r['標題']}", "url": r["網址"], "published": r["日期時間"]}
+                for r in csv.DictReader(f)}
+
+
 def main():
     seed = json.loads(SEED.read_text(encoding="utf-8"))
     old = {}
@@ -197,6 +208,10 @@ def main():
             old = {}
 
     elements = fetch_osm()
+    if elements is not None:
+        OSM_RAW_DIR.mkdir(parents=True, exist_ok=True)
+        (OSM_RAW_DIR / f"{datetime.now():%Y-%m-%d}.json").write_text(
+            json.dumps(elements, ensure_ascii=False), encoding="utf-8")
     places = [osm_place(e) for e in elements] if elements is not None else None
     used = set()
     gyms = []
@@ -237,11 +252,11 @@ def main():
         unmatched = json.loads(OUT.read_text(encoding="utf-8")).get("osm_unmatched", [])
 
     out = {
-        "_說明": "由 scripts/enrich.py 產生，不要手動改；要改資料請改 gyms_seed.json",
+        "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
         "generated": datetime.now().strftime("%Y-%m-%d %H:%M"),
         "checked": seed.get("checked"),
         "osm_ok": places is not None,
-        "sources": seed["sources"],
+        "sources": load_sources(),
         "gyms": gyms,
         "osm_unmatched": unmatched,
     }
@@ -255,7 +270,7 @@ def write_report(out):
     lines = [
         "# 座標與 OpenStreetMap 交叉比對報告",
         "",
-        f"產生時間：{out['generated']}（由 `climbing/scripts/enrich.py` 在 GitHub Actions 上產生）",
+        f"產生時間：{out['generated']}（由 `src/enrich.py` 在 GitHub Actions 上產生）",
         f"OSM 連線：{'成功' if out['osm_ok'] else '失敗（沿用上次結果）'}",
         "",
         "座標來源說明：`osm` ＝ OSM 上有這間館（最準）；`nominatim:address` ＝ 用門牌定位；"
