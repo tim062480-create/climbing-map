@@ -94,6 +94,8 @@ a { color: var(--accent); }
 }
 .btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .btn.small { padding: 3px 10px; font-size: 13px; }
+.btn.fav { margin-top: 8px; }
+.btn.fav[aria-pressed="true"] { color: #e67700; border-color: #f59f00; }
 
 .layout { flex: 1; display: flex; min-height: 0; position: relative; }
 #map { flex: 1; min-height: 0; z-index: 0; }

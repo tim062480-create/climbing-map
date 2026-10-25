@@ -10,4 +10,7 @@ window.CLIMBING_CONFIG = {
   // 大眾運輸路線：TDX 中繼（relay/tdx-worker.js）部署後的網址，例如 "https://climbing-map-tdx.xxx.workers.dev"。
   // 空著時大眾運輸只顯示粗估時間和 Google 地圖按鈕。設定步驟見 docs/TDX大眾運輸設定步驟.md
   transitRelay: "",
+  // 預設的最愛館（館的 id 見 data/manual/gyms_seed.json）：宜蘭、永和。
+  // 只在這台裝置還沒存過最愛時使用；在網頁上按 ☆ 加入、取消後，就改存在這台裝置的瀏覽器裡。
+  favorites: ["yonghe-sports", "jioutau-yilan", "wuyan-dongshan", "yilan-sports"],
 };

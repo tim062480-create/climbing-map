@@ -1,0 +1,59 @@
+# 每半年找一次新岩館（src/find_new_gyms.py）
+#
+#   - 1 月 1 日、7 月 1 日 09:00（台灣時間）重新抓 OSM，列出地圖還沒收錄的攀岩地點，宜蘭、永和排最前面
+#   - 結果存成 docs/new_gyms_report.md，並開一則 issue（GitHub App 會通知）
+#   - 想馬上跑一次：repo 的 Actions → 新岩館檢查 → Run workflow
+#
+# 在 GitHub 的主機上跑，不需要開電腦。schedule 只會在預設分支（main）上執行。
+
+name: 新岩館檢查
+
+on:
+  schedule:
+    - cron: "0 1 1 1,7 *"
+  workflow_dispatch:
+
+# 不跟 update-data.yml 共用 concurrency group：YouBike 每 20 分鐘排一次，會把排隊中的這個取消掉
+concurrency:
+  group: new-gyms
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Taipei
+      PYTHONUNBUFFERED: "1"
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 重新抓 OSM、列出新地點
+        run: |
+          python src/enrich.py
+          python src/find_new_gyms.py
+
+      - name: 存回 repo
+        run: |
+          git config user.name "climbing-data-bot"
+          git config user.email "climbing-data-bot@users.noreply.github.com"
+          git add data docs
+          git commit -q -m "新岩館檢查 $(date '+%Y-%m-%d')" || exit 0
+          for i in 1 2 3; do
+            if git pull -q --rebase; then git push -q && break; else git rebase --abort; fi
+            sleep 10
+          done
+
+      - name: 開 issue 通知
+        run: |
+          n=$(grep -c '^| ⭐' docs/new_gyms_report.md || true)
+          gh issue create --title "新岩館檢查 $(date '+%Y-%m')（宜蘭、永和 ${n} 個候選）" --body-file docs/new_gyms_report.md
