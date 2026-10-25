@@ -112,8 +112,9 @@ def google_news(gym):
     for it in raw:
         # Google 新聞的標題結尾是「 - 媒體名稱」
         title = re.sub(r"\s+-\s+[^-]+$", "", it["title"]) if it["source"] else it["title"]
-        if keyword_hit(gym, title) and CLIMB.search(title):
-            out.append({**it, "title": title, "kind": "news", "source": it["source"] or "Google 新聞"})
+        # 沒通過過濾的也回傳（match=False），存進原始資料，方便檢查過濾條件是不是太嚴
+        out.append({**it, "title": title, "kind": "news", "source": it["source"] or "Google 新聞",
+                    "match": bool(keyword_hit(gym, title) and CLIMB.search(title))})
     return out
 
 
@@ -166,6 +167,7 @@ def main():
                 errors.append(f"{g['id']} {name}：{e}")
             time.sleep(1.5)
         raw[g["id"]] = found
+        found = [{k: v for k, v in it.items() if k != "match"} for it in found if it.get("match", True)]
         merged = {}
         for it in old.get(g["id"], []) + found:
             merged.setdefault(it["url"], it)
