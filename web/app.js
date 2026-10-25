@@ -16,7 +16,7 @@ const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
   me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
-  favs: new Set(),
+  favs: new Set(), news: {}, newsUpdated: "",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -67,7 +67,11 @@ async function init() {
   state.checked = data.checked || "";
   state.favs = loadFavs();
   $("checked").textContent = state.checked;
-  [state.near, state.pattern] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json")]);
+  let news;
+  [state.near, state.pattern, news] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json"),
+    loadJSON("data/processed/news.json")]);
+  state.news = (news && news.gyms) || {};
+  state.newsUpdated = (news && news.updated) || "";
 
   for (const g of state.gyms) {
     if (g.lat == null) continue;
@@ -489,8 +493,29 @@ function listItem(g, d) {
   const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
   const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : ""]
     .filter(Boolean).join("・");
+  const n = freshNews(g);
   return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${state.favs.has(g.id) ? "⭐ " : ""}${esc(g.name)}</div>` +
-    `<div class="sub">${esc(sub)}</div></div><span class="dist">${d != null ? fmtDist(d) : g.lat == null ? "位置待補" : ""}</span></li>`;
+    `<div class="sub">${esc(sub)}</div>${n ? `<div class="sub fresh">🆕 ${esc(n.date.slice(5).replace("-", "/"))} ${esc(n.title)}</div>` : ""}</div><span class="dist">${d != null ? fmtDist(d) : g.lat == null ? "位置待補" : ""}</span></li>`;
+}
+
+// ---------- 近期動態（data/processed/news.json，每半個月更新） ----------
+const FRESH_DAYS = 15;
+// 最近 FRESH_DAYS 天內的最新一則，清單上顯示「🆕」
+function freshNews(g) {
+  const n = (state.news[g.id] || [])[0];
+  return n && n.date >= new Date(Date.now() - FRESH_DAYS * 864e5).toISOString().slice(0, 10) ? n : null;
+}
+
+function newsHTML(g) {
+  const items = state.news[g.id] || [];
+  const ICON = { news: "📰", youtube: "▶️", website: "🌐" };
+  const social = ["facebook", "instagram"].filter((k) => (g.links || {})[k]).map((k) =>
+    `<a class="btn small" href="${esc(g.links[k])}" target="_blank" rel="noopener">${k === "facebook" ? "Facebook" : "Instagram"} 最新貼文</a>`).join("");
+  return (items.length ? `<ul class="news">${items.map((n) =>
+    `<li>${ICON[n.kind] || "📰"} <a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a><div class="note">${esc(n.date)}・${esc(n.source)}</div></li>`).join("")}</ul>`
+    : `<p class="note">最近半年沒有找到這間館的新聞、影片或官網公告。</p>`) +
+    (social ? `<div class="row">${social}</div>` : "") +
+    `<p class="note">每半個月自動更新${state.newsUpdated ? `（上次 ${esc(state.newsUpdated)}）` : ""}。新聞是用館名自動搜尋，可能混到別的消息；Facebook、Instagram 的貼文沒辦法自動抓，請點連結看。</p>`;
 }
 
 // ---------- 詳細資訊 ----------
@@ -513,6 +538,9 @@ function openDetail(id, pushHash = true) {
     ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>` : ""}
     ${g.features ? `<p>${esc(g.features)}</p>` : ""}
     <div class="row">${links}<a class="btn small" href="${gmapsSearch(g)}" target="_blank" rel="noopener">Google 地圖（評論・照片）</a></div>
+
+    <h3>近期動態</h3>
+    ${newsHTML(g)}
 
     <h3>價格</h3>
     ${g.prices && g.prices.length ? `<table>${g.prices.map((p) =>
