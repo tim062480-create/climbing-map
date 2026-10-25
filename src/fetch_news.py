@@ -40,6 +40,7 @@ KEEP_DAYS = 180
 KEEP_N = 8
 CLIMB = re.compile(r"攀岩|抱石|岩館|岩場|攀登|climb|boulder", re.I)
 TW = timezone(timedelta(hours=8))
+STATS = {"news_raw": 0, "sample": None}   # Google 新聞過濾前的總則數，全部是 0 時印出回應開頭，方便查是不是被擋
 
 
 def get(url, timeout=30):
@@ -102,8 +103,13 @@ def google_news(gym):
     q = " ".join(f'"{k}"' for k in groups[0]) + " (攀岩 OR 抱石)"
     url = "https://news.google.com/rss/search?" + urllib.parse.urlencode(
         {"q": f"{q} when:{KEEP_DAYS}d", "hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant"})
+    xml = get(url)
+    raw = parse_feed(xml)
+    STATS["news_raw"] += len(raw)
+    if STATS["sample"] is None:
+        STATS["sample"] = xml[:300]
     out = []
-    for it in parse_feed(get(url)):
+    for it in raw:
         # Google 新聞的標題結尾是「 - 媒體名稱」
         title = re.sub(r"\s+-\s+[^-]+$", "", it["title"]) if it["source"] else it["title"]
         if keyword_hit(gym, title) and CLIMB.search(title):
@@ -178,6 +184,9 @@ def main():
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     for e in errors:
         print("失敗：" + e)
+    print(f"\nGoogle 新聞過濾前共 {STATS['news_raw']} 則")
+    if not STATS["news_raw"] and STATS["sample"] is not None:
+        print("Google 新聞回應開頭：" + STATS["sample"])
     print(f"\n完成：{len(result)} 間館有近期動態；{len(errors)} 個來源失敗")
 
 
