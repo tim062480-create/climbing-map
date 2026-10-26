@@ -119,8 +119,8 @@ def days_word(s):
 def price_when(item, note=""):
     """一個票價項目什麼時候能用（格式見檔案開頭）"""
     text = f"{item} {note}"
-    # 「平日晚上、假日下午與晚上」（尖峰、離峰）
-    if re.search(r"(平日|假日)(早上|上午|下午|晚上)", note):
+    # 「平日晚上、假日下午與晚上」（尖峰、離峰；只看這兩種票，避免把一般說明文字當成時段）
+    if re.search(r"尖峰|離峰", item) and re.search(r"(平日|假日)(早上|上午|下午|晚上)", note):
         conds = []
         for part in re.split(r"[、，,]", note):
             d = days_word(part)

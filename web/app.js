@@ -695,6 +695,13 @@ function priceNow(g) {
   };
 }
 
+// 票價的說明：「星光」沒寫幾點開始時，補一句是什麼意思
+function priceNote(p) {
+  const extra = /星光/.test(p.item) && p.when == null && !/打烊|閉館/.test(p.note || "")
+    ? "星光票是晚上快打烊時入場的優惠票，這裡沒寫幾點開始，請先問館方" : "";
+  return [p.note, extra].filter(Boolean).join("；");
+}
+
 // ---------- 詳細資訊 ----------
 function openDetail(id, pushHash = true) {
   const g = state.gyms.find((x) => x.id === id);
@@ -724,7 +731,7 @@ function openDetail(id, pushHash = true) {
     <h3>價格</h3>
     ${pn.html}
     ${g.prices && g.prices.length ? `<table>${g.prices.map((p) =>
-      `<tr${pn.fits.includes(p) ? ' class="now"' : ""}><td>${esc(p.item)}${p.note ? `<div class="note">${esc(p.note)}</div>` : ""}</td><td class="price">${esc(fmtPrice(p.price))}</td></tr>`).join("")}</table>`
+      `<tr${pn.fits.includes(p) ? ' class="now"' : ""}><td>${esc(p.item)}${priceNote(p) ? `<div class="note">${esc(priceNote(p))}</div>` : ""}</td><td class="price">${esc(fmtPrice(p.price))}</td></tr>`).join("")}</table>`
       : `<p class="note">還沒找到價格資料，請看官網或 Google 地圖。</p>`}
 
     <h3>交通建議</h3>

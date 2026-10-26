@@ -2049,7 +2049,8 @@
     "item": "星光票",
     "per_hour": false
    },
-   "open_hours": null
+   "open_hours": null,
+   "hours": null
   },
   {
    "id": "tup-yangmei",
@@ -2113,7 +2114,9 @@
    },
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null
   },
   {
    "id": "civic-nangang",
@@ -3135,14 +3138,14 @@
     {
      "item": "單次入場（平假日相同）",
      "price": "280–330",
-     "note": "原文並列兩個價格，新舊不明",
+     "note": "2022 年的文章寫「280／330」並註明「4/17 起調整票價」（沒寫年份），可能是調價前／後，現在多半是 330，請以館方為準",
      "kind": "entry",
      "when": []
     },
     {
      "item": "平日星光",
      "price": "200–250",
-     "note": "原文並列兩個價格，新舊不明",
+     "note": "平日晚上快打烊時入場的優惠票；文章寫「200／250」（可能是調價前／後），沒寫幾點開始，請先問館方",
      "kind": "entry",
      "when": null
     },
@@ -3713,7 +3716,8 @@
     "item": "單次",
     "per_hour": false
    },
-   "open_hours": null
+   "open_hours": null,
+   "hours": null
   },
   {
    "id": "wanhua-sports",
@@ -4298,7 +4302,9 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null
   },
   {
    "id": "qianshou-taoyuan",
@@ -5721,7 +5727,8 @@
     "item": "個人全票",
     "per_hour": false
    },
-   "open_hours": null
+   "open_hours": null,
+   "hours": null
   },
   {
    "id": "panna-taichung",
@@ -5883,7 +5890,9 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null
   },
   {
    "id": "shabby-yuanlin",
@@ -6081,7 +6090,8 @@
     "item": "單次",
     "per_hour": false
    },
-   "open_hours": null
+   "open_hours": null,
+   "hours": null
   },
   {
    "id": "chiayi-sports-8a",
@@ -6167,7 +6177,8 @@
     "item": "單次全票",
     "per_hour": false
    },
-   "open_hours": null
+   "open_hours": null,
+   "hours": null
   },
   {
    "id": "highfun-north",
@@ -7487,7 +7498,9 @@
    },
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null
   },
   {
    "id": "bonus-hualien",
@@ -7604,7 +7617,8 @@
      null
     ],
     "holiday": null
-   }
+   },
+   "prices": null
   },
   {
    "id": "bplus-hualien",
@@ -7898,7 +7912,9 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null
   }
  ],
  "osm_unmatched": [
