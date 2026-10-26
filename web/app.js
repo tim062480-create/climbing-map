@@ -163,13 +163,26 @@ function refreshFavs() {
 const FB_VER = "10.12.2";
 const auth = { enabled: false, user: null, fb: null };
 
-// 流量統計（Google Analytics）：只算匿名的瀏覽人數，本機測試不算
+// 流量統計（Google Analytics）：匿名的瀏覽人數、打開哪間館（open_gym）、搜尋條件（search），本機測試不算
+const ga = { G: null, a: null, lastSearch: "", timer: 0 };
 async function setupAnalytics(app, cfg, base) {
   if (!cfg.measurementId || !location.protocol.startsWith("https")) return;
   try {
     const G = await import(`${base}/firebase-analytics.js`);
-    if (await G.isSupported()) G.getAnalytics(app);
+    if (await G.isSupported()) { ga.a = G.getAnalytics(app); ga.G = G; }
   } catch (e) { /* 被擋廣告的外掛擋掉就算了 */ }
+}
+function track(name, params) {
+  if (ga.a) ga.G.logEvent(ga.a, name, params);
+}
+// 打字時每個字都會觸發搜尋，停 2 秒才算一次，同樣的條件不重複記
+function trackSearch(q) {
+  clearTimeout(ga.timer);
+  ga.timer = setTimeout(() => {
+    if (!q || q === ga.lastSearch) return;
+    ga.lastSearch = q;
+    track("search", { search_term: q.slice(0, 100) });
+  }, 2000);
 }
 
 async function setupAuth() {
@@ -255,7 +268,7 @@ function renderAuthBtn() {
   const u = auth.user;
   b.innerHTML = u
     ? (u.photoURL ? `<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">` : "👤")
-    : `<span class="g">G</span><span class="label"> 登入</span>`;
+    : "登入";
   b.title = u ? `${u.displayName || u.email}（點一下登出）` : "用 Google 帳號登入，最愛存在帳號裡";
   b.setAttribute("aria-label", u ? "帳號，點一下登出" : "用 Google 登入");
 }
@@ -438,6 +451,7 @@ function onQueryChange() {
   q ? url.searchParams.set("q", q) : url.searchParams.delete("q");
   history.replaceState(null, "", url);
   render();
+  trackSearch(q);
   if (searchesPlace(parseQuery(q))) fitToGyms(state.listed);   // 搜了地點或館名，地圖移到搜尋結果
 }
 
@@ -837,6 +851,7 @@ function priceNote(p) {
 function openDetail(id, pushHash = true) {
   const g = state.gyms.find((x) => x.id === id);
   if (!g) return;
+  if (state.detailId !== id) track("open_gym", { gym_id: id, gym_name: g.name });
   state.detailId = id;
   if (pushHash) history.replaceState(null, "", `#${id}`);
   if (g.lat != null) map.setView([g.lat, g.lng], Math.max(map.getZoom(), 15));
