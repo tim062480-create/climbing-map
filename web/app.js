@@ -14,7 +14,7 @@ const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbi
 
 const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
-  near: null, pattern: null, stations: null, live: undefined,
+  live: undefined,
   me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
   favs: new Set(), news: {}, newsUpdated: "",
 };
@@ -67,9 +67,7 @@ async function init() {
   state.checked = data.checked || "";
   state.favs = loadFavs();
   $("checked").textContent = state.checked;
-  let news;
-  [state.near, state.pattern, news] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json"),
-    loadJSON("data/processed/news.json")]);
+  const news = await loadJSON("data/processed/news.json");   // YouBike 等打開館的交通時才讀（見 ybNear）
   state.news = (news && news.gyms) || {};
   state.newsUpdated = (news && news.updated) || "";
 
@@ -669,12 +667,41 @@ function transitHTML(g) {
     <div id="modeBody"><p class="note">正在算路線…</p></div>`;
 }
 
-async function ensureStations() {
-  if (!state.stations) {
-    const data = await loadJSON("data/processed/youbike_stations.json");
-    state.stations = data ? data.stations.map(([sno, name, lat, lng, total]) => ({ sno, name, lat, lng, total })) : [];
+// ---------- YouBike（全台站點、即時車數、同時段歷史平均） ----------
+// 由 src/youbike_history.py 每 20 分鐘產生，存在 youbike-data 分支，依區切檔；只讀用得到的那幾區
+const YB_DATA_DEFAULT = "https://raw.githubusercontent.com/tim062480-create/climbing-map/youbike-data/";
+const ybUrl = (path) => ((window.CLIMBING_CONFIG || {}).youbikeData || YB_DATA_DEFAULT) + path;   // 本機測試可以在 config 指到別的位置
+const YB_FEW = 4;   // 歷史平均樣本少於這個數時標示「資料還少」
+const yb = { index: undefined, areas: new Map() };
+
+async function ybIndex() {
+  if (yb.index === undefined) yb.index = (await loadJSON(ybUrl("index.json"))) || null;
+  return yb.index;
+}
+
+// 讀一區的站點、即時車數和歷史平均（同一區只讀一次）
+function ybArea(code) {
+  if (!yb.areas.has(code)) {
+    yb.areas.set(code, Promise.all([loadJSON(ybUrl(`areas/${code}.json`)), loadJSON(ybUrl(`pattern/${code}.json`))]).then(([a, p]) => {
+      const area = { updated: (a && a.updated) || "", pattern: (p && p.stations) || {} };
+      area.stations = Object.entries((a && a.stations) || {}).map(([sno, [name, lat, lng, total, rent, ret]]) =>
+        ({ sno, name, lat, lng, total, rent, ret, area }));
+      return area;
+    }));
   }
-  return state.stations;
+  return yb.areas.get(code);
+}
+
+// 這個位置附近 maxM 公尺內最近的 n 站（範圍稍微放大，靠近縣市交界也找得到）；資料讀不到回傳 null
+async function ybNear(p, maxM, n) {
+  const idx = await ybIndex();
+  if (!idx) return null;
+  const pad = 0.02;
+  const codes = Object.entries(idx.areas).filter(([, a]) =>
+    p.lat >= a.bbox[0] - pad && p.lat <= a.bbox[2] + pad && p.lng >= a.bbox[1] - pad && p.lng <= a.bbox[3] + pad).map(([c]) => c);
+  const areas = await Promise.all(codes.map(ybArea));
+  return areas.flatMap((a) => a.stations).map((s) => ({ ...s, d: distM(p, s) }))
+    .filter((s) => s.d <= maxM).sort((a, b) => a.d - b.d).slice(0, n);
 }
 
 // 嘗試直接抓臺北市即時車數（瀏覽器可能因跨網域限制失敗，失敗就只用 20 分鐘一次的快照）
@@ -697,19 +724,19 @@ async function tryLive() {
   return state.live;
 }
 
-function predict(sno, when) {
-  const p = state.pattern && state.pattern[sno];
+// 站 s 在 when 那個半小時的歷史平均 → { rent, ret, n }；那格還沒資料回傳 null
+function predict(s, when) {
+  const p = s.area && s.area.pattern[s.sno];
   if (!p) return null;
   const day = when.getDay();
-  const slot = when.getHours() * 2 + Math.floor(when.getMinutes() / 30);
-  const v = p[day === 0 || day === 6 ? "we" : "wd"][slot];
-  return v ? { rent: v[0], ret: v[1], n: v[2] } : null;
+  const v = p[day === 0 || day === 6 ? "we" : "wd"][when.getHours() * 2 + Math.floor(when.getMinutes() / 30)];
+  return v ? { rent: Math.round(v[0]), ret: Math.round(v[1]), n: v[2] } : null;
 }
 
-function stationCounts(sno, live) {
-  if (live && live.has(sno)) return { ...live.get(sno), how: "即時" };
-  const s = state.near && state.near.stations[sno];
-  if (s && s.rent != null) return { rent: s.rent, ret: s.ret, t: state.near.updated, how: `${state.near.updated} 快照` };
+// 現在的車數：瀏覽器直接抓得到臺北市即時資料就用它，不然用 20 分鐘一次的全台快照
+function stationCounts(s, live) {
+  if (live && live.has(s.sno)) return { ...live.get(s.sno), how: "即時" };
+  if (s.rent != null) return { rent: s.rent, ret: s.ret, how: `${s.area.updated.slice(11)} 更新` };
   return null;
 }
 
@@ -720,12 +747,12 @@ async function enhanceTransit(g) {
   routeLayer.clearLayers();
   if (!state.me || g.lat == null || !document.querySelector("#transit .modes")) return;
   const me = { ...state.me };
-  const [stations, live] = await Promise.all([ensureStations(), tryLive()]);
+  const live = await tryLive();
   const plans = { transit: transitPlan(g, me) };
   const [walk, car, yb] = await Promise.all([
     osrmRoute("foot", [me, g]).then((r) => r || straightLeg("foot", me, g)),
     osrmRoute("car", [me, g]).then((r) => r || straightLeg("car", me, g)),
-    youbikePlan(g, me, stations, live),
+    youbikePlan(g, me, live),
   ]);
   if (state.detailId !== g.id) return;   // 算完時使用者已經換看別間
   plans.walk = { legs: [walk], minutes: walk.minutes, distance: walk.distance };
@@ -748,24 +775,33 @@ function transitPlan(g, me) {
   return { approx: true, minutes: (d * 1.4) / 350 + 10, distance: d * 1.4 };   // 粗估：市區大眾運輸約 21 km/h＋候車 10 分
 }
 
-async function youbikePlan(g, me, stations, live) {
-  const total = distM(me, g);
-  if (total > YOUBIKE_MAX_KM * 1000) return { reason: `距離超過 ${YOUBIKE_MAX_KM} 公里，騎 YouBike 太遠，建議搭大眾運輸。` };
-  const nearGym = ((state.near && state.near.gyms[g.id]) || []).map(([sno, d]) => ({ sno, d, ...(state.near.stations[sno] || {}) }));
-  const nearMe = stations.map((s) => ({ ...s, d: distM(me, s) })).sort((a, b) => a.d - b.d).slice(0, 3).filter((s) => s.d <= 1000);
+async function youbikePlan(g, me, live) {
+  const [nearMe, nearGym] = await Promise.all([ybNear(me, 1000, 3), ybNear(g, 1000, 4)]);
+  if (!nearGym) return { reason: "YouBike 資料暫時讀不到。", nearGym: [] };
+  if (distM(me, g) > YOUBIKE_MAX_KM * 1000) return { reason: `距離超過 ${YOUBIKE_MAX_KM} 公里，騎 YouBike 太遠，建議搭大眾運輸。`, nearGym, live };
   if (!nearMe.length || !nearGym.length) {
-    return { reason: !stations.length ? "YouBike 站點資料還沒產生。" : !nearMe.length ? "你附近 1 公里內沒有 YouBike 站。" : "這間館附近 1 公里內沒有 YouBike 站。" };
+    return { reason: !nearMe.length ? "你附近 1 公里內沒有 YouBike 站。" : "這間館附近 1 公里內沒有 YouBike 站。", nearGym, live };
   }
-  // 起點站：優先選有車的；終點站：優先選有空位的
-  const pick = (list, key) => list.find((s) => { const c = stationCounts(s.sno, live); return c && c[key] > 0; }) || list[0];
-  const a = pick(nearMe, "rent"), b = pick(nearGym, "ret");
+  // 借車站（你附近、現在就要借）：看現在的車數，選最近一個有車的
+  const a = nearMe.find((s) => { const c = stationCounts(s, live); return c && c.rent > 0; }) || nearMe[0];
+  // 還車站（館附近、騎到時才還）：先粗估騎到的時間，看那個半小時的歷史平均可還，選最近一個平均有 3 個以上空位的
+  const tDrop = new Date(Date.now() + ((a.d * DETOUR) / WALK_M_PER_MIN + (distM(a, g) * DETOUR) / BIKE_M_PER_MIN + 1) * 60000);
+  const expectRet = (s) => {
+    const p = predict(s, tDrop);
+    if (p && p.n >= 2) return { v: p.ret, by: `${hhmm(tDrop)} 歷史平均可還 ${p.ret}` };
+    const c = stationCounts(s, live);
+    return c ? { v: c.ret, by: `現在可還 ${c.ret}（歷史資料還少）` } : { v: null, by: "沒有車數資料" };
+  };
+  const scored = nearGym.map((s) => ({ s, e: expectRet(s) }));
+  const best = scored.find((x) => x.e.v >= 3) || scored.filter((x) => x.e.v != null).sort((x, y) => y.e.v - x.e.v)[0] || scored[0];
+  const b = { ...best.s, why: best.s.sno === nearGym[0].sno ? "" : `沒選最近的 ${nearGym[0].name}：${scored[0].e.by}；這站 ${best.e.by}` };
   const legs = await Promise.all([
     osrmRoute("foot", [me, a]).then((r) => r || straightLeg("foot", me, a)),
     osrmRoute("bike", [a, b]).then((r) => r || straightLeg("bike", a, b)),
     osrmRoute("foot", [b, g]).then((r) => r || straightLeg("foot", b, g)),
   ]);
   const minutes = legs.reduce((s, l) => s + l.minutes, 0) + YB_DOCK_MIN;
-  return { legs, minutes, distance: legs.reduce((s, l) => s + l.distance, 0), a, b, live };
+  return { legs, minutes, distance: legs.reduce((s, l) => s + l.distance, 0), a, b, live, nearGym };
 }
 
 function showMode(g, plans, mode) {
@@ -779,11 +815,11 @@ function showMode(g, plans, mode) {
       <p>公車、捷運要轉哪幾班，請用 Google 地圖查：</p>
       <a class="btn primary" href="${gmapsDir(g, "transit", state.me)}" target="_blank" rel="noopener">🚇 用 Google 地圖看大眾運輸路線</a>
       <p class="note">時間是用距離粗估：市區約每小時 21 公里，加候車 10 分鐘。</p>
-    </div>`}</div>${ybNearGymHTML(g, plans.youbike.live)}`;
+    </div>`}</div>${ybNearGymHTML(plans.youbike, new Date(Date.now() + p.minutes * 60000))}`;
     if (relay) showTransitRoutes(g, p, relay);
     return;
   }
-  if (!p.minutes) { body.innerHTML = `<div class="plan">${esc(p.reason)}</div>${ybNearGymHTML(g, null)}`; return; }
+  if (!p.minutes) { body.innerHTML = `<div class="plan">${esc(p.reason)}</div>${ybNearGymHTML(plans.youbike, new Date(Date.now() + plans.transit.minutes * 60000))}`; return; }
 
   const estimated = p.legs.some((l) => l.estimated);
   const head = `<div class="total">${fmtMin(p.minutes)}<span class="note">・${fmtDist(p.distance)}・約 ${clock(p.minutes)} 到</span></div>`;
@@ -793,8 +829,8 @@ function showMode(g, plans, mode) {
     const tPick = new Date(Date.now() + w1.minutes * 60000), tDrop = new Date(tPick.getTime() + (bike.minutes + 1) * 60000);
     const near = (leg) => leg.distance < 40;   // 站就在旁邊，不用另外寫步行
     legsHTML = `<ol class="legs">
-      <li>${near(w1) ? `<b>${esc(p.a.name)}</b> 就在你旁邊，借車` : `<b>🚶 步行 ${fmtMin(w1.minutes)}</b>（${fmtDist(w1.distance)}）到 <b>${esc(p.a.name)}</b> 借車`}<br>${countsLine(p.a.sno, p.live, tPick, "rent")}${near(w1) ? "" : stepsHTML(w1)}</li>
-      <li><b>🚲 騎車 ${fmtMin(bike.minutes)}</b>（${fmtDist(bike.distance)}）到 <b>${esc(p.b.name)}</b> 還車<br>${countsLine(p.b.sno, p.live, tDrop, "ret")}${stepsHTML(bike)}</li>
+      <li>${near(w1) ? `<b>${esc(p.a.name)}</b> 就在你旁邊，借車` : `<b>🚶 步行 ${fmtMin(w1.minutes)}</b>（${fmtDist(w1.distance)}）到 <b>${esc(p.a.name)}</b> 借車`}<br>${countsLine(p.a, p.live, tPick, "rent")}${near(w1) ? "" : stepsHTML(w1)}</li>
+      <li><b>🚲 騎車 ${fmtMin(bike.minutes)}</b>（${fmtDist(bike.distance)}）到 <b>${esc(p.b.name)}</b> 還車<br>${countsLine(p.b, p.live, tDrop, "ret")}${p.b.why ? `<br><span class="note">${esc(p.b.why)}</span>` : ""}${stepsHTML(bike)}</li>
       <li>${near(w2) ? "還車站就在館旁邊" : `<b>🚶 步行 ${fmtMin(w2.minutes)}</b>（${fmtDist(w2.distance)}）到館${stepsHTML(w2)}`}</li>
     </ol>
     <div class="row"><a class="btn small" href="${gmapsDir(p.a, "walking", state.me)}" target="_blank" rel="noopener">Google：走到借車站</a>
@@ -810,7 +846,7 @@ function showMode(g, plans, mode) {
     <button type="button" class="btn small" id="showRoute">🗺 在地圖上看路線</button>
     ${legsHTML}
     <p class="note">${estimated ? "路線服務暫時連不到，以直線距離估算。" : "路線：OpenStreetMap（FOSSGIS OSRM），實際以現場為準。"}</p>
-  </div>${mode === "youbike" ? ybNearGymHTML(g, p.live) : ""}`;
+  </div>${mode === "youbike" ? ybNearGymHTML(p, new Date(Date.now() + p.minutes * 60000)) : ""}`;
 
   // 地圖上畫路線：步行虛線、騎車綠線、開車橘線，借還車站標出來
   for (const l of p.legs) L.polyline(l.coords, LEG_STYLE[l.profile]).addTo(routeLayer);
@@ -903,24 +939,31 @@ function stepsHTML(leg, open = false) {
     list.map((s) => `<li>${esc(s.text)}${s.d >= 10 ? `<span class="note">　${fmtDist(s.d)}</span>` : ""}</li>`).join("")}</ol></details>`;
 }
 
-function countsLine(sno, live, when, key) {
-  const c = stationCounts(sno, live);
-  const p = predict(sno, when);
+// 歷史平均的說明：樣本少時提醒「資料還少」
+const avgText = (p, label, key) => `平均${label} ${p[key]}${p.n < YB_FEW ? "（資料還少）" : ""}`;
+
+function countsLine(s, live, when, key) {
+  const c = stationCounts(s, live);
+  const p = predict(s, when);
   const label = key === "rent" ? "可借" : "可還";
   const parts = [];
   if (c) parts.push(`現在${label} ${c[key]}（${esc(c.how)}）`);
-  if (p) parts.push(`${when.getHours()}:${String(when.getMinutes()).padStart(2, "0")} 歷史平均${label} ${p[key]}（${p.n} 筆）`);
+  if (p) parts.push(`${hhmm(when)} 到站時${avgText(p, label, key)}`);
   if (!parts.length) parts.push(`車數資料累積中，<a href="https://www.youbike.com.tw/region/main/stations/" target="_blank" rel="noopener">看 YouBike 官網即時車數</a>`);
   return `<span class="note">${parts.join("；")}</span>`;
 }
 
-function ybNearGymHTML(g, live) {
-  const list = (state.near && state.near.gyms[g.id]) || [];
+// 館附近的站：現在的車數、到館時的平均空位（還車）、大約 2 小時後回程時的平均車數（借車）
+function ybNearGymHTML(plan, arrive) {
+  const list = (plan && plan.nearGym) || [];
   if (!list.length) return "";
-  return `<p class="note" style="margin-top:8px">館附近的 YouBike 站：</p><table>${list.map(([sno, d]) => {
-    const s = state.near.stations[sno] || {};
-    const c = stationCounts(sno, live);
-    return `<tr><td>${esc(s.name || sno)}<div class="note">${fmtDist(d)}</div></td><td class="price">${c ? `借 ${c.rent}／還 ${c.ret}` : "—"}</td></tr>`;
+  const back = new Date(arrive.getTime() + 2 * 3600000);
+  const cell = (p, label, key) => (p ? avgText(p, label, key) : "—");
+  return `<p class="note" style="margin-top:8px">館附近的 YouBike 站（歷史平均是過去同一個半小時、平日／假日分開算）：</p>
+    <table class="yb"><tr><th>站</th><th>現在</th><th>${hhmm(arrive)} 到館</th><th>${hhmm(back)} 回程</th></tr>${list.map((s) => {
+    const c = stationCounts(s, plan.live);
+    return `<tr><td>${esc(s.name)}<div class="note">${fmtDist(s.d)}</div></td><td>${c ? `借 ${c.rent}／還 ${c.ret}` : "—"}</td>
+      <td>${cell(predict(s, arrive), "可還", "ret")}</td><td>${cell(predict(s, back), "可借", "rent")}</td></tr>`;
   }).join("")}</table>`;
 }
 

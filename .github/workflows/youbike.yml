@@ -1,0 +1,65 @@
+# 全台 YouBike 即時車數和同時段歷史平均（src/youbike_history.py）
+#
+#   - 每 20 分鐘抓一次全台站點，更新「現在這個半小時」的平均，依縣市切檔
+#   - 結果存在 youbike-data 分支，每次都覆蓋成只有一個版本（force push），repo 不會越來越大
+#   - 網頁從 https://raw.githubusercontent.com/<repo>/youbike-data/ 直接讀
+#   - 想馬上跑一次：repo 的 Actions → YouBike 歷史平均 → Run workflow
+#
+# schedule 只會在預設分支（main）上執行。
+
+name: YouBike 歷史平均
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "src/youbike_history.py"
+      - ".github/workflows/youbike.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: youbike-data
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TZ: Asia/Taipei
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 取出上一次的資料
+        run: |
+          mkdir -p yb-data
+          if git fetch -q --depth 1 origin youbike-data; then
+            git archive FETCH_HEAD | tar -x -C yb-data
+          else
+            echo "還沒有 youbike-data 分支，從頭開始"
+          fi
+
+      - name: 抓車數、更新平均
+        run: python src/youbike_history.py --out yb-data --seed-logs data/raw/youbike_log
+
+      - name: 存回 youbike-data 分支（只留一個版本）
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd yb-data
+          git init -q -b youbike-data
+          git config user.name "climbing-data-bot"
+          git config user.email "climbing-data-bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "YouBike 歷史平均 $(date '+%m/%d %H:%M')"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" youbike-data

@@ -192,6 +192,9 @@ a { color: var(--accent); }
 .modes button b { font-size: 13px; }
 .modes button[aria-selected="true"] { border-color: var(--accent); background: var(--bg); box-shadow: inset 0 0 0 1px var(--accent); }
 .transit-chips { font-size: 14px; margin: 2px 0 4px; }
+table.yb { font-size: 13px; }
+table.yb th { text-align: left; font-weight: 600; color: var(--muted); padding: 2px 4px; border-bottom: 1px solid var(--line); }
+table.yb td { padding: 4px; }
 .steps { margin: 4px 0; font-size: 13px; }
 .steps summary { cursor: pointer; color: var(--accent); }
 .steps ol { margin: 4px 0; padding-left: 20px; }

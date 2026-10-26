@@ -9,7 +9,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 資料夾規則
 - data/raw/：原始資料，寫入後不再修改。
   - `sources.csv` 只存「代號、媒體、日期時間、標題、網址」，**不得儲存文章全文**。
-  - `osm/` 是 Overpass 原始回應，`youbike_log/` 是車數記錄，都由程式寫入。
+  - `osm/` 是 Overpass 原始回應，都由程式寫入。`youbike_log/` 是舊的車數記錄（2026-10-26 起不再寫入，YouBike 改存在 `youbike-data` 分支）。
 - data/manual/：`gyms_seed.json` 是人工整理的館資料，唯一可以手動編輯的資料檔。
   - 每個欄位用 `src` 對應 `sources.csv` 的代號。
   - `verify` 列出待確認事項。
@@ -30,10 +30,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 輸出 `data/processed/gyms.json` 和 `docs/enrich_report.md`。座標可信度看 `coord_source`。
    - `price_min`：成人入場的最低價（含星光、離峰時段和計時 1 小時，`per_hour` 標示計時；排除租借、課程、學生票、起價），`price_day` 不含計時。網頁的價格排序和預算篩選用。
    - 連不到 OSM 時沿用上一次的座標。
-2. `src/youbike_near.py`：
-   - 用全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API）和臺北市開放資料，記錄每館 1 公里內最近 4 站的車數。
-   - 算出 `youbike_pattern.json`：站號 → 平日 `wd`／假日 `we` → `slot = 小時*2 + 分//30` → `[平均可借, 平均可還, 樣本數]`。
-   - 「可借、可還都是 0」視為沒有資料（例如颱風暫停營運時；2026-10-23 起北部整批回傳 0），不記錄、不算平均。
+2. `src/youbike_history.py`（2026-10-26 取代 `youbike_near.py`）：
+   - 每 20 分鐘（`.github/workflows/youbike.yml`）抓全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API，有區碼 `area_code`）和臺北市開放資料，依區切檔。
+   - 結果存在 **`youbike-data` 分支**，每次 force push 成只有一個版本（不進 main、repo 不會長大）；網頁從 `raw.githubusercontent.com/.../youbike-data/` 讀：`index.json`（各區名稱、範圍）、`areas/區碼.json`（每站 [站名, 緯度, 經度, 總車位, 可借, 可還]）、`pattern/區碼.json`（每站 `wd`／`we` × 48 個半小時 `[平均可借, 平均可還, 樣本數]`，0 表示沒資料）。
+   - 歷史平均是累加平均，樣本數上限 20（之後新資料權重固定），**不存原始記錄**（全台一年約 11 GB）。`data/raw/youbike_log/` 是 10/24–10/26 舊做法留下的每館附近車數，第一次跑時用來填平均。
+   - 「可借、可還都是 0」視為沒有資料（例如颱風暫停營運時；2026-10-23 起北部整批回傳 0），不更新平均。
+   - 網頁選站：借車站看現在車數；還車站看「騎到時那個半小時」的歷史平均可還（樣本 2 筆以上），選最近一個平均有 3 個空位以上的；館附近站列出到館時平均可還、2 小時後回程平均可借。
 3. `src/find_new_gyms.py`：每半年（1 月、7 月，`.github/workflows/new-gyms.yml`）重新抓 OSM 後，列出地圖還沒收錄、上次檢查之後新出現的攀岩地點，使用者關注的宜蘭、永和排最前面。輸出 `docs/new_gyms_report.md`、`data/processed/new_gyms_seen.json`，並開 issue 通知。只是候選，人工確認後才加進 seed。
 4. `src/fetch_news.py`：每月 1、16 日（`.github/workflows/news.yml`）抓每間館的近期動態：Google 新聞 RSS（標題要有館的關鍵字＋攀岩相關字）、館的 YouTube 頻道 RSS、官網有宣告的 RSS。輸出 `data/raw/news/日期.json` 和 `data/processed/news.json`（180 天內最多 8 則，只存日期、來源、標題、網址）。Facebook、Instagram 抓不到，網頁只附連結。
 5. `src/export_table.py`：把 gyms.json 匯出成 `output/vN/gyms.csv` 和 `summary.md`，N 自動遞增。
@@ -47,7 +49,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 館的詳細資訊有「近期動態」；15 天內有新動態的館，清單上顯示 🆕 和標題。
    - 留言用 giscus：`web/config.js` 的 `repoId`、`categoryId` 空著時不顯示。
 
-`.github/workflows/update-data.yml`：YouBike 每 20 分鐘、補座標每週一次或改了 seed、來源、程式之後自動跑，結果 commit 回 repo。schedule 只在 main 上執行。排程會一直 commit，所以本機 push 前要先 pull。
+`.github/workflows/update-data.yml`：補座標每週一次或改了 seed、來源、程式之後自動跑，結果 commit 回 repo。YouBike 在 `youbike.yml`（每 20 分鐘，只寫 `youbike-data` 分支，不 commit 到 main）。schedule 只在 main 上執行。排程會 commit，所以本機 push 前要先 pull。
 
 雲端開發環境常連不到 OSM、YouBike、Google，需要外部資料的步驟交給 Actions 跑。
 

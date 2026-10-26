@@ -13,9 +13,9 @@ climbing-map/
 ├─ web/                    網頁程式：app.js、style.css、config.js（留言區設定）
 ├─ data/
 │  ├─ raw/                 原始資料：sources.csv（媒體、日期時間、標題、網址，不存全文）、
-│  │                       osm/（OpenStreetMap 原始回應）、youbike_log/（YouBike 車數記錄）
+│  │                       osm/（OpenStreetMap 原始回應）、youbike_log/（舊的 YouBike 車數記錄）
 │  ├─ manual/              人工整理的館資料 gyms_seed.json（唯一要手動改的資料檔）
-│  └─ processed/           程式產生的資料：gyms.json（網頁讀這個）、youbike_*.json
+│  └─ processed/           程式產生的資料：gyms.json（網頁讀這個）、news.json
 ├─ src/                    所有 Python 程式
 ├─ output/                 匯出結果：v1、v2…每一版另存，output/final/ 放你決定採用的版本
 ├─ docs/                   報告與文件：資料來源紀錄.md、enrich_report.md（座標比對報告，自動產生）
@@ -28,7 +28,7 @@ climbing-map/
 | 做什麼 | 指令或做法 |
 |---|---|
 | 補座標、比對 OSM | `python src/enrich.py` |
-| 抓 YouBike 車數 | `python src/youbike_near.py`（加 `--stations` 會更新全台站點位置） |
+| 抓 YouBike 車數、更新歷史平均 | `python src/youbike_history.py --out yb-data`（Actions 每 20 分鐘跑，結果存在 `youbike-data` 分支） |
 | 找新岩館 | `python src/find_new_gyms.py`（先跑 enrich.py）→ `docs/new_gyms_report.md`；Actions 每年 1 月、7 月自動跑並開 issue，也可以在 Actions → 新岩館檢查 → Run workflow 手動跑 |
 | 館的近期動態 | `python src/fetch_news.py` → `data/processed/news.json`；Actions 每月 1、16 日自動跑 |
 | 匯出表格 | `python src/export_table.py` → 自動存到下一個 `output/vN/` |
