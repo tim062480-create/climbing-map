@@ -115,6 +115,10 @@ async function init() {
   $("locate").addEventListener("click", locate);
   map.on("moveend", drawYbStations);
   $("favsTop").addEventListener("click", onFavsTop);
+  $("authBtn").addEventListener("click", () => (auth.user ? logout() : login()));
+  $("loginGo").addEventListener("click", login);
+  $("loginCancel").addEventListener("click", hideLogin);
+  setupAuth();
   setupPanel();
   $("closeDetail").addEventListener("click", closeDetail);
   window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id) openDetail(id, false); });
@@ -128,25 +132,129 @@ async function init() {
 const searchesPlace = (c) => c.cities.length || c.districts.length || c.names.length || c.fav;
 
 // ---------- 最愛 ----------
-// 存在這台裝置的瀏覽器裡；還沒存過時用 web/config.js 的 favorites（宜蘭、永和）
+// 有設定 Google 登入（config.js 的 firebase）時：最愛存在登入的帳號裡，沒登入的人按「加入最愛」會請他登入。
+// 沒設定登入時：最愛存在這台裝置的瀏覽器裡。
 const FAV_KEY = "climbing-map:fav";
 function loadFavs() {
   try {
     const saved = localStorage.getItem(FAV_KEY);
     if (saved != null) return new Set(JSON.parse(saved));
-  } catch { /* 無痕模式或資料壞掉就用預設 */ }
-  return new Set((window.CLIMBING_CONFIG || {}).favorites || []);
+  } catch { /* 無痕模式或資料壞掉就當作沒有 */ }
+  return new Set();
 }
 
 function toggleFav(id) {
+  if (auth.enabled && !auth.user) { showLogin("登入 Google 帳號才能存最愛"); return; }
   state.favs.has(id) ? state.favs.delete(id) : state.favs.add(id);
-  try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch { /* 存不了就只在這次有效 */ }
-  const g = state.gyms.find((x) => x.id === id);
-  const m = state.markers.get(id);
-  if (g && m) m.setStyle(markerStyle(g));
-  render();
-  renderFavBtn(id);
+  if (auth.user) saveCloudFavs();
+  else try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch { /* 存不了就只在這次有效 */ }
+  refreshFavs();
 }
+
+// 最愛變了（加入、取消、登入、登出）：地圖外圈、清單、按鈕都重畫
+function refreshFavs() {
+  for (const g of state.gyms) { const m = state.markers.get(g.id); if (m) m.setStyle(markerStyle(g)); }
+  render();
+  if (state.detailId) renderFavBtn(state.detailId);
+}
+
+// ---------- 登入（Firebase：Google 帳號登入，最愛存在 Firestore 的 users/{uid}） ----------
+// 安全規則見 docs/Google登入設定步驟.md：每個人只能讀寫自己的那一份。
+const FB_VER = "10.12.2";
+const auth = { enabled: false, user: null, fb: null };
+
+async function setupAuth() {
+  const cfg = (window.CLIMBING_CONFIG || {}).firebase || {};
+  if (!cfg.apiKey || !cfg.projectId) return;   // 沒設定：不顯示登入，最愛存在這台裝置
+  try {
+    const base = `https://www.gstatic.com/firebasejs/${FB_VER}`;
+    const [{ initializeApp }, A, F] = await Promise.all([
+      import(`${base}/firebase-app.js`), import(`${base}/firebase-auth.js`), import(`${base}/firebase-firestore.js`)]);
+    const app = initializeApp(cfg);
+    auth.fb = { A, F, auth: A.getAuth(app), db: F.getFirestore(app) };
+  } catch (e) {
+    console.warn("Firebase 載入失敗，最愛先存在這台裝置", e);
+    return;
+  }
+  auth.enabled = true;
+  renderAuthBtn();
+  const { A } = auth.fb;
+  A.getRedirectResult(auth.fb.auth).catch(() => { /* 不是從登入頁回來 */ });
+  A.onAuthStateChanged(auth.fb.auth, onAuth);
+}
+
+// 登入狀態變了：登入就讀帳號的最愛（第一次登入把這台裝置的併進去），登出就清空
+async function onAuth(u) {
+  const { F, db } = auth.fb;
+  auth.user = u;
+  if (u) {
+    const ref = F.doc(db, "users", u.uid);
+    try {
+      const snap = await F.getDoc(ref);
+      let favs = snap.exists() ? snap.data().favorites || [] : [];
+      // 第一次登入：把這台裝置以前存的最愛併進帳號
+      const local = [...loadFavs()];
+      if (!snap.exists() && local.length) {
+        favs = [...new Set([...favs, ...local])];
+        await F.setDoc(ref, { favorites: favs, updatedAt: F.serverTimestamp() });
+      }
+      state.favs = new Set(favs);
+    } catch (e) {
+      console.warn("讀取帳號的最愛失敗", e);
+      setStatus("讀取帳號的最愛失敗，請重新整理。", true);
+    }
+    hideLogin();
+  } else {
+    state.favs = new Set();   // 沒登入：沒有最愛
+  }
+  renderAuthBtn();
+  refreshFavs();
+}
+
+async function saveCloudFavs() {
+  const { F, db } = auth.fb;
+  try {
+    await F.setDoc(F.doc(db, "users", auth.user.uid), { favorites: [...state.favs], updatedAt: F.serverTimestamp() });
+  } catch (e) {
+    console.warn("最愛存到帳號失敗", e);
+    setStatus("最愛沒有存到帳號，請檢查網路後再試一次。", true);
+  }
+}
+
+async function login() {
+  const { A } = auth.fb;
+  const provider = new A.GoogleAuthProvider();
+  try {
+    await A.signInWithPopup(auth.fb.auth, provider);
+  } catch (e) {
+    // 跳出視窗被擋（有些手機瀏覽器）就改成整頁跳轉到 Google 登入
+    if (/popup-blocked|operation-not-supported/.test(e.code || "")) await A.signInWithRedirect(auth.fb.auth, provider);
+    else if (!/popup-closed|cancelled-popup/.test(e.code || "")) alert(`登入失敗：${e.message}`);
+  }
+}
+
+function logout() {
+  if (confirm(`要登出 ${auth.user.email || ""} 嗎？登出後最愛不會顯示，再登入就回來。`)) auth.fb.A.signOut(auth.fb.auth);
+}
+
+// 右上角：沒登入是「登入」按鈕，登入後是頭像（點了可以登出）
+function renderAuthBtn() {
+  const b = $("authBtn");
+  b.hidden = !auth.enabled;
+  if (!auth.enabled) return;
+  const u = auth.user;
+  b.innerHTML = u
+    ? (u.photoURL ? `<img src="${esc(u.photoURL)}" alt="" referrerpolicy="no-referrer">` : "👤")
+    : `<span class="g">G</span><span class="label"> 登入</span>`;
+  b.title = u ? `${u.displayName || u.email}（點一下登出）` : "用 Google 帳號登入，最愛存在帳號裡";
+  b.setAttribute("aria-label", u ? "帳號，點一下登出" : "用 Google 登入");
+}
+
+function showLogin(reason) {
+  $("loginReason").textContent = reason;
+  $("loginBox").hidden = false;
+}
+function hideLogin() { $("loginBox").hidden = true; }
 
 // ---------- 下方清單面板（手機）：收起 collapsed／一半 normal／拉高 expanded ----------
 // 一開始收起來讓地圖大一點；點拉把或往上滑展開，往下滑或點地圖收起；搜尋、按 ⭐ 時自動展開
@@ -197,6 +305,7 @@ function revealResults() {
 
 // 上方的 ⭐ 按鈕：點一下只看最愛（搜尋框換成「最愛」），再點一下回到原本的搜尋
 function onFavsTop() {
+  if (auth.enabled && !auth.user) { showLogin("登入 Google 帳號就能看、存你的最愛"); return; }
   const on = parseQuery($("q").value).fav;
   if (on) {
     $("q").value = state.qBeforeFav ?? normalizeQuery($("q").value).replace(Q_RE.fav, " ").replace(/\s+/g, " ").trim();
@@ -558,7 +667,7 @@ function render() {
   c.osm ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
-    (c.fav && !state.favs.size ? `<li class="sub">還沒有最愛。打開館的詳細資訊，按「☆ 加入最愛」就會出現在這裡。</li>` : `<li class="sub">沒有符合條件的館。</li>`)) +
+    (c.fav && !state.favs.size ? `<li class="sub">${auth.enabled && !auth.user ? "登入 Google 帳號後，按館的「☆ 加入最愛」就會出現在這裡。" : "還沒有最愛。打開館的詳細資訊，按「☆ 加入最愛」就會出現在這裡。"}</li>` : `<li class="sub">沒有符合條件的館。</li>`)) +
     (outside.length ? `<li class="divider">${radiusKm} 公里外最近的館</li>` + outside.map(({ g, d }) => listItem(g, d)).join("") : "");
   const noCoord = gyms.filter((g) => g.lat == null);
   $("nocoord").hidden = !noCoord.length;

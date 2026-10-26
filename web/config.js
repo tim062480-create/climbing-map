@@ -10,7 +10,14 @@ window.CLIMBING_CONFIG = {
   // 大眾運輸路線：TDX 中繼（relay/tdx-worker.js）部署後的網址，例如 "https://climbing-map-tdx.xxx.workers.dev"。
   // 空著時大眾運輸只顯示粗估時間和 Google 地圖按鈕。設定步驟見 docs/TDX大眾運輸設定步驟.md
   transitRelay: "",
-  // 預設的最愛館（館的 id 見 data/manual/gyms_seed.json）：宜蘭、永和。
-  // 只在這台裝置還沒存過最愛時使用；在網頁上按 ☆ 加入、取消後，就改存在這台裝置的瀏覽器裡。
-  favorites: ["yonghe-sports", "jioutau-yilan", "wuyan-dongshan", "yilan-sports"],
+  // Google 登入（Firebase）：填好後網頁右上角出現「登入」，最愛存在登入的帳號裡（換手機也在）；
+  // 沒登入的人照常使用，按「加入最愛」時才請他登入。這幾個值是公開的（本來就會出現在網頁裡），
+  // 資料安全靠 Firestore 的安全規則。空著時沒有登入功能，最愛存在各自裝置的瀏覽器裡。
+  // 設定步驟見 docs/Google登入設定步驟.md
+  firebase: {
+    apiKey: "",
+    authDomain: "",   // 例如 "climbing-map-xxxx.firebaseapp.com"
+    projectId: "",
+    appId: "",
+  },
 };

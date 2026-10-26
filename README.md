@@ -17,6 +17,7 @@
 | 改館的資料（價格、營業時間、地址…） | `data/manual/gyms_seed.json`（唯一要手動改的資料檔） |
 | 資料怎麼來的、哪些還沒確認 | [docs/資料來源紀錄.md](docs/資料來源紀錄.md) |
 | 大眾運輸路線怎麼開通 | [docs/TDX大眾運輸設定步驟.md](docs/TDX大眾運輸設定步驟.md) |
+| Google 登入存最愛怎麼開通 | [docs/Google登入設定步驟.md](docs/Google登入設定步驟.md) |
 
 其他資料夾都是程式和程式自動產生的檔案，平常不用動。
 
@@ -26,7 +27,7 @@
 climbing-map/
 ├─ 打開攀岩地圖網站.url     雙擊打開網站
 ├─ index.html              網站原始碼的入口（GitHub Pages 從這裡開始，不要直接點開）
-├─ web/                    網頁程式：app.js、style.css、config.js（留言區、大眾運輸中繼的設定）
+├─ web/                    網頁程式：app.js、style.css、config.js（留言區、大眾運輸中繼、Google 登入的設定）
 ├─ data/
 │  ├─ manual/              人工整理的館資料 gyms_seed.json（唯一要手動改的資料檔）
 │  ├─ raw/                 原始資料：sources.csv（媒體、日期時間、標題、網址，不存全文）、
