@@ -5,14 +5,13 @@
 #   - 網頁從 https://raw.githubusercontent.com/<repo>/youbike-data/ 直接讀
 #   - 想馬上跑一次：repo 的 Actions → YouBike 歷史平均 → Run workflow
 #
-# schedule 只會在預設分支（main）上執行。
+# 排程（每小時 7、27、47 分）寫在 update-data.yml，由它呼叫這個檔案（workflow_call）：
+# 2026-10-26 這個檔案自己的排程加上後一直沒被 GitHub 觸發，update-data.yml 的排程之前一直正常。
 
 name: YouBike 歷史平均
 
 on:
-  schedule:
-    # 避開整點（GitHub 整點最塞、排程容易被延後或跳過）；2026-10-26 原本的 */20 加上後 4 小時都沒觸發，改成這個
-    - cron: "7,27,47 * * * *"
+  workflow_call:
   push:
     branches: [main]
     paths:

@@ -1,7 +1,7 @@
 # 抱石地圖的資料更新
 #
 #   - 補座標＋OSM 交叉比對（src/enrich.py）：每週一次，或館資料、來源、程式有改時
-#   - YouBike 車數另外在 youbike.yml（每 20 分鐘，存在 youbike-data 分支，不 commit 到 main）
+#   - YouBike 車數：每小時 7、27、47 分呼叫 youbike.yml（結果存在 youbike-data 分支，不 commit 到 main）
 #
 # 容器內連不到 OpenStreetMap，所以在 GitHub 的主機上跑。
 # 注意：schedule 只會在預設分支（main）上執行；在開發分支上是靠 push 觸發。
@@ -10,7 +10,8 @@ name: 抱石地圖資料
 
 on:
   schedule:
-    - cron: "15 18 * * 0"     # 每週一 02:15（台灣時間）重新補座標
+    - cron: "15 18 * * 0"       # 每週一 02:15（台灣時間）重新補座標
+    - cron: "7,27,47 * * * *"   # YouBike 車數（避開整點）
   push:
     paths:
       - "data/manual/**"
@@ -27,7 +28,14 @@ permissions:
   contents: write
 
 jobs:
+  youbike:
+    if: github.event_name == 'schedule' && github.event.schedule == '7,27,47 * * * *'
+    uses: ./.github/workflows/youbike.yml
+    permissions:
+      contents: write
+
   update:
+    if: github.event_name != 'schedule' || github.event.schedule == '15 18 * * 0'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
