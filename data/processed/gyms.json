@@ -1,8 +1,8 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-26 04:57",
+ "generated": "2026-10-26 19:39",
  "checked": "2026-10-24",
- "osm_ok": false,
+ "osm_ok": true,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -484,26 +484,11 @@
    },
    "verify": [],
    "phone": "02-2521-8233",
-   "lat": 25.0569486,
-   "lng": 121.5225824,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/13253683801",
-    "url": "https://www.openstreetmap.org/node/13253683801",
-    "name": "角 · 攀岩館 - 中山",
-    "tags": {
-     "addr:city": "臺北市",
-     "addr:district": "中山區",
-     "addr:full": "10448臺北市中山區中山北路二段68號B1樓",
-     "addr:housenumber": "68",
-     "addr:street": "中山北路二段",
-     "contact:facebook": "corner.bouldering.zs",
-     "leisure": "fitness_centre",
-     "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
-     "phone": "+886 225218233"
-    },
-    "dist_to_address_m": 70
-   },
+   "lat": 25.0536414,
+   "lng": 121.5227443,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺北市中山區中山北路二段",
+   "coord_match": "中山北路二段, 康樂里, 中山區, 南西商圈, 臺北市, 10450, 臺灣",
    "price_min": {
     "price": 250,
     "item": "平日 10:00–12:00",
@@ -697,26 +682,11 @@
    },
    "verify": [],
    "hours": "週一至週五 10:00–23:00；週六、日 09:00–21:00",
-   "lat": 25.0342851,
-   "lng": 121.496916,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/13253694101",
-    "url": "https://www.openstreetmap.org/node/13253694101",
-    "name": "原岩攀岩館-萬華店",
-    "tags": {
-     "addr:city": "臺北市",
-     "addr:district": "萬華區",
-     "addr:full": "108臺北市萬華區大理街149號",
-     "addr:housenumber": "149",
-     "addr:street": "大理街",
-     "leisure": "fitness_centre",
-     "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
-     "phone": "+886 2 23088250",
-     "website": "https://tupclimbing.tw"
-    },
-    "dist_to_address_m": 309
-   },
+   "lat": 25.0340843,
+   "lng": 121.4963684,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺北市萬華區大理街",
+   "coord_match": "大理街, 糖廍里, 萬華區, 下崁, 臺北市, 10856, 臺灣",
    "price_min": {
     "price": 320,
     "item": "平日星光 20:30–23:00",
@@ -812,26 +782,11 @@
    },
    "verify": [],
    "phone": "02-2821-9988",
-   "lat": 25.1082962,
-   "lng": 121.5142184,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/13447526001",
-    "url": "https://www.openstreetmap.org/node/13447526001",
-    "name": "原岩攀岩館-明德店",
-    "tags": {
-     "addr:city": "臺北市",
-     "addr:district": "北投區",
-     "addr:full": "臺北市北投區文林北路222號B1樓",
-     "addr:housenumber": "222",
-     "addr:street": "文林北路",
-     "leisure": "fitness_centre",
-     "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 10:00-22:00",
-     "phone": "+886 2 28219988",
-     "website": "https://www.tupclimbing.tw/"
-    },
-    "dist_to_address_m": 102
-   },
+   "lat": 25.1051566,
+   "lng": 121.5180389,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺北市北投區文林北路",
+   "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112047, 臺灣",
    "price_min": {
     "price": 320,
     "item": "平日星光 20:30–23:00",
@@ -922,8 +877,8 @@
    },
    "verify": [],
    "hours": "週一至週五 12:00–23:00；週六、日 09:00–21:00",
-   "lat": 25.0539817,
-   "lng": 121.5978492,
+   "lat": 25.0542847,
+   "lng": 121.596696,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區南港路二段",
    "coord_match": "南港路二段, 東明里, 南港區, 潭美, 臺北市, 11573, 臺灣",
@@ -1028,27 +983,11 @@
     "抱石區規模"
    ],
    "hours": "週一至週五 12:00–23:00；週六、日 09:00–22:00",
-   "lat": 25.0062525,
-   "lng": 121.4860912,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/8330698331",
-    "url": "https://www.openstreetmap.org/node/8330698331",
-    "name": "原岩中和店",
-    "tags": {
-     "addr:city": "新北市",
-     "addr:district": "中和區",
-     "addr:full": "23557新北市中和區立言街41號",
-     "addr:housenumber": "41",
-     "addr:street": "立言街",
-     "fee": "yes",
-     "leisure": "sports_centre",
-     "opening_hours": "Tu-Fr 12:00-23:00; Sa-Mo 09:00-22:00",
-     "phone": "+886 2 8228 2555",
-     "sport": "climbing"
-    },
-    "dist_to_address_m": 42
-   },
+   "lat": 25.0060804,
+   "lng": 121.4864657,
+   "coord_source": "nominatim:road",
+   "coord_query": "新北市中和區立言街",
+   "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣",
    "price_min": {
     "price": 320,
     "item": "平日星光 20:30–23:00",
@@ -1289,23 +1228,9 @@
     ]
    },
    "verify": [],
-   "lat": 24.9200421,
-   "lng": 121.1451743,
-   "coord_source": "osm",
-   "osm": {
-    "id": "way/1016526111",
-    "url": "https://www.openstreetmap.org/way/1016526111",
-    "name": "原岩攀岩館-楊梅店",
-    "tags": {
-     "addr:city": "桃園市",
-     "addr:district": "楊梅區",
-     "addr:full": "326桃園市楊梅區梅高路99巷20號",
-     "addr:housenumber": "20",
-     "addr:street": "梅高路99巷",
-     "leisure": "sports_centre",
-     "sport": "climbing"
-    }
-   },
+   "lat": null,
+   "lng": null,
+   "coord_source": "none",
    "price_min": null,
    "price_day": null
   },
@@ -1389,8 +1314,8 @@
      "price": "100"
     }
    ],
-   "lat": 25.0531814,
-   "lng": 121.6067087,
+   "lat": 25.0532343,
+   "lng": 121.6066976,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區市民大道八段",
    "coord_match": "市民大道八段, 南港里, 南港區, 三重埔, 臺北市, 115011, 臺灣",
@@ -1468,11 +1393,11 @@
      "price": "100"
     }
    ],
-   "lat": 25.0527582,
-   "lng": 121.6120803,
+   "lat": 25.0521753,
+   "lng": 121.6072066,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區忠孝東路七段",
-   "coord_match": "忠孝東路七段, 中南里, 南港區, 三重埔, 臺北市, 11571, 臺灣",
+   "coord_match": "忠孝東路七段, 中南里, 南港區, 三重埔, 臺北市, 115011, 臺灣",
    "price_min": {
     "price": 220,
     "item": "平日 18:00 前入場",
@@ -1556,11 +1481,11 @@
      "price": "100"
     }
    ],
-   "lat": 25.0894747,
-   "lng": 121.5199918,
+   "lat": 25.0866934,
+   "lng": 121.522978,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
-   "coord_match": "承德路四段, 後港里, 士林區, 社子, 臺北市, 111056, 臺灣",
+   "coord_match": "承德路四段, 義信里, 士林區, 社子, 臺北市, 111052, 臺灣",
    "price_min": {
     "price": 250,
     "item": "單次入場（平假日相同）",
@@ -1896,19 +1821,11 @@
      "price": "100"
     }
    ],
-   "lat": 25.1088442,
-   "lng": 121.5298068,
-   "coord_source": "osm",
-   "osm": {
-    "id": "way/659878780",
-    "url": "https://www.openstreetmap.org/way/659878780",
-    "name": "The little rock",
-    "tags": {
-     "leisure": "sports_centre",
-     "sport": "climbing"
-    },
-    "dist_to_address_m": 188
-   },
+   "lat": 25.1104056,
+   "lng": 121.5305186,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺北市士林區忠誠路二段",
+   "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11147, 臺灣",
    "price_min": {
     "price": 200,
     "item": "平日星光",
@@ -2456,11 +2373,11 @@
     "S04（較舊）寫平日 300／假日 330／租鞋 80，S03（2025-05）寫 360／400／100，採用較新的"
    ],
    "phone": "02-8992-8991",
-   "lat": 25.0346843,
-   "lng": 121.4455471,
+   "lat": 25.0405741,
+   "lng": 121.4630293,
    "coord_source": "nominatim:road",
    "coord_query": "新北市新莊區中正路",
-   "coord_match": "中正路, 忠孝里, 新莊區, 新庄(海山口), 新北市, 242009, 臺灣",
+   "coord_match": "中正路, 思源里, 新莊區, 新庄(海山口), 新北市, 242015, 臺灣",
    "price_min": {
     "price": 240,
     "item": "星光票（當日最後兩小時）",
@@ -2688,24 +2605,11 @@
     }
    ],
    "features": "抱石與上攀；晚上常有駐場教練陪練",
-   "lat": 25.0216119,
-   "lng": 121.3004947,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/9316739471",
-    "url": "https://www.openstreetmap.org/node/9316739471",
-    "name": "passion climbing爬森攀岩館",
-    "tags": {
-     "addr:city": "桃園市",
-     "addr:district": "桃園區",
-     "addr:full": "桃園市桃園區新埔七街139-1號",
-     "addr:housenumber": "139-1",
-     "addr:street": "新埔七街",
-     "leisure": "sports_centre",
-     "sport": "climbing"
-    },
-    "dist_to_address_m": 227
-   },
+   "lat": 25.0188514,
+   "lng": 121.3020336,
+   "coord_source": "nominatim:road",
+   "coord_query": "桃園市桃園區新埔七街",
+   "coord_match": "新埔七街, 新埔里, 桃園區, 桃園市, 330, 臺灣",
    "price_min": {
     "price": 200,
     "item": "平日星光（閉館前 2.5 小時）",
@@ -2783,24 +2687,11 @@
     "成功館營業時間 S55 和 S51 不同"
    ],
    "hours": "週一至週三 10:00–22:30；週四至週日 09:00–21:00（成功館）",
-   "lat": 24.8197808,
-   "lng": 121.0241394,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/3176072661",
-    "url": "https://www.openstreetmap.org/node/3176072661",
-    "name": "風城攀岩館 iClimb",
-    "tags": {
-     "addr:city": "新竹縣",
-     "addr:district": "竹北市",
-     "addr:full": "30264新竹縣竹北市成功二街98號",
-     "addr:housenumber": "98",
-     "addr:street": "成功二街",
-     "phone": "+886 3 6588588",
-     "website": "www.iclimb.com.tw"
-    },
-    "dist_to_address_m": 57
-   },
+   "lat": 24.8195605,
+   "lng": 121.0246494,
+   "coord_source": "nominatim:road",
+   "coord_query": "新竹縣竹北市成功二街",
+   "coord_match": "成功二街, 鹿場, 鹿場里, 竹北市, 新竹縣, 30264, 臺灣",
    "price_min": {
     "price": 320,
     "item": "全日票（成功館）",
@@ -2901,22 +2792,11 @@
     }
    ],
    "features": "iClimb 的抱石館（成功館以上攀為主）",
-   "lat": 24.8299473,
-   "lng": 121.0280732,
-   "coord_source": "osm",
-   "osm": {
-    "id": "way/1220419515",
-    "url": "https://www.openstreetmap.org/way/1220419515",
-    "name": "iClimb風城攀岩 勝利館",
-    "tags": {
-     "addr:city": "新竹縣",
-     "addr:district": "竹北市",
-     "addr:full": "302新竹縣竹北市勝利十五街66號",
-     "addr:housenumber": "66",
-     "addr:street": "勝利十五街"
-    },
-    "dist_to_address_m": 192
-   },
+   "lat": 24.8289099,
+   "lng": 121.0295922,
+   "coord_source": "nominatim:road",
+   "coord_query": "新竹縣竹北市勝利十五街",
+   "coord_match": "勝利十五街, 田厝, 北興里, 竹北市, 新竹縣, 30543, 臺灣",
    "price_min": {
     "price": 299,
     "item": "離峰票",
@@ -2993,27 +2873,11 @@
     }
    ],
    "features": "抱石、重訓、兒童課程；新竹火車站後站附近",
-   "lat": 24.8032873,
-   "lng": 120.9786617,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/13295191398",
-    "url": "https://www.openstreetmap.org/node/13295191398",
-    "name": "BABO PAPAK",
-    "tags": {
-     "addr:city": "新竹市",
-     "addr:district": "東區",
-     "addr:full": "新竹市東區南大路300號",
-     "addr:housenumber": "300",
-     "addr:street": "南大路",
-     "fee": "yes",
-     "leisure": "sports_centre",
-     "opening_hours": "Mo-Fr 14:00-23:00; Sa-Su 10:00-19:00",
-     "sport": "climbing",
-     "website": "https://linktr.ee/babopapak"
-    },
-    "dist_to_address_m": 1998
-   },
+   "lat": 24.7960352,
+   "lng": 120.9671836,
+   "coord_source": "nominatim:road",
+   "coord_query": "新竹市東區南大路",
+   "coord_match": "南大路, 新興里, 東區, 新竹市, 300036, 臺灣",
    "price_min": {
     "price": 250,
     "item": "平日離峰 13:30–18:00",
@@ -3081,8 +2945,8 @@
     "週日時間：S54 寫到 21:00，粉專簡介和 S55 寫到 19:00"
    ],
    "phone": "0933-324-381",
-   "lat": 24.1778551,
-   "lng": 120.6348156,
+   "lat": 24.1791542,
+   "lng": 120.6347984,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
    "coord_match": "環中路二段, 西墩里, 西屯區, 臺中七期, 臺中市, 407670, 臺灣",
@@ -3233,11 +3097,11 @@
     ]
    },
    "verify": [],
-   "lat": 24.1304329,
-   "lng": 120.6301684,
+   "lat": 24.1424284,
+   "lng": 120.6338892,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
-   "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣",
+   "coord_match": "永春東七路, 永定里, 南屯區, 田心, 臺中市, 408474, 臺灣",
    "price_min": {
     "price": 380,
     "item": "星光票（21:00 後）",
@@ -3359,11 +3223,11 @@
     "價格來源未標日期"
    ],
    "hours": "週一、二 18:00–23:00；週三至週五 14:00–23:00；週六、日 11:00–23:00",
-   "lat": 24.1534551,
-   "lng": 120.6943557,
+   "lat": 24.1418589,
+   "lng": 120.6943029,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市東區進化路",
-   "coord_match": "進化路, 錦村里, 北區, 臺中市, 404, 臺灣",
+   "coord_match": "進化路, 干城里, 東區, 臺中市, 401, 臺灣",
    "price_min": {
     "price": 250,
     "item": "全日票",
@@ -3648,29 +3512,11 @@
    "verify": [
     "營業時間：S05 寫週二至五 14:00–22:00、週末 10:00–18:00；S51（2025-12）寫週一至四 14:00–22:00、週五至日 10:00–18:00"
    ],
-   "lat": 23.011325,
-   "lng": 120.1900737,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/12198361101",
-    "url": "https://www.openstreetmap.org/node/12198361101",
-    "name": "嗨翻",
-    "tags": {
-     "addr:city": "臺南市",
-     "addr:district": "北區",
-     "addr:full": "臺南市北區大和路121號",
-     "addr:housenumber": "121",
-     "addr:street": "大和路",
-     "contact:facebook": "highfun55",
-     "contact:instagram": "highfun2017",
-     "leisure": "sports_centre",
-     "opening_hours": "Tu-Fr 14:00-22:00; Sa-Su 10:00-18:00",
-     "phone": "+886 6 358 4339",
-     "sport": "climbing",
-     "website": "https://highfun2017.com/"
-    },
-    "dist_to_address_m": 363
-   },
+   "lat": 23.0145341,
+   "lng": 120.1894238,
+   "coord_source": "nominatim:road",
+   "coord_query": "臺南市北區大和路",
+   "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣",
    "price_min": {
     "price": 200,
     "item": "平日星光票",
@@ -4048,11 +3894,11 @@
      "note": "看起來是課程或體驗價"
     }
    ],
-   "lat": 22.6766101,
-   "lng": 120.2995524,
+   "lat": 22.6806503,
+   "lng": 120.3029807,
    "coord_source": "nominatim:road",
    "coord_query": "高雄市左營區正德路",
-   "coord_match": "政德路, 華夏新村, 新下里, 左營區, 高雄市, 813, 臺灣",
+   "coord_match": "政德路, 新光里, 左營區, 高雄市, 813, 臺灣",
    "price_min": null,
    "price_day": null
   },
@@ -4295,25 +4141,11 @@
     "電話和久淘官網的電話相同，經營者可能是同一個"
    ],
    "phone": "0986-567-929",
-   "lat": 24.7389332,
-   "lng": 121.7557822,
-   "coord_source": "osm",
-   "osm": {
-    "id": "relation/20671094",
-    "url": "https://www.openstreetmap.org/relation/20671094",
-    "name": "宜蘭國民運動中心",
-    "tags": {
-     "addr:city": "宜蘭縣",
-     "addr:district": "宜蘭市",
-     "addr:full": "宜蘭縣宜蘭市公園路66號",
-     "addr:housenumber": "66",
-     "addr:street": "公園路",
-     "leisure": "sports_centre",
-     "sport": "swimming;climbing;cycling;table_tennis",
-     "website": "https://yilansports.com.tw/"
-    },
-    "dist_to_address_m": 1
-   },
+   "lat": 24.7389283,
+   "lng": 121.7557927,
+   "coord_source": "nominatim:place",
+   "coord_query": "宜蘭縣宜蘭國民運動中心",
+   "coord_match": "宜蘭國民運動中心, 66, 公園路, 四鬮一, 建業里, 宜蘭市, 宜蘭縣, 260011, 臺灣",
    "price_min": null,
    "price_day": null
   },
@@ -4359,26 +4191,11 @@
    "verify": [
     "S55 寫站前本館、民治店都已歇業；國民一街38號3樓現在的粉專名稱是「崩岩館站前店【戶外活動部門】」，看起來已不是岩館"
    ],
-   "lat": 23.9877651,
-   "lng": 121.6018246,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/7596936848",
-    "url": "https://www.openstreetmap.org/node/7596936848",
-    "name": "崩岩館",
-    "tags": {
-     "addr:city": "花蓮縣",
-     "addr:district": "花蓮市",
-     "addr:full": "花蓮縣花蓮市國民一街38號三樓",
-     "addr:housenumber": "38",
-     "addr:street": "國民一街",
-     "leisure": "sports_centre",
-     "phone": "+886 966 475 655",
-     "sport": "climbing;bouldering",
-     "website": "https://hualienbonus.tw/"
-    },
-    "dist_to_address_m": 123
-   },
+   "lat": 23.9887095,
+   "lng": 121.601192,
+   "coord_source": "nominatim:road",
+   "coord_query": "花蓮縣花蓮市國民一街",
+   "coord_match": "國民一街, 國聯里, 花蓮市, 花蓮縣, 970, 臺灣",
    "price_min": null,
    "price_day": null
   },
