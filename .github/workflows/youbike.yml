@@ -11,7 +11,8 @@ name: YouBike 歷史平均
 
 on:
   schedule:
-    - cron: "*/20 * * * *"
+    # 避開整點（GitHub 整點最塞、排程容易被延後或跳過）；2026-10-26 原本的 */20 加上後 4 小時都沒觸發，改成這個
+    - cron: "7,27,47 * * * *"
   push:
     branches: [main]
     paths:
