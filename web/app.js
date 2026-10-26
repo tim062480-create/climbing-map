@@ -2,6 +2,18 @@
 // 資料：data/processed/gyms.json（館）、data/processed/youbike_*.json（YouBike），都由 GitHub Actions 定期更新。
 "use strict";
 
+// 直接在電腦上點開 index.html（file://）時：瀏覽器不讓網頁讀旁邊的資料檔，OSM 底圖也會擋（沒有網站來源），
+// 整頁會像壞掉一樣。改成顯示一段說明和網站網址，後面的程式都不跑。
+const SITE_URL = "https://tim062480-create.github.io/climbing-map/";
+if (location.protocol === "file:") {
+  document.body.innerHTML = `<main style="max-width:560px;margin:15vh auto;padding:0 20px;font:16px/1.7 system-ui,'Microsoft JhengHei',sans-serif">
+    <h1 style="font-size:22px">這是網站的原始碼，請用網址打開</h1>
+    <p>直接點開 <code>index.html</code> 時，瀏覽器不讓網頁讀取館的資料，地圖也載入不了，所以畫面會像壞掉一樣。</p>
+    <p><a href="${SITE_URL}" style="font-size:20px">👉 打開附近抱石館地圖</a></p>
+    <p style="color:#5f6b78;font-size:14px">資料夾裡的「打開攀岩地圖網站」也可以直接打開網站。</p></main>`;
+  throw new Error("請用網址打開網站，不要直接開 index.html");
+}
+
 // seed 的 status 是「這間館還有沒有在營運」，不是「現在有沒有開」，畫面上改叫「仍在營運」以免誤會
 const STATUS_LABEL = { "營業中": "仍在營運" };
 const STATUS_CLASS = { "營業中": "ok", "待確認": "warn", "可能已停業": "warn", "已停業": "bad" };
