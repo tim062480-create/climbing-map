@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# 附近抱石館地圖（climbing-map）
+# 岩館地圖go（climbing-map）
 
 手機定位找附近的室內抱石館，顯示價格、營業時間、影片、留言，並提供大眾運輸與 YouBike 交通建議。用 GitHub Pages 發布，GitHub Actions 自動更新資料。使用者用繁體中文溝通，文件、註解、commit 訊息都用繁體中文。
 
