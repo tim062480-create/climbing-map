@@ -16,6 +16,7 @@ const state = {
   gyms: [], sources: {}, osmExtra: [], checked: "",
   near: null, pattern: null, stations: null, live: undefined,
   me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  favs: new Set(), news: {}, newsUpdated: "",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -64,8 +65,13 @@ async function init() {
   state.sources = data.sources || {};
   state.osmExtra = data.osm_unmatched || [];
   state.checked = data.checked || "";
+  state.favs = loadFavs();
   $("checked").textContent = state.checked;
-  [state.near, state.pattern] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json")]);
+  let news;
+  [state.near, state.pattern, news] = await Promise.all([loadJSON("data/processed/youbike_near.json"), loadJSON("data/processed/youbike_pattern.json"),
+    loadJSON("data/processed/news.json")]);
+  state.news = (news && news.gyms) || {};
+  state.newsUpdated = (news && news.updated) || "";
 
   for (const g of state.gyms) {
     if (g.lat == null) continue;
@@ -100,7 +106,36 @@ async function init() {
   if (location.hash.length > 1) openDetail(location.hash.slice(1), false);
 }
 
-const searchesPlace = (c) => c.cities.length || c.districts.length || c.names.length;
+const searchesPlace = (c) => c.cities.length || c.districts.length || c.names.length || c.fav;
+
+// ---------- 最愛 ----------
+// 存在這台裝置的瀏覽器裡；還沒存過時用 web/config.js 的 favorites（宜蘭、永和）
+const FAV_KEY = "climbing-map:fav";
+function loadFavs() {
+  try {
+    const saved = localStorage.getItem(FAV_KEY);
+    if (saved != null) return new Set(JSON.parse(saved));
+  } catch { /* 無痕模式或資料壞掉就用預設 */ }
+  return new Set((window.CLIMBING_CONFIG || {}).favorites || []);
+}
+
+function toggleFav(id) {
+  state.favs.has(id) ? state.favs.delete(id) : state.favs.add(id);
+  try { localStorage.setItem(FAV_KEY, JSON.stringify([...state.favs])); } catch { /* 存不了就只在這次有效 */ }
+  const g = state.gyms.find((x) => x.id === id);
+  const m = state.markers.get(id);
+  if (g && m) m.setStyle(markerStyle(g));
+  render();
+  renderFavBtn(id);
+}
+
+function renderFavBtn(id) {
+  const b = $("favBtn");
+  if (!b) return;
+  const on = state.favs.has(id);
+  b.setAttribute("aria-pressed", on);
+  b.textContent = on ? "★ 已加入最愛" : "☆ 加入最愛";
+}
 
 // ---------- 搜尋框 ----------
 // 一個框打所有條件，例如「台中 300 以下 最便宜」「最近 5 間」「內湖」「原岩」「上攀 3 公里」。
@@ -109,10 +144,11 @@ const QUERY_KEY = "climbing-map:q";
 const DEFAULT_RADIUS_KM = 10;   // 沒指定地點、館名、範圍時，有定位就先看附近這麼遠
 const CITY_ORDER = ["基隆市", "臺北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣", "臺中市", "彰化縣", "南投縣", "雲林縣",
   "嘉義市", "嘉義縣", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"];
-const SUGGESTIONS = ["最近 5 間", "最便宜", "300 以下", "台北", "台中", "高雄"];
+const SUGGESTIONS = ["最愛", "最近 5 間", "最便宜", "300 以下", "台北", "台中", "高雄"];
 const STOPWORDS = /抱石館|攀岩館|攀岩場|抱石|攀岩|岩館|我想|想要|幫我|找|的|在|有|和|跟|與|及|或|以及/g;
 // 搜尋框認得的關鍵字（解析和下拉選單共用）
 const Q_RE = {
+  fav: /我的最愛|最愛|收藏/g,
   budget: /(?:預算|低於|不超過|[<≤])\s*(\d{2,4})\s*(?:元|塊)?|(\d{2,4})\s*(?:元|塊)?\s*(?:以下|以內|內|有找)/g,
   km: /(\d+(?:\.\d+)?)\s*(?:公里|km|k)(?:以內|內)?/gi,
   anywhere: /全臺|全國|不限距離|不限範圍|不限/g,
@@ -148,9 +184,10 @@ const normalizeQuery = (q) => q
 // 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
 function parseQuery(q) {
   let s = normalizeQuery(q);
-  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openOnly: false, osm: false, chips: [] };
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openOnly: false, osm: false, fav: false, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
+  take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
   take(Q_RE.budget, (raw, a, b) => { c.budget = Number(a || b); c.chips.push({ raw, label: `$${c.budget} 以下` }); });
   take(Q_RE.km, (raw, n) => { c.radius = Number(n); c.chips.push({ raw, label: `${n} 公里內` }); });
   take(Q_RE.anywhere, (raw) => { c.radius = 0; c.chips.push({ raw, label: "不限距離" }); });
@@ -176,8 +213,8 @@ function parseQuery(q) {
     else c.chips.push({ raw: word, label: `看不懂「${word}」`, unknown: true });
   }
   c.cities = [...new Set(c.cities)];
-  // 沒指定地點、館名或範圍時，有定位就先看附近
-  c.radiusAuto = c.radius == null && !c.cities.length && !c.districts.length && !c.names.length;
+  // 沒指定地點、館名、最愛或範圍時，有定位就先看附近
+  c.radiusAuto = c.radius == null && !searchesPlace(c);
   if (c.radius == null) c.radius = c.radiusAuto ? DEFAULT_RADIUS_KM : 0;
   return c;
 }
@@ -230,6 +267,7 @@ function suggestGroups() {
       ...[3, 5, 10, 30].map((n) => ({ label: `${n} 公里`, on: (c) => !c.radiusAuto && c.radius === n })),
       { label: "不限距離", on: (c, q) => toRe("不限").test(q) }] },
     { title: "其他", items: [
+      { label: "最愛", re: Q_RE.fav, count: state.favs.size, on: (c) => c.fav },
       { label: "營業中", re: Q_RE.open, on: (c) => c.openOnly },
       { label: "上攀", re: Q_RE.lead, on: (c) => c.lead },
       { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly }] },
@@ -323,7 +361,8 @@ function renderChips(c) {
 
 function markerStyle(g) {
   const color = { ok: "#2b8a3e", warn: "#c77700", bad: "#b02a37" }[STATUS_CLASS[g.status] || "warn"];
-  return { radius: hasBoulder(g) ? 9 : 7, color: "#fff", weight: 2, fillColor: color, fillOpacity: 0.95 };
+  const fav = state.favs.has(g.id);   // 最愛的館外圈改成金色
+  return { radius: hasBoulder(g) ? 9 : 7, color: fav ? "#f59f00" : "#fff", weight: fav ? 3 : 2, fillColor: color, fillOpacity: 0.95 };
 }
 
 function setStatus(msg, isError = false) {
@@ -384,7 +423,8 @@ const minPrice = (g) => (priceOf(g) ? priceOf(g).price : null);
 function visibleGyms(c) {
   return state.gyms.filter((g) =>
     g.status !== "已停業" &&
-    (c.lead || hasBoulder(g)) &&
+    (!c.fav || state.favs.has(g.id)) &&
+    (c.lead || c.fav || hasBoulder(g)) &&   // 最愛的館就算只有上攀也列出來
     (!c.openOnly || g.status === "營業中") &&
     (!c.cities.length || c.cities.includes(g.city)) &&
     (!c.districts.length || c.districts.includes(g.district)) &&
@@ -453,8 +493,29 @@ function listItem(g, d) {
   const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
   const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : ""]
     .filter(Boolean).join("・");
-  return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${esc(g.name)}</div>` +
-    `<div class="sub">${esc(sub)}</div></div><span class="dist">${d != null ? fmtDist(d) : g.lat == null ? "位置待補" : ""}</span></li>`;
+  const n = freshNews(g);
+  return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${state.favs.has(g.id) ? "⭐ " : ""}${esc(g.name)}</div>` +
+    `<div class="sub">${esc(sub)}</div>${n ? `<div class="sub fresh">🆕 ${esc(n.date.slice(5).replace("-", "/"))} ${esc(n.title)}</div>` : ""}</div><span class="dist">${d != null ? fmtDist(d) : g.lat == null ? "位置待補" : ""}</span></li>`;
+}
+
+// ---------- 近期動態（data/processed/news.json，每半個月更新） ----------
+const FRESH_DAYS = 15;
+// 最近 FRESH_DAYS 天內的最新一則，清單上顯示「🆕」
+function freshNews(g) {
+  const n = (state.news[g.id] || [])[0];
+  return n && n.date >= new Date(Date.now() - FRESH_DAYS * 864e5).toISOString().slice(0, 10) ? n : null;
+}
+
+function newsHTML(g) {
+  const items = state.news[g.id] || [];
+  const ICON = { news: "📰", youtube: "▶️", website: "🌐" };
+  const social = ["facebook", "instagram"].filter((k) => (g.links || {})[k]).map((k) =>
+    `<a class="btn small" href="${esc(g.links[k])}" target="_blank" rel="noopener">${k === "facebook" ? "Facebook" : "Instagram"} 最新貼文</a>`).join("");
+  return (items.length ? `<ul class="news">${items.map((n) =>
+    `<li>${ICON[n.kind] || "📰"} <a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a><div class="note">${esc(n.date)}・${esc(n.source)}</div></li>`).join("")}</ul>`
+    : `<p class="note">最近半年沒有找到這間館的新聞、影片或官網公告。</p>`) +
+    (social ? `<div class="row">${social}</div>` : "") +
+    `<p class="note">每半個月自動更新${state.newsUpdated ? `（上次 ${esc(state.newsUpdated)}）` : ""}。新聞是用館名自動搜尋，可能混到別的消息；Facebook、Instagram 的貼文沒辦法自動抓，請點連結看。</p>`;
 }
 
 // ---------- 詳細資訊 ----------
@@ -472,10 +533,14 @@ function openDetail(id, pushHash = true) {
   $("detailBody").innerHTML = `
     <h2>${esc(g.name)}</h2>
     <div class="meta"><span class="badge ${cls}">${esc(g.status)}</span> ${esc(types)}${g.name_en ? `・${esc(g.name_en)}` : ""}</div>
+    <button type="button" class="btn small fav" id="favBtn"></button>
     <p>${esc(g.address || `${g.city}${g.district || ""}（地址待補）`)}${g.phone ? `<br>☎ <a href="tel:${esc(g.phone)}">${esc(g.phone)}</a>` : ""}</p>
     ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>` : ""}
     ${g.features ? `<p>${esc(g.features)}</p>` : ""}
     <div class="row">${links}<a class="btn small" href="${gmapsSearch(g)}" target="_blank" rel="noopener">Google 地圖（評論・照片）</a></div>
+
+    <h3>近期動態</h3>
+    ${newsHTML(g)}
 
     <h3>價格</h3>
     ${g.prices && g.prices.length ? `<table>${g.prices.map((p) =>
@@ -495,6 +560,8 @@ function openDetail(id, pushHash = true) {
     ${sourcesHTML(g)}
   `;
   $("detail").hidden = false;
+  renderFavBtn(id);
+  $("favBtn").addEventListener("click", () => toggleFav(id));
   $("detailBody").querySelectorAll("[data-yt]").forEach((b) => b.addEventListener("click", () => {
     b.outerHTML = `<iframe class="embed" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(b.dataset.yt)}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="YouTube"></iframe>`;
   }));

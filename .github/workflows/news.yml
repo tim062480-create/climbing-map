@@ -1,0 +1,54 @@
+# 每間館的近期動態（src/fetch_news.py）
+#
+#   - 每月 1 日、16 日 09:30（台灣時間）抓 Google 新聞、館的 YouTube 頻道和官網 RSS，存成 data/processed/news.json
+#   - 改了 src/fetch_news.py 或這個檔案時也會跑（開發分支上靠這個測試）
+#   - 想馬上跑一次：repo 的 Actions → 館的近期動態 → Run workflow
+#
+# 容器內連不到 Google、YouTube，所以在 GitHub 的主機上跑。schedule 只會在預設分支（main）上執行。
+
+name: 館的近期動態
+
+on:
+  schedule:
+    - cron: "30 1 1,16 * *"
+  push:
+    paths:
+      - "src/fetch_news.py"
+      - ".github/workflows/news.yml"
+  workflow_dispatch:
+
+# 不跟 update-data.yml 共用 concurrency group：YouBike 每 20 分鐘排一次，會把排隊中的這個取消掉
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Taipei
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: 抓近期動態
+        run: python src/fetch_news.py
+
+      - name: 存回 repo
+        run: |
+          git config user.name "climbing-data-bot"
+          git config user.email "climbing-data-bot@users.noreply.github.com"
+          git add data
+          git commit -q -m "館的近期動態 $(date '+%m/%d %H:%M')" || exit 0
+          for i in 1 2 3; do
+            if git pull -q --rebase; then git push -q && break; else git rebase --abort; fi
+            sleep 10
+          done

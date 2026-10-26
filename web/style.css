@@ -94,6 +94,8 @@ a { color: var(--accent); }
 }
 .btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .btn.small { padding: 3px 10px; font-size: 13px; }
+.btn.fav { margin-top: 8px; }
+.btn.fav[aria-pressed="true"] { color: #e67700; border-color: #f59f00; }
 
 .layout { flex: 1; display: flex; min-height: 0; position: relative; }
 #map { flex: 1; min-height: 0; z-index: 0; }
@@ -137,6 +139,10 @@ a { color: var(--accent); }
 .list .dist { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--muted); font-size: 13px; white-space: nowrap; }
 .list .name { font-weight: 600; }
 .list .sub { font-size: 12px; color: var(--muted); }
+.list .sub.fresh { color: var(--accent); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.list li > div { min-width: 0; }
+.news { list-style: none; margin: 0 0 6px; padding: 0; }
+.news li { padding: 5px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 7px; flex: none; background: var(--ok); }
 .dot.warn { background: var(--warn); }
 .dot.bad { background: var(--bad); }

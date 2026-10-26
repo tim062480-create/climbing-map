@@ -29,6 +29,8 @@ climbing-map/
 |---|---|
 | 補座標、比對 OSM | `python src/enrich.py` |
 | 抓 YouBike 車數 | `python src/youbike_near.py`（加 `--stations` 會更新全台站點位置） |
+| 找新岩館 | `python src/find_new_gyms.py`（先跑 enrich.py）→ `docs/new_gyms_report.md`；Actions 每年 1 月、7 月自動跑並開 issue，也可以在 Actions → 新岩館檢查 → Run workflow 手動跑 |
+| 館的近期動態 | `python src/fetch_news.py` → `data/processed/news.json`；Actions 每月 1、16 日自動跑 |
 | 匯出表格 | `python src/export_table.py` → 自動存到下一個 `output/vN/` |
 | 新增／修改館 | 改 `data/manual/gyms_seed.json`，新來源加到 `data/raw/sources.csv`，push 後排程會自動補座標 |
 | 座標不對 | 在 seed 該館加上 `"lat": 25.0, "lng": 121.5`（手動座標優先），或改 `osm_keywords` |
