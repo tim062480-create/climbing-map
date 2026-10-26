@@ -710,10 +710,11 @@ function openDetail(id, pushHash = true) {
 
   $("detailBody").innerHTML = `
     <h2>${esc(g.name)}</h2>
+    ${openNowHTML(g)}
     <div class="meta"><span class="badge ${cls}">${esc(STATUS_LABEL[g.status] || g.status)}</span> ${esc(types)}${g.name_en ? `・${esc(g.name_en)}` : ""}</div>
     <button type="button" class="btn small fav" id="favBtn"></button>
     <p>${esc(g.address || `${g.city}${g.district || ""}（地址待補）`)}${g.phone ? `<br>☎ <a href="tel:${esc(g.phone)}">${esc(g.phone)}</a>` : ""}</p>
-    ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>${openNowHTML(g)}` : ""}
+    ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>` : ""}
     ${g.features ? `<p>${esc(g.features)}</p>` : ""}
     <div class="row">${links}<a class="btn small" href="${gmapsSearch(g)}" target="_blank" rel="noopener">Google 地圖（評論・照片）</a></div>
 
