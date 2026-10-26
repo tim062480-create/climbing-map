@@ -91,11 +91,11 @@ async function init() {
   $("suggest").addEventListener("mousedown", (e) => e.preventDefault());   // 點選項時不要讓搜尋框失去焦點
   $("suggest").addEventListener("click", onSuggestClick);
   document.addEventListener("pointerdown", (e) => { if (!$("searchForm").contains(e.target)) closeSuggest(); });
-  $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); closeSuggest(); $("q").blur(); });
+  $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); closeSuggest(); $("q").blur(); revealResults(); });
   $("chips").addEventListener("click", onChipClick);
   $("locate").addEventListener("click", locate);
   $("favsTop").addEventListener("click", onFavsTop);
-  $("handle").addEventListener("click", () => $("panel").classList.toggle("expanded"));
+  setupPanel();
   $("closeDetail").addEventListener("click", closeDetail);
   window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id) openDetail(id, false); });
 
@@ -128,6 +128,53 @@ function toggleFav(id) {
   renderFavBtn(id);
 }
 
+// ---------- 下方清單面板（手機）：收起 collapsed／一半 normal／拉高 expanded ----------
+// 一開始收起來讓地圖大一點；點拉把或往上滑展開，往下滑或點地圖收起；搜尋、按 ⭐ 時自動展開
+const PANEL_STEPS = ["collapsed", "normal", "expanded"];
+const isPhone = () => matchMedia("(max-width: 899px)").matches;
+
+function setPanel(mode) {
+  const p = $("panel");
+  p.classList.toggle("collapsed", mode === "collapsed");
+  p.classList.toggle("expanded", mode === "expanded");
+  if (mode === "collapsed") p.scrollTop = 0;
+  $("handleHint").textContent = mode === "collapsed" ? "▲ 看清單" : "▼ 收起";
+}
+
+const panelMode = () => PANEL_STEPS.find((m) => $("panel").classList.contains(m)) || "normal";
+
+function setupPanel() {
+  const h = $("handle");
+  if (isPhone()) setPanel("collapsed");
+  else setPanel("normal");
+  // 點拉把：收起 ↔ 一半
+  h.addEventListener("click", () => setPanel(panelMode() === "collapsed" ? "normal" : "collapsed"));
+  h.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); h.click(); } });
+  // 在拉把或狀態列上滑動：往上一階、往下一階
+  let y0 = null;
+  const zones = [h, $("status")];
+  zones.forEach((z) => {
+    z.addEventListener("touchstart", (e) => { y0 = e.touches[0].clientY; }, { passive: true });
+    z.addEventListener("touchend", (e) => {
+      if (y0 == null) return;
+      const dy = e.changedTouches[0].clientY - y0;
+      y0 = null;
+      if (Math.abs(dy) < 30) return;
+      const i = PANEL_STEPS.indexOf(panelMode());
+      setPanel(PANEL_STEPS[Math.max(0, Math.min(2, i + (dy < 0 ? 1 : -1)))]);
+    });
+  });
+  // 收起時點狀態列也能展開
+  $("status").addEventListener("click", () => { if (panelMode() === "collapsed") setPanel("normal"); });
+  // 點地圖空白處：收起清單，地圖看得比較清楚
+  map.on("click", () => { if (isPhone() && $("detail").hidden) setPanel("collapsed"); });
+}
+
+// 使用者主動搜尋時，清單收著就打開到一半，結果才看得到
+function revealResults() {
+  if (isPhone() && panelMode() === "collapsed") setPanel("normal");
+}
+
 // 上方的 ⭐ 按鈕：點一下只看最愛（搜尋框換成「最愛」），再點一下回到原本的搜尋
 function onFavsTop() {
   const on = parseQuery($("q").value).fav;
@@ -138,7 +185,7 @@ function onFavsTop() {
     state.qBeforeFav = $("q").value;
     $("q").value = "最愛";
     if (!$("detail").hidden) closeDetail();
-    $("panel").classList.add("expanded");   // 手機上把清單拉高，最愛一眼看得到
+    setPanel("expanded");   // 手機上把清單拉高，最愛一眼看得到
   }
   onQueryChange();
 }
@@ -269,6 +316,7 @@ function onChipClick(e) {
   if (chip.dataset.add) $("q").value = `${$("q").value} ${chip.dataset.add}`.trim();
   else $("q").value = normalizeQuery($("q").value).replace(chip.dataset.raw, " ").replace(/\s+/g, " ").trim();
   onQueryChange();
+  revealResults();
 }
 
 // ---------- 搜尋框下拉選單 ----------
@@ -365,6 +413,7 @@ function onSuggestClick(e) {
   }
   onQueryChange();
   renderSuggest();
+  revealResults();
 }
 
 function renderChips(c) {
