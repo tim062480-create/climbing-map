@@ -15,6 +15,7 @@
   4. OSM 有、我們沒列的地點放進 osm_unmatched，網頁上用灰色標示「未人工確認」
   5. 算出每間館的 price_min（成人入場最低價，含星光、離峰時段和計時 1 小時）和 price_day（不含計時），
      網頁的價格排序和預算篩選用
+  6. 營業時間和票價適用時段轉成規則（見 src/hours_prices.py）
 
 只用 Python 內建套件。容器／本機連不到 OSM 時會保留上一次 gyms.json 的座標。
 用法：python src/enrich.py
@@ -30,6 +31,8 @@ import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
+
+import hours_prices
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "data" / "manual" / "gyms_seed.json"
@@ -269,6 +272,7 @@ def main():
                 g.update({"lat": None, "lng": None, "coord_source": "none"})
         g["price_min"] = price_min(g)                  # 含計時（1 小時）
         g["price_day"] = price_min(g, hourly=False)    # 只看一次入場的票，搜尋「全日」時用
+        hours_prices.annotate(g)                       # 營業時間、票價適用時段 → 網頁算「現在有沒有開、現在多少錢」
         gyms.append(g)
         print(f"{g['id']:24s} {g.get('coord_source')}")
 

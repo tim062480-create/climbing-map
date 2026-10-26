@@ -2,6 +2,8 @@
 // 資料：data/processed/gyms.json（館）、data/processed/youbike_*.json（YouBike），都由 GitHub Actions 定期更新。
 "use strict";
 
+// seed 的 status 是「這間館還有沒有在營運」，不是「現在有沒有開」，畫面上改叫「仍在營運」以免誤會
+const STATUS_LABEL = { "營業中": "仍在營運" };
 const STATUS_CLASS = { "營業中": "ok", "待確認": "warn", "可能已停業": "warn", "已停業": "bad" };
 const TYPE_NAME = { bouldering: "抱石", lead: "上攀", speed: "速度", autobelay: "自動確保" };
 const WALK_M_PER_MIN = 75;     // 步行約 4.5 km/h
@@ -66,6 +68,11 @@ async function init() {
   state.osmExtra = data.osm_unmatched || [];
   state.checked = data.checked || "";
   state.favs = loadFavs();
+  // 國定假日行事曆在背景讀；今天剛好是國定假日或補班日時，清單和打開的館重畫一次
+  loadHolidays().then(() => {
+    const t = new Date(), h = holidays.get(ymd(t));
+    if (h && h.off !== (t.getDay() === 0 || t.getDay() === 6)) { render(); if (state.detailId) openDetail(state.detailId, false); }
+  });
   $("checked").textContent = state.checked;
   const news = await loadJSON("data/processed/news.json");   // YouBike 等打開館的交通時才讀（見 ybNear）
   state.news = (news && news.gyms) || {};
@@ -224,7 +231,7 @@ const Q_RE = {
   cheap: /最?便宜|價格|低價|划算|省錢/g,
   near: /最近|附近|離我|距離/g,
   lead: /上攀|先鋒|綁繩|top\s*rope|lead/gi,
-  open: /營業中|有開/g,
+  open: /現在有開|現在營業|營業中|有開/g,
   day: /全日|整天|不限時|包日/g,
   osm: /osm/gi,
 };
@@ -252,7 +259,7 @@ const normalizeQuery = (q) => q
 // 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
 function parseQuery(q) {
   let s = normalizeQuery(q);
-  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openOnly: false, osm: false, fav: false, chips: [] };
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, osm: false, fav: false, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
   take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
@@ -263,7 +270,7 @@ function parseQuery(q) {
   take(Q_RE.cheap, (raw) => { c.sort = "price"; c.chips.push({ raw, label: "價格低到高" }); });
   take(Q_RE.near, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
   take(Q_RE.lead, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
-  take(Q_RE.open, (raw) => { c.openOnly = true; c.chips.push({ raw, label: "只看營業中" }); });
+  take(Q_RE.open, (raw) => { c.openNow = true; c.chips.push({ raw, label: "現在有開" }); });
   take(Q_RE.day, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
   take(Q_RE.osm, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
   // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
@@ -337,7 +344,7 @@ function suggestGroups() {
       { label: "不限距離", on: (c, q) => toRe("不限").test(q) }] },
     { title: "其他", items: [
       { label: "最愛", re: Q_RE.fav, count: state.favs.size, on: (c) => c.fav },
-      { label: "營業中", re: Q_RE.open, on: (c) => c.openOnly },
+      { label: "現在有開", re: Q_RE.open, on: (c) => c.openNow },
       { label: "上攀", re: Q_RE.lead, on: (c) => c.lead },
       { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly }] },
     // 短名稱（台北）重複時（新竹市、新竹縣）用全名
@@ -495,7 +502,7 @@ function visibleGyms(c) {
     g.status !== "已停業" &&
     (!c.fav || state.favs.has(g.id)) &&
     (c.lead || c.fav || hasBoulder(g)) &&   // 最愛的館就算只有上攀也列出來
-    (!c.openOnly || g.status === "營業中") &&
+    (!c.openNow || (g.status === "營業中" && (openState(g) || {}).open)) &&
     (!c.cities.length || c.cities.includes(g.city)) &&
     (!c.districts.length || c.districts.includes(g.district)) &&
     c.names.every((t) => gymText(g).includes(t)) &&
@@ -562,7 +569,8 @@ function listItem(g, d) {
   const first = (g.prices || [])[0];
   const p = priceOf(g);
   const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
-  const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : ""]
+  const os = g.status === "營業中" ? openState(g) : null;
+  const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : os ? (os.open ? "營業中" : "已打烊") : ""]
     .filter(Boolean).join("・");
   const n = freshNews(g);
   return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${state.favs.has(g.id) ? "⭐ " : ""}${esc(g.name)}</div>` +
@@ -589,6 +597,104 @@ function newsHTML(g) {
     `<p class="note">每半個月自動更新${state.newsUpdated ? `（上次 ${esc(state.newsUpdated)}）` : ""}。只抓館方的官網和 YouTube（例如原岩新訊、官網上的活動與課程）；Facebook、Instagram 的貼文沒辦法自動抓，請點連結看。</p>`;
 }
 
+// ---------- 現在有沒有開、現在入場多少錢 ----------
+// open_hours、prices[].when 由 src/hours_prices.py 產生；國定假日、補班日用 ruyut/TaiwanCalendar（政府行事曆整理）
+const holidays = new Map();   // "20261010" → { off: 是否放假, desc: "國慶日" }
+const WEEK = ["日", "一", "二", "三", "四", "五", "六"];
+const ymd = (d) => `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+const minOfDay = (d) => d.getHours() * 60 + d.getMinutes();
+const hm = (m) => `${Math.floor(m / 60) % 24}:${String(m % 60).padStart(2, "0")}`;
+
+async function loadHolidays() {
+  const y = new Date().getFullYear();
+  const years = new Date().getMonth() === 11 ? [y, y + 1] : [y];   // 12 月時順便讀明年
+  const lists = await Promise.all(years.map((yy) => loadJSON(`https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/${yy}.json`)));
+  for (const d of lists.flat().filter(Boolean)) holidays.set(d.date, { off: d.isHoliday, desc: d.description || "" });
+}
+
+// 這天是不是假日（週末或國定假日；補班的週六算平日）；行事曆沒讀到就只看週末
+function isOffDay(d) {
+  const h = holidays.get(ymd(d));
+  return h ? h.off : d.getDay() === 0 || d.getDay() === 6;
+}
+
+const dayLabel = (d) => {
+  const h = holidays.get(ymd(d));
+  const tag = h && h.off && h.desc ? h.desc : h && !h.off && (d.getDay() === 0 || d.getDay() === 6) ? "補班" : isOffDay(d) ? "假日" : "平日";
+  return `${d.getMonth() + 1}/${d.getDate()} 週${WEEK[d.getDay()]}・${tag}`;
+};
+
+// 某天的營業時段 [[開, 關], …]；[] 公休；null／undefined 不知道
+function dayHours(g, d) {
+  const oh = g.open_hours;
+  if (!oh) return undefined;
+  const i = (d.getDay() + 6) % 7;   // 0 = 週一
+  if (isOffDay(d) && i < 5) return oh.holiday;   // 平日遇到國定假日
+  if (!isOffDay(d) && i >= 5) return oh.week[4]; // 補班的週末照週五
+  return oh.week[i];
+}
+
+// → { open: true, until } ／ { open: false, next: Date 或 null } ／ null（營業時間不明）
+function openState(g, t = new Date()) {
+  const today = dayHours(g, t);
+  if (today == null) return null;
+  const m = minOfDay(t);
+  const now = today.find(([a, b]) => a <= m && m < b);
+  if (now) return { open: true, until: now[1] };
+  for (let i = 0; i < 8; i++) {
+    const d = new Date(t.getFullYear(), t.getMonth(), t.getDate() + i);
+    const iv = i === 0 ? today : dayHours(g, d);
+    if (iv == null) return { open: false, next: null };
+    const first = iv.find(([a]) => i > 0 || a > m);
+    if (first) return { open: false, next: new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, first[0]) };
+  }
+  return { open: false, next: null };
+}
+
+function nextLabel(next, from = new Date()) {
+  const days = Math.round((new Date(next.getFullYear(), next.getMonth(), next.getDate()) - new Date(from.getFullYear(), from.getMonth(), from.getDate())) / 864e5);
+  return `${days === 0 ? "今天" : days === 1 ? "明天" : `週${WEEK[next.getDay()]}`} ${hm(minOfDay(next))}`;
+}
+
+function openNowHTML(g) {
+  const s = openState(g);
+  if (!s) return "";
+  if (s.open) return `<p class="open-now on">● 現在營業中・到 ${hm(s.until)}</p>`;
+  return `<p class="open-now off">● 現在沒有營業${s.next ? `・${nextLabel(s.next)} 開` : ""}</p>`;
+}
+
+// 這個票在時間 t 能不能用
+function priceFits(g, p, t) {
+  if (p.kind === "other" || p.when == null) return false;
+  if (!p.when.length) return true;
+  const iv = dayHours(g, t) || [];
+  const m = minOfDay(t), close = iv.length ? iv[iv.length - 1][1] : 1440;
+  const off = isOffDay(t), wday = (t.getDay() + 6) % 7;
+  return p.when.some((c) => {
+    if (c.days === "wd" && off) return false;
+    if (c.days === "we" && !off) return false;
+    if (Array.isArray(c.days) && !c.days.includes(wday)) return false;
+    const from = c.before_close != null ? close - c.before_close : c.from ?? -1;
+    return from <= m && m < (c.to ?? 1e9);
+  });
+}
+
+// 價格區開頭：現在（沒營業就看下次開門）能買哪些票，最便宜的放前面；回傳 { html, fits: 符合的票 }
+function priceNow(g) {
+  const s = openState(g);
+  const t = s && !s.open && s.next ? s.next : new Date();
+  const fits = (g.prices || []).filter((p) => priceFits(g, p, t));
+  if (!fits.length || (s && !s.open && !s.next)) return { html: "", fits: [] };
+  const num = (p) => Number((String(p.price).match(/\d+/) || [Infinity])[0]);
+  const sorted = [...fits].sort((a, b) => num(a) - num(b));
+  const when = s && !s.open ? `下次開門（${dayLabel(t)} ${hm(minOfDay(t))}）` : `現在（${dayLabel(t)} ${hm(minOfDay(t))}）`;
+  return {
+    fits,
+    html: `<div class="price-now">${when}入場：${sorted.map((p, i) =>
+      `${i ? "、" : ""}<b>${esc(fmtPrice(p.price))}</b> ${esc(p.item)}`).join("")}</div>`,
+  };
+}
+
 // ---------- 詳細資訊 ----------
 function openDetail(id, pushHash = true) {
   const g = state.gyms.find((x) => x.id === id);
@@ -598,15 +704,16 @@ function openDetail(id, pushHash = true) {
   if (g.lat != null) map.setView([g.lat, g.lng], Math.max(map.getZoom(), 15));
   const cls = STATUS_CLASS[g.status] || "warn";
   const types = (g.types || []).map((t) => TYPE_NAME[t] || t).join("、");
+  const pn = priceNow(g);
   const links = Object.entries(g.links || {}).map(([k, url]) =>
     `<a class="btn small" href="${esc(url)}" target="_blank" rel="noopener">${esc({ website: "官網", facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", price_page: "價目表", booking: "預約" }[k] || k)}</a>`).join("");
 
   $("detailBody").innerHTML = `
     <h2>${esc(g.name)}</h2>
-    <div class="meta"><span class="badge ${cls}">${esc(g.status)}</span> ${esc(types)}${g.name_en ? `・${esc(g.name_en)}` : ""}</div>
+    <div class="meta"><span class="badge ${cls}">${esc(STATUS_LABEL[g.status] || g.status)}</span> ${esc(types)}${g.name_en ? `・${esc(g.name_en)}` : ""}</div>
     <button type="button" class="btn small fav" id="favBtn"></button>
     <p>${esc(g.address || `${g.city}${g.district || ""}（地址待補）`)}${g.phone ? `<br>☎ <a href="tel:${esc(g.phone)}">${esc(g.phone)}</a>` : ""}</p>
-    ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>` : ""}
+    ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>${openNowHTML(g)}` : ""}
     ${g.features ? `<p>${esc(g.features)}</p>` : ""}
     <div class="row">${links}<a class="btn small" href="${gmapsSearch(g)}" target="_blank" rel="noopener">Google 地圖（評論・照片）</a></div>
 
@@ -614,8 +721,9 @@ function openDetail(id, pushHash = true) {
     ${newsHTML(g)}
 
     <h3>價格</h3>
+    ${pn.html}
     ${g.prices && g.prices.length ? `<table>${g.prices.map((p) =>
-      `<tr><td>${esc(p.item)}${p.note ? `<div class="note">${esc(p.note)}</div>` : ""}</td><td class="price">${esc(fmtPrice(p.price))}</td></tr>`).join("")}</table>`
+      `<tr${pn.fits.includes(p) ? ' class="now"' : ""}><td>${esc(p.item)}${p.note ? `<div class="note">${esc(p.note)}</div>` : ""}</td><td class="price">${esc(fmtPrice(p.price))}</td></tr>`).join("")}</table>`
       : `<p class="note">還沒找到價格資料，請看官網或 Google 地圖。</p>`}
 
     <h3>交通建議</h3>

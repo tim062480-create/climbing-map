@@ -222,3 +222,10 @@ table.yb td { padding: 4px; }
 .yb-tag.low { background: #ffd8a8; }
 .yb-tag.empty { background: #ced4da; color: #495057; }
 .yb-tag.none { background: #e9ecef; color: #868e96; }
+/* 現在有沒有開、現在的價格 */
+.open-now { margin: -6px 0 8px; font-size: 14px; font-weight: 600; }
+.open-now.on { color: var(--ok); }
+.open-now.off { color: var(--muted); }
+.price-now { background: var(--surface); border-left: 3px solid var(--accent); border-radius: 6px; padding: 6px 10px; margin: 4px 0 8px; font-size: 14px; }
+.detail tr.now td { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.detail tr.now td:first-child { box-shadow: inset 3px 0 0 var(--accent); }

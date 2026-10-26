@@ -28,6 +28,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 讀 seed 和 sources.csv，先用 Overpass 比對 OSM 的館名，對不到再用 Nominatim 查地址（門牌 → 地址括號裡的地標 → 路段 → 地標 → 館名）。
    - 只有縣市或行政區的地址不拿來定位。
    - 輸出 `data/processed/gyms.json` 和 `docs/enrich_report.md`。座標可信度看 `coord_source`。
+   - `src/hours_prices.py`（enrich.py 會呼叫，也可以單獨跑來更新 gyms.json）：把文字營業時間轉成 `open_hours`（週一…週日每天的 [開, 關] 分鐘、國定假日），票價加 `kind`（entry／hourly／other）和 `when`（平日／假日／星期幾、幾點到幾點、閉館前幾小時）。網頁用這些算「現在有沒有開」「現在入場多少錢」，國定假日、補班日讀 `cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar`。seed 的 `status`「營業中」是「還在營運」，網頁顯示成「仍在營運」，不是現在有開。
    - `price_min`：成人入場的最低價（含星光、離峰時段和計時 1 小時，`per_hour` 標示計時；排除租借、課程、學生票、起價），`price_day` 不含計時。網頁的價格排序和預算篩選用。
    - 連不到 OSM 時沿用上一次的座標。
 2. `src/youbike_history.py`（2026-10-26 取代 `youbike_near.py`）：
