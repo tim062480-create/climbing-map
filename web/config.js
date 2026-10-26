@@ -14,10 +14,12 @@ window.CLIMBING_CONFIG = {
   // 沒登入的人照常使用，按「加入最愛」時才請他登入。這幾個值是公開的（本來就會出現在網頁裡），
   // 資料安全靠 Firestore 的安全規則。空著時沒有登入功能，最愛存在各自裝置的瀏覽器裡。
   // 設定步驟見 docs/Google登入設定步驟.md
+  // measurementId 是 Google Analytics 的流量統計（只算匿名的瀏覽人數）。
   firebase: {
-    apiKey: "",
-    authDomain: "",   // 例如 "climbing-map-xxxx.firebaseapp.com"
-    projectId: "",
-    appId: "",
+    apiKey: "AIzaSyA0sicWgoDXYZ44iUhbnQHSU5foDAY94gw",
+    authDomain: "climbing-map-25afd.firebaseapp.com",
+    projectId: "climbing-map-25afd",
+    appId: "1:305130952506:web:8da3d35f819ea160e0e203",
+    measurementId: "G-7Q484ZJYFY",
   },
 };

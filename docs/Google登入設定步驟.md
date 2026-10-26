@@ -3,6 +3,9 @@
 > 這份由 Claude 產生（2026-10-27）。照著做完，網站右上角會出現「G 登入」：
 > 用 Google 帳號登入後，最愛存在帳號裡，換手機、換電腦都看得到；沒登入的人照常使用，按「加入最愛」時才會請他登入。
 > 沒設定前，網站照舊運作：沒有登入按鈕，最愛存在各自裝置的瀏覽器裡。
+>
+> **2026-10-27 已設定完成**：用的是 Firebase 專案 `climbing-map-25afd`（有開 Google Analytics）；`climbing-map-4041c` 是多建的，沒用到，可以刪。
+> 看流量：Firebase 主控台 → climbing-map-25afd → Analytics，或 <https://analytics.google.com/>。
 
 用的是 Google 的 **Firebase**（免費方案就夠，不用綁信用卡）：
 - **Authentication**：Google 帳號登入

@@ -163,6 +163,15 @@ function refreshFavs() {
 const FB_VER = "10.12.2";
 const auth = { enabled: false, user: null, fb: null };
 
+// 流量統計（Google Analytics）：只算匿名的瀏覽人數，本機測試不算
+async function setupAnalytics(app, cfg, base) {
+  if (!cfg.measurementId || !location.protocol.startsWith("https")) return;
+  try {
+    const G = await import(`${base}/firebase-analytics.js`);
+    if (await G.isSupported()) G.getAnalytics(app);
+  } catch (e) { /* 被擋廣告的外掛擋掉就算了 */ }
+}
+
 async function setupAuth() {
   const cfg = (window.CLIMBING_CONFIG || {}).firebase || {};
   if (!cfg.apiKey || !cfg.projectId) return;   // 沒設定：不顯示登入，最愛存在這台裝置
@@ -172,6 +181,7 @@ async function setupAuth() {
       import(`${base}/firebase-app.js`), import(`${base}/firebase-auth.js`), import(`${base}/firebase-firestore.js`)]);
     const app = initializeApp(cfg);
     auth.fb = { A, F, auth: A.getAuth(app), db: F.getFirestore(app) };
+    setupAnalytics(app, cfg, base);
   } catch (e) {
     console.warn("Firebase 載入失敗，最愛先存在這台裝置", e);
     return;
