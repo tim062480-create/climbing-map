@@ -6,6 +6,9 @@
 >
 > **2026-10-27 已設定完成**：用的是 Firebase 專案 `climbing-map-25afd`（有開 Google Analytics）；`climbing-map-4041c` 是多建的，沒用到，可以刪。
 > 看流量：Firebase 主控台 → climbing-map-25afd → Analytics，或 <https://analytics.google.com/>。
+> Google Analytics 已建立自訂維度「館名」（`gym_name`）、「搜尋字」（`search_term`），從 2026-10-27 起開始統計。
+> 看哪間館最多人開：報表 → 互動 → 事件 → 點 `open_gym` → 看「館名」；搜尋字：同樣點 `search` → 看「搜尋字」。
+> 也可以在「探索」建一張表，維度選「館名」或「搜尋字」，指標選「事件計數」。
 
 用的是 Google 的 **Firebase**（免費方案就夠，不用綁信用卡）：
 - **Authentication**：Google 帳號登入
