@@ -204,3 +204,8 @@ table.yb td { padding: 4px; }
 .verify { color: var(--warn); font-size: 13px; }
 
 .me-dot { width: 16px; height: 16px; border-radius: 50%; background: #1c7ed6; border: 3px solid #fff; box-shadow: 0 0 0 2px rgba(28,126,214,.35); }
+/* 上方的 ⭐ 最愛按鈕：選取時反白，旁邊小數字是最愛的館數 */
+.fav-top { padding: 6px 10px; flex: none; }
+.fav-top b { font-size: 11px; margin-left: 2px; color: var(--muted); }
+.fav-top[aria-pressed="true"] { background: #f59f00; border-color: #f59f00; color: #1d2228; }
+.fav-top[aria-pressed="true"] b { color: #1d2228; }

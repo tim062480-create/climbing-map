@@ -94,6 +94,7 @@ async function init() {
   $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); closeSuggest(); $("q").blur(); });
   $("chips").addEventListener("click", onChipClick);
   $("locate").addEventListener("click", locate);
+  $("favsTop").addEventListener("click", onFavsTop);
   $("handle").addEventListener("click", () => $("panel").classList.toggle("expanded"));
   $("closeDetail").addEventListener("click", closeDetail);
   window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id) openDetail(id, false); });
@@ -125,6 +126,27 @@ function toggleFav(id) {
   if (g && m) m.setStyle(markerStyle(g));
   render();
   renderFavBtn(id);
+}
+
+// 上方的 ⭐ 按鈕：點一下只看最愛（搜尋框換成「最愛」），再點一下回到原本的搜尋
+function onFavsTop() {
+  const on = parseQuery($("q").value).fav;
+  if (on) {
+    $("q").value = state.qBeforeFav ?? normalizeQuery($("q").value).replace(Q_RE.fav, " ").replace(/\s+/g, " ").trim();
+    state.qBeforeFav = null;
+  } else {
+    state.qBeforeFav = $("q").value;
+    $("q").value = "最愛";
+    if (!$("detail").hidden) closeDetail();
+    $("panel").classList.add("expanded");   // 手機上把清單拉高，最愛一眼看得到
+  }
+  onQueryChange();
+}
+
+function renderFavsTop(c) {
+  const b = $("favsTop");
+  b.setAttribute("aria-pressed", String(Boolean(c.fav)));
+  $("favCount").textContent = state.favs.size ? String(state.favs.size) : "";
 }
 
 function renderFavBtn(id) {
@@ -460,13 +482,14 @@ function render() {
   if (limit) shown = shown.slice(0, limit);
   state.listed = shown.map((x) => x.g);
   renderChips(c);
+  renderFavsTop(c);
 
   const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
   c.osm ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
-    `<li class="sub">沒有符合條件的館。</li>`) +
+    (c.fav && !state.favs.size ? `<li class="sub">還沒有最愛。打開館的詳細資訊，按「☆ 加入最愛」就會出現在這裡。</li>` : `<li class="sub">沒有符合條件的館。</li>`)) +
     (outside.length ? `<li class="divider">${radiusKm} 公里外最近的館</li>` + outside.map(({ g, d }) => listItem(g, d)).join("") : "");
   const noCoord = gyms.filter((g) => g.lat == null);
   $("nocoord").hidden = !noCoord.length;
