@@ -15,9 +15,13 @@
          都沒提到分店時，算品牌的消息，每間分店都放
      同一組名稱只查一次（例如原岩 5 間分店共用一次查詢）
   2. 原岩官網的「原岩新訊」（tupclimbing.tw/news）：列表上有日期、標題和適用分店，「全部分店」放到每間
-  3. 館的 YouTube 頻道（links.youtube）：頻道的影片 RSS
-  4. 館的官網（links.website）：網頁裡有宣告 RSS／Atom 才抓。官網只是大網站的一個子頁面時，
+  3. climbrock.vip 岩館系統的「活動及課程」（爬森、BABO PAPAK 等官網）：頁面內嵌課程資料，日期用建立時間
+  4. 館的 YouTube 頻道（links.youtube）：頻道的影片 RSS
+  5. 館的官網（links.website）：網頁裡有宣告 RSS／Atom 才抓。官網只是大網站的一個子頁面時，
      一樣要求標題有攀岩相關字，避免整個網站的其他文章混進來
+
+2026-10-26 使用者決定先只抓官方來源（2～5），Google 新聞（1）關掉：台灣新聞很少報導單一間岩館，
+人工看過抓到的都不是館的消息。要再打開就把 USE_GOOGLE_NEWS 改成 True。
 Facebook、Instagram 沒有不用登入的公開資料可以抓，網頁上只附連結讓人點過去看。
 
 只用 Python 內建套件。容器連不到 Google、YouTube 時交給 GitHub Actions 跑。
@@ -42,6 +46,7 @@ RAW_DIR = ROOT / "data" / "raw" / "news"
 OUT = ROOT / "data" / "processed" / "news.json"
 
 UA = "Mozilla/5.0 (compatible; climbing-map/1.0; +https://github.com/tim062480-create/climbing-map)"
+USE_GOOGLE_NEWS = False   # 先只抓官方來源（見檔案開頭）
 KEEP_DAYS = 180
 KEEP_N = 8
 CLIMB = re.compile(r"攀岩|抱石|岩館|岩場|攀登|climb|boulder", re.I)
@@ -175,6 +180,24 @@ def tup_for(gym, items):
             for it in items if branch in it["branches"] or (not it["branches"] and not other_branch(it["title"]))]
 
 
+def climbrock(gym):
+    """官網是 climbrock.vip 岩館系統時，抓「活動及課程」頁內嵌的課程資料（Inertia 的 data-page JSON）"""
+    site = (gym.get("links") or {}).get("website", "")
+    u = urllib.parse.urlparse(site)
+    if not u.hostname or not u.hostname.endswith(".climbrock.vip"):
+        return []
+    origin = f"{u.scheme}://{u.hostname}"
+    m = re.search(r'data-page="([^"]+)"', get(origin + "/courses"))
+    if not m:
+        return []
+    courses = json.loads(unescape(m.group(1))).get("props", {}).get("courses") or []
+    if isinstance(courses, dict):   # 有分頁時資料在 data 裡
+        courses = courses.get("data", [])
+    return [{"date": parse_date(c.get("created_at")), "title": c["title"].strip(), "url": f"{origin}/courses/{c['id']}",
+             "kind": "website", "source": "官網活動與課程"}
+            for c in courses if c.get("title") and c.get("is_active", True) and not c.get("is_archived")]
+
+
 def youtube(gym):
     page_url = (gym.get("links") or {}).get("youtube", "")
     if not page_url:
@@ -221,7 +244,10 @@ def main():
         errors.append(f"原岩官網：{e}")
     for g in gyms:
         found = tup_for(g, tup)
-        for name, fn in (("Google 新聞", lambda x: google_news(x, gyms)), ("YouTube", youtube), ("官網", website)):
+        sources = [("climbrock 官網", climbrock), ("YouTube", youtube), ("官網", website)]
+        if USE_GOOGLE_NEWS:
+            sources.insert(0, ("Google 新聞", lambda x: google_news(x, gyms)))
+        for name, fn in sources:
             try:
                 found += fn(g)
             except Exception as e:   # 連不到、格式不對：這個來源這次跳過，沿用上次的結果
@@ -247,8 +273,9 @@ def main():
     }, ensure_ascii=False, indent=1), encoding="utf-8")
     for e in errors:
         print("失敗：" + e)
-    print(f"\nGoogle 新聞過濾前共 {STATS['news_raw']} 則")
-    if not STATS["news_raw"] and STATS["sample"] is not None:
+    if USE_GOOGLE_NEWS:
+        print(f"\nGoogle 新聞過濾前共 {STATS['news_raw']} 則")
+    if USE_GOOGLE_NEWS and not STATS["news_raw"] and STATS["sample"] is not None:
         print("Google 新聞回應開頭：" + STATS["sample"])
     print(f"\n完成：{len(result)} 間館有近期動態；{len(errors)} 個來源失敗")
 

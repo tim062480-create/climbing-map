@@ -515,7 +515,7 @@ function newsHTML(g) {
     `<li>${ICON[n.kind] || "📰"} <a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a><div class="note">${esc(n.date)}・${esc(n.source)}</div></li>`).join("")}</ul>`
     : `<p class="note">最近半年沒有找到這間館的新聞、影片或官網公告。</p>`) +
     (social ? `<div class="row">${social}</div>` : "") +
-    `<p class="note">每半個月自動更新${state.newsUpdated ? `（上次 ${esc(state.newsUpdated)}）` : ""}。新聞是用館名自動搜尋，可能混到別的消息；Facebook、Instagram 的貼文沒辦法自動抓，請點連結看。</p>`;
+    `<p class="note">每半個月自動更新${state.newsUpdated ? `（上次 ${esc(state.newsUpdated)}）` : ""}。只抓館方的官網和 YouTube（例如原岩新訊、官網上的活動與課程）；Facebook、Instagram 的貼文沒辦法自動抓，請點連結看。</p>`;
 }
 
 // ---------- 詳細資訊 ----------

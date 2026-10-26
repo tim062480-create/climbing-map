@@ -1,24 +1,6 @@
 {
- "corner-zhongshan": [
-  {
-   "date": "2026-09-24",
-   "title": "下雨別再逛百貨！3 種室內活動推薦，攀岩、密室逃脫、金工都好玩",
-   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5CY19RNGUzOFJEV1BadUJGclJlcWdkZTBYUkNrdUJGMkNkOVJWYUpCaWY2WmNPTGl3TjNFXy1BTWJjNzJobC1rR2dTUXdnVVRwMnNfNzQteDVLZ3Jv?oc=5",
-   "source": "UDN",
-   "kind": "news",
-   "match": false
-  }
- ],
- "corner-huashan": [
-  {
-   "date": "2026-09-24",
-   "title": "下雨別再逛百貨！3 種室內活動推薦，攀岩、密室逃脫、金工都好玩",
-   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE5CY19RNGUzOFJEV1BadUJGclJlcWdkZTBYUkNrdUJGMkNkOVJWYUpCaWY2WmNPTGl3TjNFXy1BTWJjNzJobC1rR2dTUXdnVVRwMnNfNzQteDVLZ3Jv?oc=5",
-   "source": "UDN",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "corner-zhongshan": [],
+ "corner-huashan": [],
  "tup-wanhua": [
   {
    "date": "2026-04-22",
@@ -110,94 +92,103 @@
  "kirin-nangang": [],
  "redrock-shilin": [],
  "redrock-hsinchu": [],
- "double8-datong": [
-  {
-   "date": "2026-06-22",
-   "title": "【台北IG打卡景點】不怕下雨天！9個超好拍室內網美景點！博物館、攀岩、文創園區",
-   "url": "https://news.google.com/rss/articles/CBMiPEFVX3lxTE5SY2ZfblZLOTBxWXExZmJERGhsbzRSb2FLUmNmbXdZUVg4aXZFclZSSXczZU94Q0d4QldsVg?oc=5",
-   "source": "吃貨瑪莉",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "double8-datong": [],
  "camp4-taipei": [],
  "littlerock-tianmu": [],
  "y17-taipei": [],
- "neihu-sports": [
-  {
-   "date": "2026-05-04",
-   "title": "台北內湖攀岩體驗課程推薦 寒暑假兒童攀岩營隊帶來攀爬樂趣",
-   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBVZklrZWlWZTZIRTMtWEhvbWhLQVdkX0hjUHVBaWRfakpXWE9nMHFHWDFDZnVSdE1CVzRuckg3RG9BeVJ5NE1Dc0JQSE5fM2J4Y1dFVDJwdjlaTjhm0gFiQVVfeXFMTmFuOTdqbFE3WGV1b0M3ZnRJUVhMX2MxSjExYVZfNmJZdkRvTXhrX1NMZWVSSGtOcXVtOTlTTnBpQzUwLUYxcWhlalBuR0VaNGVpdl9UYTFaRnRnN0JnbzFTN1E?oc=5",
-   "source": "經濟日報",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-23",
-   "title": "台北10大運動中心出爐！上班族首選是這 攀岩體驗超特別",
-   "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1oRlhBMjRQdGl4c2ItcENqbWdiVVlEbzlZV3B6aWwydUM3TUljV3VfVmgxWk5WUWRrZUkwQWxQZm5YQnY0UExxVU9NR181Zw?oc=5",
-   "source": "TVBS新聞網",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-07-16",
-   "title": "南港、中山不是第一！台北最強運動中心TOP10冠軍是它：頂級配置好玩到瘋、 去過一次徹底愛上",
-   "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9EdWs4aWRaeURhcmFSa2d1YkNHYmxVRldwbndPMUJVV1BpN3phaDhwR3lXV1N6S21FbXI3bFg3R1dDbWN0c3hlamZpRWZ1M2t3?oc=5",
-   "source": "風傳媒",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "neihu-sports": [],
  "flow-neihu": [],
- "nangang-sports": [
-  {
-   "date": "2026-05-04",
-   "title": "臺北市南港運動中心115年兒童夏令營活動「鯊鯊防衛隊」",
-   "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFAtZk9zUnkwSTFzQkFmY01LQVJyZlRVTDVjWkJuOHpHaFpkZm5wdF9taVJsQVNidGN4bXMzUE1HbU1BRW1xRVFVLWthdUlTM2p1ZjlVdXFB?oc=5",
-   "source": "中央社 CNA",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-23",
-   "title": "台北10大運動中心出爐！上班族首選是這 攀岩體驗超特別",
-   "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1oRlhBMjRQdGl4c2ItcENqbWdiVVlEbzlZV3B6aWwydUM3TUljV3VfVmgxWk5WUWRrZUkwQWxQZm5YQnY0UExxVU9NR181Zw?oc=5",
-   "source": "TVBS新聞網",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-07-16",
-   "title": "南港、中山不是第一！台北最強運動中心TOP10冠軍是它：頂級配置好玩到瘋、 去過一次徹底愛上",
-   "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9EdWs4aWRaeURhcmFSa2d1YkNHYmxVRldwbndPMUJVV1BpN3phaDhwR3lXV1N6S21FbXI3bFg3R1dDbWN0c3hlamZpRWZ1M2t3?oc=5",
-   "source": "風傳媒",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-16",
-   "title": "中山、南港輸了！台北最強運動中心冠軍「環境寬敞乾淨、交通方便」： 收費便宜固定報到",
-   "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1PVGVQZnFHZWtTSXdOV2pHd1lUZzQybUFRR1FjX1dyWEJOQXhteHhCQW5hOWRnRXZiUG9oa3gyNFktdXc0czN0c1U3U0FEajVT?oc=5",
-   "source": "風傳媒",
-   "kind": "news",
-   "match": false
-  }
- ],
- "wanhua-sports": [
-  {
-   "date": "2026-06-23",
-   "title": "台北10大運動中心出爐！上班族首選是這 攀岩體驗超特別",
-   "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1oRlhBMjRQdGl4c2ItcENqbWdiVVlEbzlZV3B6aWwydUM3TUljV3VfVmgxWk5WUWRrZUkwQWxQZm5YQnY0UExxVU9NR181Zw?oc=5",
-   "source": "TVBS新聞網",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "nangang-sports": [],
+ "wanhua-sports": [],
  "yonghe-sports": [],
  "megastone-xinzhuang": [],
  "qianshou-taoyuan": [],
- "passion-taoyuan": [],
+ "passion-taoyuan": [
+  {
+   "date": "2026-04-06",
+   "title": "成人試上班",
+   "url": "https://passion.climbrock.vip/courses/12",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-05-02",
+   "title": "【115年度桃園市長盃】抱石運動攀登錦標賽",
+   "url": "https://passion.climbrock.vip/courses/13",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-06",
+   "title": "兒童試上班",
+   "url": "https://passion.climbrock.vip/courses/11",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-21",
+   "title": "動作評估及調整服務-每次800元",
+   "url": "https://passion.climbrock.vip/courses/10",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-13",
+   "title": "兒童初階團體班-周五晚",
+   "url": "https://passion.climbrock.vip/courses/9",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-13",
+   "title": "兒童進階團體班-周三晚",
+   "url": "https://passion.climbrock.vip/courses/8",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-09",
+   "title": "兒童周末彈性團體班",
+   "url": "https://passion.climbrock.vip/courses/7",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-09",
+   "title": "成人中階團體班-周三晚",
+   "url": "https://passion.climbrock.vip/courses/5",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "團體入場安全教學",
+   "url": "https://passion.climbrock.vip/courses/4",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "抱石體驗",
+   "url": "https://passion.climbrock.vip/courses/3",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "上方確保30分鐘",
+   "url": "https://passion.climbrock.vip/courses/2",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-06",
+   "title": "綜合攀登體驗",
+   "url": "https://passion.climbrock.vip/courses/1",
+   "kind": "website",
+   "source": "官網活動與課程"
+  }
+ ],
  "iclimb-zhubei": [
   {
    "date": "2024-05-23",
@@ -308,182 +299,199 @@
  "iclimb-shengli": [],
  "babo-hsinchu": [
   {
+   "date": "2026-03-03",
+   "title": "抱石體驗教練課",
+   "url": "https://babo.climbrock.vip/courses/19",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "11/8(日) 特別企劃：兒童攀岩x生物觀察－百變天王・變色龍體驗課！",
+   "url": "https://babo.climbrock.vip/courses/83",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "12/6(日) 特別企劃：兒童攀岩x生物觀察－動物防衛隊體驗課！",
+   "url": "https://babo.climbrock.vip/courses/84",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "1/10(日) 特別企劃：兒童攀岩 x 生物觀察－大自然的隱身高手體驗課！",
+   "url": "https://babo.climbrock.vip/courses/85",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-04",
+   "title": "兒童攀岩抱石試上體驗課｜第一次來本館攀岩請選擇",
+   "url": "https://babo.climbrock.vip/courses/36",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石動態調整/進階技巧課 十一月週二團班",
+   "url": "https://babo.climbrock.vip/courses/107",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv2 十一月周三 兩人小班",
+   "url": "https://babo.climbrock.vip/courses/103",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石動態調整/進階技巧課 十一月週三團班",
+   "url": "https://babo.climbrock.vip/courses/108",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-20",
+   "title": "抱石技巧班Lv1 十一月週三團班",
+   "url": "https://babo.climbrock.vip/courses/109",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv1 十一月週四團班",
+   "url": "https://babo.climbrock.vip/courses/104",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv2 十一月周五 兩人小班",
+   "url": "https://babo.climbrock.vip/courses/105",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "攀岩專項肌力與體能課 十一月週五團班",
+   "url": "https://babo.climbrock.vip/courses/106",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲台中德芙蘭x泡湯x鱒魚 11/21(六)",
+   "url": "https://babo.climbrock.vip/courses/89",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲台中德芙蘭x泡湯x鱒魚 11/22(日)",
+   "url": "https://babo.climbrock.vip/courses/90",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲關子嶺x泡湯x甕仔雞 12/12(六)",
+   "url": "https://babo.climbrock.vip/courses/91",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲關子嶺x泡湯x甕仔雞 12/13(日)",
+   "url": "https://babo.climbrock.vip/courses/92",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "霸寶共學之夜-兒童教練培訓",
+   "url": "https://babo.climbrock.vip/courses/102",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-06-21",
+   "title": "運動按摩體驗活動",
+   "url": "https://babo.climbrock.vip/courses/61",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
    "date": "2026-09-03",
-   "title": "青年創業不孤單！竹市青創媒合會串聯企業學研 讓好點子接軌市場",
-   "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9qbEh4bVJOZzZ6NGdqMTd2NC1GbTFOY2Jxb29EMk1KTTFSN1N4Nm8xdlpIbE1aanpQVkZycXpRVF9XZXg5aHNCU0trQ2pfOF9rLVZzUFpB?oc=5",
-   "source": "中央社 CNA",
-   "kind": "news",
-   "match": false
+   "title": "【曉勤Chin】運動按摩",
+   "url": "https://babo.climbrock.vip/courses/78",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-03",
+   "title": "【芝儀】肢體評估",
+   "url": "https://babo.climbrock.vip/courses/80",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-25",
+   "title": "兒童抱石【團體】教練課(課程點數請在線上購票區購買)",
+   "url": "https://babo.climbrock.vip/courses/44",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-03",
+   "title": "兒童抱石【一對一】教練課(課程點數請在線上購票區購買)",
+   "url": "https://babo.climbrock.vip/courses/14",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-15",
+   "title": "抱石私人教練課試上一堂課（一對一、一對二）",
+   "url": "https://babo.climbrock.vip/courses/29",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-02-28",
+   "title": "抱石私人教練課一對一（課程點數請先至線上購票購買)",
+   "url": "https://babo.climbrock.vip/courses/10",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-15",
+   "title": "抱石私人教練課一對二（課程點數請先至線上購票購買)",
+   "url": "https://babo.climbrock.vip/courses/28",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-15",
+   "title": "抱石體驗課｜PAYEASY  2027",
+   "url": "https://babo.climbrock.vip/courses/101",
+   "kind": "website",
+   "source": "官網活動與課程"
   }
  ],
  "bplus-xitun": [],
  "bplus-taiyuan": [],
- "dapro-nantun": [
-  {
-   "date": "2026-06-13",
-   "title": "頂尖國手同場競技！ 台中市長盃攀岩 特色三人團體賽、全齡歡樂組成亮點",
-   "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5JMmh4alFscE0zVHRzUlVZM2ZmVkFOQWtXS3gzV0czU0hyd3F0enI4VnJUX184NmJOY2g5NUx5cE1pVm96a3pXci1icWczaC1WT0dySlFZN0kwTV9kaVI4?oc=5",
-   "source": "臺中市政府全球資訊網",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-14",
-   "title": "台中市長盃攀岩 特色三人團體賽 全齡歡樂組成亮點",
-   "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE9iTDJibGd3TEVVTmVqbzBScDhrVGJ0RGJpRnlpclFUcmdnVG5KXzBja0hISDdRdzhuZ2doR3pfV0swSXZyRFdpbmFB?oc=5",
-   "source": "更生新聞網",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-07-13",
-   "title": "Arc’teryx 全新登山系列上市！以輕盈機能支撐盛夏時節山野行進，邁向更遠之境 - OUTSiDERS",
-   "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9rU3VPLUhTY0ZmdlJSeGJ6UU81c0dkNHZFNmphTW1jLWlFa1diaDk1bV9lWGJQT0JGSERJb0RxX3BzWkVTVlhtMEktTkMwdVhX?oc=5",
-   "source": "OUTSiDERS - 戶外風格誌",
-   "kind": "news",
-   "match": false
-  }
- ],
- "panna-taichung": [
-  {
-   "date": "2026-07-18",
-   "title": "改圖「我是書店店員」宣傳 台中業者道歉：出發點非惡意",
-   "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE0yV2VUN2hNdHgtcUw0cUVzM1BjVjJEX1NJbVNQeV90UkJyQVE2N1laRTd0WWNQN1pzbVN0UmZCdC1NSEcxRjd2MFowWTU0WGIxeUdPT1NUaGpVTmk3ZVVFbklmNWY5Z21DanRFX0pnd0ljNEY0V2ZUWU4xZUZRUQ?oc=5",
-   "source": "壹蘋新聞網",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "dapro-nantun": [],
+ "panna-taichung": [],
  "shabby-yuanlin": [],
  "chiayi-club": [],
  "chiayi-sports-8a": [],
- "highfun-north": [
-  {
-   "date": "2026-07-29",
-   "title": "蘇晏霈、羅子惟高空攀岩舊疾復發",
-   "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFB0akU2QVFPeWx0MXZRMTkyMTFyNkM4Z0JHODRCZi1PdWhyMENUZ2t5NFQ2aFZfcjdnTk9JbEhsSWtmOGM1NE0xTk80TXJBMEhnSHFoUkMtc01HczNJNmFMX3paeVBqd9IBa0FVX3lxTE14VzA4NlBCTk9KeXZuTUtVQ1RPS0tkYmNsX2g4VjdWLTdPT1NpLXRFdmRqWkpudzZpS05GZEJhQms5YkNyWFFDZkdDd1RrOEpzZl9nUXhHVDJqbGk3Z1d0Tm9kZWhzMTk3TEdv?oc=5",
-   "source": "鏡週刊Mirror Media",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-06",
-   "title": "高雄最大親子遊樂園8/8開幕！30項設施免費玩、YOYO家族嗨翻暑假",
-   "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5Oandncmx1SGtFOHdJa0gwVFFoaXBpTGZnTURKWWo4ZzVvaHNWY2Y3VzZxc29FalJWNHA1Z0puTjliYXVTLVZKVFpyZjhrQWczeDkxY1RXRl8?oc=5",
-   "source": "《旅奇傳媒》TR Omnimedia",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-05",
-   "title": "老機廠變身親子秘境！高雄熊、香蕉哥哥陪玩 限定水樂園嗨翻暑假",
-   "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5FTUcwQXlpVnFHeG1ITllzbXQyVGN6dUZZMXpNbnZTUlRiclVaV2s1eUpZRUV4T2xxVEExUFJfNXlwM2tYVkNxSkhvbjBJMEp2aXc?oc=5",
-   "source": "蕃新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-08",
-   "title": "開幕首日湧入3萬人朝聖！全台最大「高雄親子樂園區」嗨翻",
-   "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBZYkxzNzVNNmk4NkdhcWlaLWZtd0FqVHZfckllUzZjTzUtWlM0TVlIY1RkY3VJd2F3RklHWjI0LTRKYWNSbzNMTFE3RWjSAVJBVV95cUxQbTFYRzF4VFh3NHhEZFI1LVBHRzNfaWV2TlY5WlBpMjkzck9vRlV0VERsazdzVXZZWENCQ3JqbDBBQ2VEUl80XzJnZFl4bmZCYzFB?oc=5",
-   "source": "NOWnews今日新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-05-29",
-   "title": "嫁中國官二代14年　台女星真實近況曝光了",
-   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFA4dVVKOUNaUUR3ZEw3NEQyb3owdl82aW1KY0N0eDlJY2tMOFJ0ekhEVzJDX0hXZTBvVG82YzJHQkFvQmpmX2FaUzFoNlRmYzhJU0lLWG9SS2Q5aDQw0gFiQVVfeXFMT3FaRkFMdW1MNUtBdDJPamlTMTlYZ0xvRjlNMnMyVXV1SG1SRDFFMXNuX3dxVC1rTUR4R25fN1ZyMXNsLVpaUHhZNWo0bXZQVHRMNnp3RFBYOXZncEN0VzVRblE?oc=5",
-   "source": "鏡週刊Mirror Media",
-   "kind": "news",
-   "match": false
-  }
- ],
- "highfun-rende": [
-  {
-   "date": "2026-07-29",
-   "title": "蘇晏霈、羅子惟高空攀岩舊疾復發",
-   "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTFB0akU2QVFPeWx0MXZRMTkyMTFyNkM4Z0JHODRCZi1PdWhyMENUZ2t5NFQ2aFZfcjdnTk9JbEhsSWtmOGM1NE0xTk80TXJBMEhnSHFoUkMtc01HczNJNmFMX3paeVBqd9IBa0FVX3lxTE14VzA4NlBCTk9KeXZuTUtVQ1RPS0tkYmNsX2g4VjdWLTdPT1NpLXRFdmRqWkpudzZpS05GZEJhQms5YkNyWFFDZkdDd1RrOEpzZl9nUXhHVDJqbGk3Z1d0Tm9kZWhzMTk3TEdv?oc=5",
-   "source": "鏡週刊Mirror Media",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-06",
-   "title": "高雄最大親子遊樂園8/8開幕！30項設施免費玩、YOYO家族嗨翻暑假",
-   "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5Oandncmx1SGtFOHdJa0gwVFFoaXBpTGZnTURKWWo4ZzVvaHNWY2Y3VzZxc29FalJWNHA1Z0puTjliYXVTLVZKVFpyZjhrQWczeDkxY1RXRl8?oc=5",
-   "source": "《旅奇傳媒》TR Omnimedia",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-05",
-   "title": "老機廠變身親子秘境！高雄熊、香蕉哥哥陪玩 限定水樂園嗨翻暑假",
-   "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5FTUcwQXlpVnFHeG1ITllzbXQyVGN6dUZZMXpNbnZTUlRiclVaV2s1eUpZRUV4T2xxVEExUFJfNXlwM2tYVkNxSkhvbjBJMEp2aXc?oc=5",
-   "source": "蕃新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-08-08",
-   "title": "開幕首日湧入3萬人朝聖！全台最大「高雄親子樂園區」嗨翻",
-   "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBZYkxzNzVNNmk4NkdhcWlaLWZtd0FqVHZfckllUzZjTzUtWlM0TVlIY1RkY3VJd2F3RklHWjI0LTRKYWNSbzNMTFE3RWjSAVJBVV95cUxQbTFYRzF4VFh3NHhEZFI1LVBHRzNfaWV2TlY5WlBpMjkzck9vRlV0VERsazdzVXZZWENCQ3JqbDBBQ2VEUl80XzJnZFl4bmZCYzFB?oc=5",
-   "source": "NOWnews今日新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-05-29",
-   "title": "嫁中國官二代14年　台女星真實近況曝光了",
-   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFA4dVVKOUNaUUR3ZEw3NEQyb3owdl82aW1KY0N0eDlJY2tMOFJ0ekhEVzJDX0hXZTBvVG82YzJHQkFvQmpmX2FaUzFoNlRmYzhJU0lLWG9SS2Q5aDQw0gFiQVVfeXFMT3FaRkFMdW1MNUtBdDJPamlTMTlYZ0xvRjlNMnMyVXV1SG1SRDFFMXNuX3dxVC1rTUR4R25fN1ZyMXNsLVpaUHhZNWo0bXZQVHRMNnp3RFBYOXZncEN0VzVRblE?oc=5",
-   "source": "鏡週刊Mirror Media",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "highfun-north": [],
+ "highfun-rende": [],
  "btopia-kaohsiung": [],
- "basecamp-zuoying": [
-  {
-   "date": "2026-06-19",
-   "title": "高雄龍舟拔河冠軍出爐 舉鐵健身中心、日月光與鯊剋稱王",
-   "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE8yOUVuOWRsdXFCNC1ZUFB2bXE4eHZLS0xWMjhBbEJiUnh5bnFaSzNIcVI0WDRWNXpybVRWX2xMdHYzTXRESW1rbnp1TURib3VZMjJudklwYV8tdG9JY3psdGVxdw?oc=5",
-   "source": "波新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-21",
-   "title": "高雄龍舟賽吸20萬人觀賽 健身工廠奪冠抱回20萬",
-   "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1Ed3A5X3NKeVBPckFJeGV4Y0lHRmRETUlWRU5DTG1HRU5BalZDYkVWVW1QeERISFJHTlNnQjZTTXI0dk14akdZZ0h5YXZ3N0k3LTBjYk0zSTE1Y3NuU0Z1ZnFtaTbSAWpBVV95cUxOVDgzVkVSZGRmZlZJYVlQVG41QWdjSTBzYzJvMTI0anFoemk0SVZxLU9HbERWNnNKRmlaNHluM0pEeWhkRXZCU0JqZ1kwTDcxZzhRZjRGNHVSNkNEb1htQUxrQWc3dFZxakZB?oc=5",
-   "source": "自由時報",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-20",
-   "title": "高雄端午龍舟賽愛河盛大開幕 紙風車劇團、飛馬燈展演鰲躍龍翔輝映",
-   "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1NV1dOU1hURTExY1A2aVVQOW9nUUNtbkdHaDJhMXhzVXBZdTFVR1pQeEl2SUMtVEZvM29zRS1Ec0xhVTdvQTRWdzVMU01Eakh3NThaT2puaw?oc=5",
-   "source": "台視新聞網",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-20",
-   "title": "高雄龍舟嘉年華愛河登場　飛馬燈、夜間龍舟賽熱鬧開幕",
-   "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE5zTmZxVEROOHp1LW9HN3NlODNqaFhIdTBFRFVIOEFjcmxScXZ4b19JbGM3NTJOM25rQVNKYkRUNWc3Vk9WNHFGU3d4V3PSAVJBVV95cUxQUDJneE5JSVAyWGVRd0FmSllPM3hvUTZWOTQwSDNiMXJkM1dNOHJPd0VDRzVlM1p0ZjRnaXl3RmVKcmIzQzhpVllyZFB2MWdGSnp3?oc=5",
-   "source": "NOWnews今日新聞",
-   "kind": "news",
-   "match": false
-  },
-  {
-   "date": "2026-06-21",
-   "title": "陳其邁領軍、李洋、安芝儇助陣奏效 高雄市府隊睽違兩年重登龍舟國際賽王座",
-   "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE1fVloyZXdkTnlOcXBnaVVyYm9kY1M2Zmd6UXVkdi1zMksxUmo5NURaUFUwYkw3UU5nQ2dkT240dWZFbnRaNzVqbHRtdGFwQnRBamRUTUhaTXRsRHU2U1RXQzFuMA?oc=5",
-   "source": "波新聞",
-   "kind": "news",
-   "match": false
-  }
- ],
+ "basecamp-zuoying": [],
  "boulderspace-zuoying": [],
  "qingchang-kaohsiung": [],
  "jioutau-yilan": [],
