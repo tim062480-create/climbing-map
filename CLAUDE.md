@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 每個欄位用 `src` 對應 `sources.csv` 的代號。
   - `verify` 列出待確認事項。
   - `osm_keywords` 是比對 OSM 名稱用的關鍵字組，每組的字要全部出現在 OSM 名稱裡。
+  - `news` 是近期動態（`src/fetch_news.py`）用的：`names` 館的專有名稱（新聞標題要出現其中一個）、`branch` 連鎖品牌的分店字、`climb` 名稱太一般時標題還要有攀岩字。新增館時要一起填。
 - data/processed/：由 src/ 的程式產生，不手動編輯。
 - src/：所有 Python 程式都放這裡。**不要只在對話中執行一次性程式碼**，任何處理步驟都要存成 src/ 下的 .py 檔，確保可以重跑。只用 Python 內建套件（urllib、csv、json），沒有 requirements.txt、測試框架或 linter，要確認能跑就直接執行。
 - output/：每次分析或匯出另存新版本資料夾 output/v1/、output/v2/…，**舊版不覆蓋、不刪除**。使用者決定採用的版本才複製到 output/final/，未經使用者同意不得改動 final。

@@ -1,5 +1,22 @@
 {
  "_說明": "由 src/fetch_news.py 產生，不要手動改；只存日期、來源、標題、網址",
- "updated": "2026-10-26 19:32",
- "gyms": {}
+ "updated": "2026-10-26 19:41",
+ "gyms": {
+  "tup-zhonghe": [
+   {
+    "date": "2026-10-09",
+    "title": "全國運動攀登錦標賽開放報名！",
+    "url": "https://tupclimbing.tw/news/competition/590",
+    "kind": "website",
+    "source": "原岩官網"
+   },
+   {
+    "date": "2026-07-03",
+    "title": "🚀 2026 原岩火箭盃快閃先鋒賽",
+    "url": "https://tupclimbing.tw/news/competition/583",
+    "kind": "website",
+    "source": "原岩官網"
+   }
+  ]
+ }
 }
