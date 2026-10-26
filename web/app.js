@@ -94,6 +94,7 @@ async function init() {
   $("searchForm").addEventListener("submit", (e) => { e.preventDefault(); onQueryChange(); closeSuggest(); $("q").blur(); revealResults(); });
   $("chips").addEventListener("click", onChipClick);
   $("locate").addEventListener("click", locate);
+  map.on("moveend", drawYbStations);
   $("favsTop").addEventListener("click", onFavsTop);
   setupPanel();
   $("closeDetail").addEventListener("click", closeDetail);
@@ -774,6 +775,47 @@ async function ybNear(p, maxM, n) {
   const areas = await Promise.all(codes.map(ybArea));
   return areas.flatMap((a) => a.stations).map((s) => ({ ...s, d: distM(p, s) }))
     .filter((s) => s.d <= maxM).sort((a, b) => a.d - b.d).slice(0, n);
+}
+
+// 地圖放大到街道（16 級以上）時，畫面內的 YouBike 站畫成小標籤，數字是現在可借幾台；點了看可借、可還和歷史平均
+const YB_MAP_ZOOM = 16;
+const YB_MAP_MAX = 150;   // 畫面內最多畫幾站（離中心近的先畫）
+map.createPane("yb").style.zIndex = 350;   // 在館的圓點（400）下面，不會擋住館
+const ybLayer = L.layerGroup();
+let ybDrawSeq = 0;   // 地圖連續移動時，只畫最後一次
+
+async function drawYbStations() {
+  const seq = ++ybDrawSeq;
+  if (map.getZoom() < YB_MAP_ZOOM) { ybLayer.remove(); return; }
+  const idx = await ybIndex();
+  if (!idx || seq !== ybDrawSeq) return;
+  const b = map.getBounds(), c = map.getCenter();
+  const codes = Object.entries(idx.areas).filter(([, a]) =>
+    a.bbox[0] <= b.getNorth() && a.bbox[2] >= b.getSouth() && a.bbox[1] <= b.getEast() && a.bbox[3] >= b.getWest()).map(([k]) => k);
+  const areas = await Promise.all(codes.map(ybArea));
+  if (seq !== ybDrawSeq) return;
+  const live = state.live || null;
+  const list = areas.flatMap((a) => a.stations).filter((s) => b.contains([s.lat, s.lng]))
+    .sort((x, y) => distM(c, x) - distM(c, y)).slice(0, YB_MAP_MAX);
+  ybLayer.clearLayers();
+  for (const s of list) {
+    const now = stationCounts(s, live);
+    const cls = !now ? "none" : now.rent === 0 ? "empty" : now.rent <= 2 ? "low" : "ok";
+    L.marker([s.lat, s.lng], { pane: "yb", keyboard: false,
+      icon: L.divIcon({ className: "", html: `<div class="yb-tag ${cls}">${now ? now.rent : "–"}</div>`, iconSize: [26, 18] }) })
+      .bindPopup(() => ybPopup(s, live)).addTo(ybLayer);
+  }
+  ybLayer.addTo(map);
+}
+
+function ybPopup(s, live) {
+  const now = stationCounts(s, live);
+  const later = new Date(Date.now() + 3600000);
+  const p0 = predict(s, new Date()), p1 = predict(s, later);
+  return `<b>🚲 ${esc(s.name)}</b><br>${now ? `現在可借 ${now.rent}、可還 ${now.ret}（${esc(now.how)}）` : "沒有車數資料"}` +
+    (p0 ? `<br>這個時段${avgText(p0, "可借", "rent")}` : "") +
+    (p1 ? `<br>${hhmm(later)} ${avgText(p1, "可借", "rent")}` : "") +
+    `<br><a href="${gmapsDir(s, "walking", state.me)}" target="_blank" rel="noopener">走過去（Google 地圖）</a>`;
 }
 
 // 嘗試直接抓臺北市即時車數（瀏覽器可能因跨網域限制失敗，失敗就只用 20 分鐘一次的快照）

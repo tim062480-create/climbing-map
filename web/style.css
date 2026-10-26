@@ -215,3 +215,10 @@ table.yb td { padding: 4px; }
 .fav-top b { font-size: 11px; margin-left: 2px; color: var(--muted); }
 .fav-top[aria-pressed="true"] { background: #f59f00; border-color: #f59f00; color: #1d2228; }
 .fav-top[aria-pressed="true"] b { color: #1d2228; }
+/* 地圖上的 YouBike 站：黃色小標籤，數字是現在可借幾台；剩 0～2 台、沒資料時顏色變淡 */
+.yb-tag { min-width: 22px; height: 18px; padding: 0 4px; border-radius: 9px; border: 1.5px solid #fff;
+  background: #f5b400; color: #1d2228; font: 700 11px/15px system-ui, sans-serif; text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.35); }
+.yb-tag.low { background: #ffd8a8; }
+.yb-tag.empty { background: #ced4da; color: #495057; }
+.yb-tag.none { background: #e9ecef; color: #868e96; }
