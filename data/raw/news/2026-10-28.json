@@ -1,0 +1,531 @@
+{
+ "corner-zhongshan": [],
+ "corner-huashan": [],
+ "tup-wanhua": [
+  {
+   "date": "2026-04-22",
+   "title": "🚧 原岩萬華店 5/4-5/29 整修公告",
+   "url": "https://tupclimbing.tw/news/announcement/577",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2026-04-11",
+   "title": "🌴 2026 原岩攀岩夏令營",
+   "url": "https://tupclimbing.tw/news/activity/576",
+   "kind": "website",
+   "source": "原岩官網"
+  }
+ ],
+ "tup-mingde": [
+  {
+   "date": "2026-04-11",
+   "title": "🌴 2026 原岩攀岩夏令營",
+   "url": "https://tupclimbing.tw/news/activity/576",
+   "kind": "website",
+   "source": "原岩官網"
+  }
+ ],
+ "tup-nangang": [
+  {
+   "date": "2026-04-11",
+   "title": "🌴 2026 原岩攀岩夏令營",
+   "url": "https://tupclimbing.tw/news/activity/576",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2025-11-29",
+   "title": "✦ 2025 岩物二手市集 ✦",
+   "url": "https://tupclimbing.tw/news/activity/556",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2025-11-29",
+   "title": "✦ 2025 南港岩遊會 ✦ 新路線 × 挑戰賽 × 調酒咖啡 × 岩物市集 × 日本 DJ 嗨爆登場 🔥",
+   "url": "https://tupclimbing.tw/news/activity/555",
+   "kind": "website",
+   "source": "原岩官網"
+  }
+ ],
+ "tup-zhonghe": [
+  {
+   "date": "2026-10-09",
+   "title": "全國運動攀登錦標賽開放報名！",
+   "url": "https://tupclimbing.tw/news/competition/590",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2026-07-03",
+   "title": "🚀 2026 原岩火箭盃快閃先鋒賽",
+   "url": "https://tupclimbing.tw/news/competition/583",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2026-04-11",
+   "title": "🌴 2026 原岩攀岩夏令營",
+   "url": "https://tupclimbing.tw/news/activity/576",
+   "kind": "website",
+   "source": "原岩官網"
+  }
+ ],
+ "tup-xindian": [
+  {
+   "date": "2026-04-11",
+   "title": "🌴 2026 原岩攀岩夏令營",
+   "url": "https://tupclimbing.tw/news/activity/576",
+   "kind": "website",
+   "source": "原岩官網"
+  },
+  {
+   "date": "2026-04-09",
+   "title": "★ 2026 原岩黑夜盃 ★ 矇眼上攀趣味賽",
+   "url": "https://tupclimbing.tw/news/competition/575",
+   "kind": "website",
+   "source": "原岩官網"
+  }
+ ],
+ "civic-nangang": [],
+ "kirin-nangang": [],
+ "redrock-shilin": [],
+ "redrock-hsinchu": [],
+ "double8-datong": [],
+ "camp4-taipei": [],
+ "littlerock-tianmu": [],
+ "y17-taipei": [],
+ "neihu-sports": [],
+ "flow-neihu": [],
+ "nangang-sports": [],
+ "wanhua-sports": [],
+ "yonghe-sports": [],
+ "megastone-xinzhuang": [],
+ "qianshou-taoyuan": [],
+ "passion-taoyuan": [
+  {
+   "date": "2026-04-06",
+   "title": "成人試上班",
+   "url": "https://passion.climbrock.vip/courses/12",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-05-02",
+   "title": "【115年度桃園市長盃】抱石運動攀登錦標賽",
+   "url": "https://passion.climbrock.vip/courses/13",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-06",
+   "title": "兒童試上班",
+   "url": "https://passion.climbrock.vip/courses/11",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-21",
+   "title": "動作評估及調整服務-每次800元",
+   "url": "https://passion.climbrock.vip/courses/10",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-13",
+   "title": "兒童初階團體班-周五晚",
+   "url": "https://passion.climbrock.vip/courses/9",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-13",
+   "title": "兒童進階團體班-周三晚",
+   "url": "https://passion.climbrock.vip/courses/8",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-09",
+   "title": "兒童周末彈性團體班",
+   "url": "https://passion.climbrock.vip/courses/7",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-09",
+   "title": "成人中階團體班-周三晚",
+   "url": "https://passion.climbrock.vip/courses/5",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "團體入場安全教學",
+   "url": "https://passion.climbrock.vip/courses/4",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "抱石體驗",
+   "url": "https://passion.climbrock.vip/courses/3",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-07",
+   "title": "上方確保30分鐘",
+   "url": "https://passion.climbrock.vip/courses/2",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-06",
+   "title": "綜合攀登體驗",
+   "url": "https://passion.climbrock.vip/courses/1",
+   "kind": "website",
+   "source": "官網活動與課程"
+  }
+ ],
+ "iclimb-zhubei": [
+  {
+   "date": "2024-05-23",
+   "title": "iClimb風城攀岩館 掃地僧 #攀岩 #指力訓練",
+   "url": "https://www.youtube.com/shorts/p5HttU4L7ac",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-29",
+   "title": "決賽 - 112學年度全國青少年運動攀登錦標賽",
+   "url": "https://www.youtube.com/watch?v=INMtfEysiSk",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "資格賽、複賽頻道1 - 112學年度全國青少年運動攀登錦標賽",
+   "url": "https://www.youtube.com/watch?v=3RpCA426mjk",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "112學年度全國青少年運動攀登錦標賽 高中男子組資格賽 A",
+   "url": "https://www.youtube.com/watch?v=0iDtcRwE25M",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小6年級 國中1年級男子組 資格賽 A",
+   "url": "https://www.youtube.com/watch?v=hoZFzn8LSjA",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "112學年度全國青少年運動攀登錦標賽 國2-3男子組、高中女子組 資格賽 A",
+   "url": "https://www.youtube.com/watch?v=ERzRdvnoqOA",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "112學年度全國青少年運動攀登錦標賽 高中男子組資格賽 B",
+   "url": "https://www.youtube.com/watch?v=-7iGw1-FNZ8",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-28",
+   "title": "112學年度全國青少年運動攀登錦標賽 國中2-3年級男子組、高中女子組 資格賽B",
+   "url": "https://www.youtube.com/watch?v=3WAE7XwtyX4",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國中2-3年級女子組 資格賽 B",
+   "url": "https://www.youtube.com/watch?v=Mbe3HDgM4LM",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國中2-3年級女子組 資格賽 A",
+   "url": "https://www.youtube.com/watch?v=zIKOBjvp8S8",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小6年級 國中1年級 女子組資格賽 B",
+   "url": "https://www.youtube.com/watch?v=7J0-5P8vW10",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小6年級 國中1年級 男子組 資格賽B",
+   "url": "https://www.youtube.com/watch?v=GOuKbnPgsP4",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小4-5年級組資格賽 B",
+   "url": "https://www.youtube.com/watch?v=PtFIC56iI-s",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小4-5年級組、國小6年級 國中1年級女子組 資格賽 A",
+   "url": "https://www.youtube.com/watch?v=_xZHdEtRKSE",
+   "source": "YouTube",
+   "kind": "youtube"
+  },
+  {
+   "date": "2023-10-27",
+   "title": "112學年度全國青少年運動攀登錦標賽 國小1-3年級組 資格賽B",
+   "url": "https://www.youtube.com/watch?v=j5jAPE5gQTE",
+   "source": "YouTube",
+   "kind": "youtube"
+  }
+ ],
+ "iclimb-shengli": [],
+ "babo-hsinchu": [
+  {
+   "date": "2026-10-24",
+   "title": "2027兒童冬令攀岩營(1/25-1/29五日早上半日營)",
+   "url": "https://babo.climbrock.vip/courses/113",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-24",
+   "title": "2027兒童冬令攀岩營(2/01-2/02兩日全日營)",
+   "url": "https://babo.climbrock.vip/courses/112",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-24",
+   "title": "2027兒童冬令攀岩營(1/21-1/22兩日全日營)",
+   "url": "https://babo.climbrock.vip/courses/111",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-24",
+   "title": "2027兒童冬令攀岩營(1/25-1/29五日全日營)",
+   "url": "https://babo.climbrock.vip/courses/110",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-03",
+   "title": "抱石體驗教練課",
+   "url": "https://babo.climbrock.vip/courses/19",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "11/8(日) 特別企劃：兒童攀岩x生物觀察－百變天王・變色龍體驗課！",
+   "url": "https://babo.climbrock.vip/courses/83",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "12/6(日) 特別企劃：兒童攀岩x生物觀察－動物防衛隊體驗課！",
+   "url": "https://babo.climbrock.vip/courses/84",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-07",
+   "title": "1/10(日) 特別企劃：兒童攀岩 x 生物觀察－大自然的隱身高手體驗課！",
+   "url": "https://babo.climbrock.vip/courses/85",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-04",
+   "title": "兒童攀岩抱石試上體驗課｜第一次來本館攀岩請選擇",
+   "url": "https://babo.climbrock.vip/courses/36",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石動態調整/進階技巧課 十一月週二團班",
+   "url": "https://babo.climbrock.vip/courses/107",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv2 十一月周三 兩人小班",
+   "url": "https://babo.climbrock.vip/courses/103",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石動態調整/進階技巧課 十一月週三團班",
+   "url": "https://babo.climbrock.vip/courses/108",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-20",
+   "title": "抱石技巧班Lv1 十一月週三團班",
+   "url": "https://babo.climbrock.vip/courses/109",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv1 十一月週四團班",
+   "url": "https://babo.climbrock.vip/courses/104",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "抱石技巧班Lv2 十一月周五 兩人小班",
+   "url": "https://babo.climbrock.vip/courses/105",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "攀岩專項肌力與體能課 十一月週五團班",
+   "url": "https://babo.climbrock.vip/courses/106",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲台中德芙蘭x泡湯x鱒魚 11/21(六)",
+   "url": "https://babo.climbrock.vip/courses/89",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲台中德芙蘭x泡湯x鱒魚 11/22(日)",
+   "url": "https://babo.climbrock.vip/courses/90",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲關子嶺x泡湯x甕仔雞 12/12(六)",
+   "url": "https://babo.climbrock.vip/courses/91",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-10",
+   "title": "霸寶溫泉攀岩度假 ▲關子嶺x泡湯x甕仔雞 12/13(日)",
+   "url": "https://babo.climbrock.vip/courses/92",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-16",
+   "title": "霸寶共學之夜-兒童教練培訓",
+   "url": "https://babo.climbrock.vip/courses/102",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-06-21",
+   "title": "運動按摩體驗活動",
+   "url": "https://babo.climbrock.vip/courses/61",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-03",
+   "title": "【曉勤Chin】運動按摩",
+   "url": "https://babo.climbrock.vip/courses/78",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-09-03",
+   "title": "【芝儀】肢體評估",
+   "url": "https://babo.climbrock.vip/courses/80",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-04-25",
+   "title": "兒童抱石【團體】教練課(課程點數請在線上購票區購買)",
+   "url": "https://babo.climbrock.vip/courses/44",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-03",
+   "title": "兒童抱石【一對一】教練課(課程點數請在線上購票區購買)",
+   "url": "https://babo.climbrock.vip/courses/14",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-15",
+   "title": "抱石私人教練課試上一堂課（一對一、一對二）",
+   "url": "https://babo.climbrock.vip/courses/29",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-02-28",
+   "title": "抱石私人教練課一對一（課程點數請先至線上購票購買)",
+   "url": "https://babo.climbrock.vip/courses/10",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-03-15",
+   "title": "抱石私人教練課一對二（課程點數請先至線上購票購買)",
+   "url": "https://babo.climbrock.vip/courses/28",
+   "kind": "website",
+   "source": "官網活動與課程"
+  },
+  {
+   "date": "2026-10-15",
+   "title": "抱石體驗課｜PAYEASY  2027",
+   "url": "https://babo.climbrock.vip/courses/101",
+   "kind": "website",
+   "source": "官網活動與課程"
+  }
+ ],
+ "bplus-xitun": [],
+ "bplus-taiyuan": [],
+ "dapro-nantun": [],
+ "panna-taichung": [],
+ "shabby-yuanlin": [],
+ "chiayi-club": [],
+ "chiayi-sports-8a": [],
+ "highfun-north": [],
+ "highfun-rende": [],
+ "btopia-kaohsiung": [],
+ "basecamp-zuoying": [],
+ "boulderspace-zuoying": [],
+ "qingchang-kaohsiung": [],
+ "jioutau-yilan": [],
+ "wuyan-dongshan": [],
+ "yilan-sports": [],
+ "bonus-hualien": [],
+ "bplus-hualien": [],
+ "hejiang-taitung": []
+}

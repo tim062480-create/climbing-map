@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/fetch_news.py 產生，不要手動改；只存日期、來源、標題、網址",
- "updated": "2026-10-26 19:49",
+ "updated": "2026-10-28 15:09",
  "gyms": {
   "tup-zhonghe": [
    {
@@ -29,6 +29,34 @@
   ],
   "babo-hsinchu": [
    {
+    "date": "2026-10-24",
+    "title": "2027兒童冬令攀岩營(1/25-1/29五日早上半日營)",
+    "url": "https://babo.climbrock.vip/courses/113",
+    "kind": "website",
+    "source": "官網活動與課程"
+   },
+   {
+    "date": "2026-10-24",
+    "title": "2027兒童冬令攀岩營(2/01-2/02兩日全日營)",
+    "url": "https://babo.climbrock.vip/courses/112",
+    "kind": "website",
+    "source": "官網活動與課程"
+   },
+   {
+    "date": "2026-10-24",
+    "title": "2027兒童冬令攀岩營(1/21-1/22兩日全日營)",
+    "url": "https://babo.climbrock.vip/courses/111",
+    "kind": "website",
+    "source": "官網活動與課程"
+   },
+   {
+    "date": "2026-10-24",
+    "title": "2027兒童冬令攀岩營(1/25-1/29五日全日營)",
+    "url": "https://babo.climbrock.vip/courses/110",
+    "kind": "website",
+    "source": "官網活動與課程"
+   },
+   {
     "date": "2026-10-20",
     "title": "抱石技巧班Lv1 十一月週三團班",
     "url": "https://babo.climbrock.vip/courses/109",
@@ -53,34 +81,6 @@
     "date": "2026-10-16",
     "title": "抱石動態調整/進階技巧課 十一月週三團班",
     "url": "https://babo.climbrock.vip/courses/108",
-    "kind": "website",
-    "source": "官網活動與課程"
-   },
-   {
-    "date": "2026-10-16",
-    "title": "抱石技巧班Lv1 十一月週四團班",
-    "url": "https://babo.climbrock.vip/courses/104",
-    "kind": "website",
-    "source": "官網活動與課程"
-   },
-   {
-    "date": "2026-10-16",
-    "title": "抱石技巧班Lv2 十一月周五 兩人小班",
-    "url": "https://babo.climbrock.vip/courses/105",
-    "kind": "website",
-    "source": "官網活動與課程"
-   },
-   {
-    "date": "2026-10-16",
-    "title": "攀岩專項肌力與體能課 十一月週五團班",
-    "url": "https://babo.climbrock.vip/courses/106",
-    "kind": "website",
-    "source": "官網活動與課程"
-   },
-   {
-    "date": "2026-10-16",
-    "title": "霸寶共學之夜-兒童教練培訓",
-    "url": "https://babo.climbrock.vip/courses/102",
     "kind": "website",
     "source": "官網活動與課程"
    }
