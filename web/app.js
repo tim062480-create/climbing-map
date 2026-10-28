@@ -711,7 +711,7 @@ function render() {
 
 function listItem(g, d) {
   const cls = STATUS_CLASS[g.status] || "warn";
-  const first = (g.prices || [])[0];
+  const first = !isOld(g, "prices") && (g.prices || [])[0];   // 超過一年的價格不列在清單上
   const p = priceOf(g);
   const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
   const os = g.status === "營業中" ? openState(g) : null;
@@ -847,6 +847,15 @@ function priceNote(p) {
   return [p.note, extra].filter(Boolean).join("；");
 }
 
+// ---------- 資料新舊 ----------
+// src/freshness.py 把最近一年內沒有來源的欄位放在 stale：網頁標「超過一年」，不拿來算現在有沒有開、價格排序和預算
+const isOld = (g, field) => (g.stale || []).includes(field);
+const oldTag = (g, field) => {
+  if (!isOld(g, field)) return "";
+  const d = g.fresh && g.fresh[field];
+  return ` <span class="old" title="最近一年內沒有來源可以確認，只供參考">${d ? `超過一年（${esc(d.slice(0, 7))}）` : "來源沒寫日期"}</span>`;
+};
+
 // ---------- 詳細資訊 ----------
 function openDetail(id, pushHash = true) {
   const g = state.gyms.find((x) => x.id === id);
@@ -857,7 +866,7 @@ function openDetail(id, pushHash = true) {
   if (g.lat != null) map.setView([g.lat, g.lng], Math.max(map.getZoom(), 15));
   const cls = STATUS_CLASS[g.status] || "warn";
   const types = (g.types || []).map((t) => TYPE_NAME[t] || t).join("、");
-  const pn = priceNow(g);
+  const pn = isOld(g, "prices") ? { html: "", fits: [] } : priceNow(g);
   const links = Object.entries(g.links || {}).map(([k, url]) =>
     `<a class="btn small" href="${esc(url)}" target="_blank" rel="noopener">${esc({ website: "官網", facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", price_page: "價目表", booking: "預約" }[k] || k)}</a>`).join("");
 
@@ -866,15 +875,16 @@ function openDetail(id, pushHash = true) {
     ${openNowHTML(g)}
     <div class="meta"><span class="badge ${cls}">${esc(STATUS_LABEL[g.status] || g.status)}</span> ${esc(types)}${g.name_en ? `・${esc(g.name_en)}` : ""}</div>
     <button type="button" class="btn small fav" id="favBtn"></button>
-    <p>${esc(g.address || `${g.city}${g.district || ""}（地址待補）`)}${g.phone ? `<br>☎ <a href="tel:${esc(g.phone)}">${esc(g.phone)}</a>` : ""}</p>
-    ${g.hours ? `<p>🕒 ${esc(g.hours)}</p>` : ""}
-    ${g.features ? `<p>${esc(g.features)}</p>` : ""}
+    <p>${esc(g.address || `${g.city}${g.district || ""}（地址待補）`)}${oldTag(g, "address")}${g.phone ? `<br>☎ <a href="tel:${esc(g.phone)}">${esc(g.phone)}</a>${oldTag(g, "phone")}` : ""}</p>
+    ${g.hours ? `<p>🕒 ${esc(g.hours)}${oldTag(g, "hours")}</p>` : ""}
+    ${g.features ? `<p>${esc(g.features)}${oldTag(g, "features")}</p>` : ""}
+    ${(g.stale || []).length ? `<p class="note">標「超過一年」「來源沒寫日期」的資料，最近一年內沒有來源可以確認，只供參考，出發前請向館方確認。</p>` : ""}
     <div class="row">${links}<a class="btn small" href="${gmapsSearch(g)}" target="_blank" rel="noopener">Google 地圖（評論・照片）</a></div>
 
     <h3>近期動態</h3>
     ${newsHTML(g)}
 
-    <h3>價格</h3>
+    <h3>價格${oldTag(g, "prices")}</h3>
     ${pn.html}
     ${g.prices && g.prices.length ? `<table>${g.prices.map((p) =>
       `<tr${pn.fits.includes(p) ? ' class="now"' : ""}><td>${esc(p.item)}${priceNote(p) ? `<div class="note">${esc(priceNote(p))}</div>` : ""}</td><td class="price">${esc(fmtPrice(p.price))}</td></tr>`).join("")}</table>`

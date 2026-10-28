@@ -16,6 +16,7 @@
   5. 算出每間館的 price_min（成人入場最低價，含星光、離峰時段和計時 1 小時）和 price_day（不含計時），
      網頁的價格排序和預算篩選用
   6. 營業時間和票價適用時段轉成規則（見 src/hours_prices.py）
+  7. 來源超過一年的欄位標成不相信，所有來源都超過一年的館改成「待確認」（見 src/freshness.py）
 
 只用 Python 內建套件。容器／本機連不到 OSM 時會保留上一次 gyms.json 的座標。
 用法：python src/enrich.py
@@ -32,6 +33,7 @@ import urllib.request
 from datetime import datetime
 from pathlib import Path
 
+import freshness
 import hours_prices
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -244,6 +246,7 @@ def main():
         (OSM_RAW_DIR / f"{datetime.now():%Y-%m-%d}.json").write_text(
             json.dumps(elements, ensure_ascii=False), encoding="utf-8")
     places = [osm_place(e) for e in elements] if elements is not None else None
+    source_dates = freshness.load_source_dates()
     used = set()
     gyms = []
     for g in seed["gyms"]:
@@ -273,6 +276,7 @@ def main():
         g["price_min"] = price_min(g)                  # 含計時（1 小時）
         g["price_day"] = price_min(g, hourly=False)    # 只看一次入場的票，搜尋「全日」時用
         hours_prices.annotate(g)                       # 營業時間、票價適用時段 → 網頁算「現在有沒有開、現在多少錢」
+        freshness.annotate(g, source_dates)            # 來源超過一年的欄位不相信（見 src/freshness.py）
         gyms.append(g)
         print(f"{g['id']:24s} {g.get('coord_source')}")
 

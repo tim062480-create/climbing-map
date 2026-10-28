@@ -30,6 +30,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - 輸出 `data/processed/gyms.json` 和 `docs/enrich_report.md`。座標可信度看 `coord_source`。
    - `src/hours_prices.py`（enrich.py 會呼叫，也可以單獨跑來更新 gyms.json）：把文字營業時間轉成 `open_hours`（週一…週日每天的 [開, 關] 分鐘、國定假日），票價加 `kind`（entry／hourly／other）和 `when`（平日／假日／星期幾、幾點到幾點、閉館前幾小時）。網頁用這些算「現在有沒有開」「現在入場多少錢」，國定假日、補班日讀 `cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar`。seed 的 `status`「營業中」是「還在營運」，網頁顯示成「仍在營運」，不是現在有開。
    - `price_min`：成人入場的最低價（含星光、離峰時段和計時 1 小時，`per_hour` 標示計時；排除租借、課程、學生票、起價），`price_day` 不含計時。網頁的價格排序和預算篩選用。
+   - 呼叫 `src/freshness.py`：每個欄位加 `fresh`（最新來源日期）、`stale`（超過一年不相信的欄位）、`data_date`；不相信的營業時間、價格不產生 `open_hours`、`price_min`。單獨跑 `python src/freshness.py` 會直接更新 gyms.json 並列出影響。
    - 連不到 OSM 時沿用上一次的座標。
 2. `src/youbike_history.py`（2026-10-26 取代 `youbike_near.py`）：
    - 每 20 分鐘（`.github/workflows/youbike.yml`）抓全台 YouBike 站點（`apis.youbike.com.tw`，非正式 API，有區碼 `area_code`）和臺北市開放資料，依區切檔。
@@ -58,4 +59,5 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 只收室內館，以抱石為主。
 - 不爬 Google 地圖（違反使用條款），只附搜尋連結讓人手動對照。要顯示 Google 評論、照片需要 Places API 金鑰，使用者還沒申請。
 - 不能確認的資料寫進 `verify`，不要猜。
+- 資料要有一年內的來源才相信（2026-10-28）：`src/freshness.py` 依 `sources.csv` 的「日期時間」判斷，超過一年或沒寫日期的欄位網頁標「超過一年」，不拿來算現在有沒有開、價格排序和預算；所有來源都超過一年的營業中館改成「待確認」。新增來源時「日期時間」要寫看得懂的日期（例如「2026-10-28 讀取」）。
 - 機密資訊（API 金鑰等）放 .env，不寫進程式碼、不 commit。

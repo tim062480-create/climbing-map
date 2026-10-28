@@ -625,7 +625,18 @@
       1260
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-01",
+    "phone": "2026-01-26",
+    "hours": "2026-10-01",
+    "prices": "2026-10-01",
+    "features": "2025-05-01"
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": "2026-10-01"
   },
   {
    "id": "corner-huashan",
@@ -837,7 +848,16 @@
       1260
      ]
     ]
-   }
+   },
+   "features": null,
+   "fresh": {
+    "address": "2026-10-01",
+    "phone": "2026-01-26",
+    "hours": "2026-10-01",
+    "prices": "2026-10-01"
+   },
+   "stale": [],
+   "data_date": "2026-10-01"
   },
   {
    "id": "tup-wanhua",
@@ -1008,58 +1028,21 @@
     "item": "平日星光 20:30–23:00",
     "per_hour": false
    },
-   "open_hours": {
-    "week": [
-     [
-      [
-       600,
-       1380
-      ]
-     ],
-     [
-      [
-       600,
-       1380
-      ]
-     ],
-     [
-      [
-       600,
-       1380
-      ]
-     ],
-     [
-      [
-       600,
-       1380
-      ]
-     ],
-     [
-      [
-       600,
-       1380
-      ]
-     ],
-     [
-      [
-       540,
-       1260
-      ]
-     ],
-     [
-      [
-       540,
-       1260
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1260
-     ]
-    ]
-   }
+   "open_hours": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "hours": null,
+    "prices": "2026-10-24",
+    "features": "2024-01-01"
+   },
+   "stale": [
+    "address",
+    "phone",
+    "hours",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-mingde",
@@ -1232,58 +1215,21 @@
     "item": "平日星光 20:30–23:00",
     "per_hour": false
    },
-   "open_hours": {
-    "week": [
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       600,
-       1320
-      ]
-     ],
-     [
-      [
-       600,
-       1320
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      600,
-      1320
-     ]
-    ]
-   }
+   "open_hours": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "hours": null,
+    "prices": "2026-10-24",
+    "features": null
+   },
+   "stale": [
+    "address",
+    "phone",
+    "hours",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-nangang",
@@ -1436,58 +1382,20 @@
     "item": "平日下午 12:00–18:00",
     "per_hour": false
    },
-   "open_hours": {
-    "week": [
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       540,
-       1260
-      ]
-     ],
-     [
-      [
-       540,
-       1260
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1260
-     ]
-    ]
-   }
+   "open_hours": null,
+   "features": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "hours": null,
+    "prices": "2026-10-24"
+   },
+   "stale": [
+    "address",
+    "phone",
+    "hours"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-zhonghe",
@@ -1669,58 +1577,21 @@
     "item": "平日星光 20:30–23:00",
     "per_hour": false
    },
-   "open_hours": {
-    "week": [
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       720,
-       1380
-      ]
-     ],
-     [
-      [
-       540,
-       1320
-      ]
-     ],
-     [
-      [
-       540,
-       1320
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1320
-     ]
-    ]
-   }
+   "open_hours": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "hours": null,
+    "prices": "2026-10-24",
+    "features": "2024-01-01"
+   },
+   "stale": [
+    "address",
+    "phone",
+    "hours",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-xindian",
@@ -1871,58 +1742,21 @@
     "item": "平日星光 20:30–23:00",
     "per_hour": false
    },
-   "open_hours": {
-    "week": [
-     [
-      [
-       660,
-       1380
-      ]
-     ],
-     [
-      [
-       660,
-       1380
-      ]
-     ],
-     [
-      [
-       660,
-       1380
-      ]
-     ],
-     [
-      [
-       660,
-       1380
-      ]
-     ],
-     [
-      [
-       660,
-       1380
-      ]
-     ],
-     [
-      [
-       660,
-       1320
-      ]
-     ],
-     [
-      [
-       660,
-       1290
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      660,
-      1290
-     ]
-    ]
-   }
+   "open_hours": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "hours": null,
+    "prices": "2026-10-24",
+    "features": null
+   },
+   "stale": [
+    "address",
+    "phone",
+    "hours",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-a19",
@@ -2011,17 +1845,23 @@
    "lat": null,
    "lng": null,
    "coord_source": "none",
-   "price_min": {
-    "price": 300,
-    "item": "星光票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "hours": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "prices": null,
+    "features": null
    },
-   "price_day": {
-    "price": 300,
-    "item": "星光票",
-    "per_hour": false
-   },
-   "open_hours": null
+   "stale": [
+    "address",
+    "phone",
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-yangmei",
@@ -2085,7 +1925,20 @@
    },
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "features": null
+   },
+   "stale": [
+    "address",
+    "phone",
+    "features"
+   ],
+   "data_date": "2024-11-01"
   },
   {
    "id": "civic-nangang",
@@ -2197,16 +2050,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區市民大道八段",
    "coord_match": "市民大道八段, 東明里, 南港區, 三重埔, 臺北市, 115011, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "星光票（營業結束前 2 小時）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "星光票（營業結束前 2 小時）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -2258,7 +2103,18 @@
       1350
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-24",
+    "phone": "2026-10-24",
+    "hours": "2026-03-23",
+    "prices": "2024-11-01",
+    "features": "2026-03-23"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "kirin-nangang",
@@ -2346,16 +2202,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區忠孝東路七段",
    "coord_match": "忠孝東路七段, 新光里, 南港區, 三重埔, 臺北市, 11561, 臺灣",
-   "price_min": {
-    "price": 220,
-    "item": "平日 18:00 前入場",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 220,
-    "item": "平日 18:00 前入場",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -2407,7 +2255,19 @@
       1200
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-01-26",
+    "phone": "2026-01-26",
+    "hours": "2026-01-26",
+    "prices": "2024-11-01",
+    "features": null
+   },
+   "stale": [
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-01-26"
   },
   {
    "id": "redrock-shilin",
@@ -2499,16 +2359,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
    "coord_match": "承德路四段, 義信里, 士林區, 社子, 臺北市, 111052, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "單次入場（平假日相同）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "單次入場（平假日相同）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -2560,7 +2412,19 @@
       1080
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2025-12-19",
+    "phone": null,
+    "hours": "2025-12-19",
+    "prices": "2024-11-01",
+    "features": "2026-01-01"
+   },
+   "stale": [
+    "phone",
+    "prices"
+   ],
+   "data_date": "2026-01-01"
   },
   {
    "id": "redrock-hsinchu",
@@ -2642,16 +2506,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "新竹市東區光復路一段",
    "coord_match": "世界高中, 257, 光復路一段, 仙水里, 東區, 新竹市, 300052, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "單次入場（平假日相同）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "單次入場（平假日相同）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -2703,7 +2559,18 @@
       1200
      ]
     ]
-   }
+   },
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2025-12-19",
+    "hours": "2025-12-19",
+    "prices": "2024-11-01"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-01-01"
   },
   {
    "id": "double8-datong",
@@ -2900,7 +2767,16 @@
       1110
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-01",
+    "phone": "2026-01-26",
+    "hours": "2026-10-01",
+    "prices": "2026-10-24",
+    "features": "2026-03-23"
+   },
+   "stale": [],
+   "data_date": "2026-10-24"
   },
   {
    "id": "camp4-taipei",
@@ -3046,7 +2922,16 @@
       1080
      ]
     ]
-   }
+   },
+   "features": null,
+   "fresh": {
+    "address": "2026-10-01",
+    "phone": "2026-01-26",
+    "hours": "2026-01-26",
+    "prices": "2026-10-01"
+   },
+   "stale": [],
+   "data_date": "2026-10-24"
   },
   {
    "id": "littlerock-tianmu",
@@ -3145,16 +3030,8 @@
     },
     "dist_to_address_m": 938
    },
-   "price_min": {
-    "price": 200,
-    "item": "平日星光",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 200,
-    "item": "平日星光",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -3206,7 +3083,18 @@
       1140
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-24",
+    "phone": "2026-01-26",
+    "hours": "2026-01-26",
+    "prices": "2024-11-01",
+    "features": "2026-01-01"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "y17-taipei",
@@ -3336,7 +3224,16 @@
       1110
      ]
     ]
-   }
+   },
+   "features": null,
+   "fresh": {
+    "address": "2026-01-26",
+    "phone": "2026-01-26",
+    "hours": "2026-10-24",
+    "prices": "2026-10-24"
+   },
+   "stale": [],
+   "data_date": "2026-10-24"
   },
   {
    "id": "neihu-sports",
@@ -3491,7 +3388,18 @@
       1320
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-01-26",
+    "phone": "2026-01-26",
+    "hours": "2026-01-26",
+    "prices": "2026-01-26",
+    "features": "2025-05-01"
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": "2026-01-26"
   },
   {
    "id": "flow-neihu",
@@ -3573,16 +3481,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺北市內湖區瑞光路",
    "coord_match": "瑞光路, 西湖里, 內湖區, 臺北市, 114727, 臺灣",
-   "price_min": {
-    "price": 300,
-    "item": "平日星光（20:30 後入場）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 300,
-    "item": "平日星光（20:30 後入場）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -3619,7 +3519,18 @@
      null
     ],
     "holiday": null
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "nangang-sports",
@@ -3632,7 +3543,7 @@
    "types": [
     "lead"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "prices": [
     {
      "item": "單次",
@@ -3655,7 +3566,8 @@
     ]
    },
    "verify": [
-    "是否有抱石區"
+    "是否有抱石區",
+    "所有來源都超過一年（最新的來源是 2024-01-01），不確定現在是否還在營業"
    ],
    "news": {
     "names": [
@@ -3668,17 +3580,22 @@
    "coord_source": "nominatim:address",
    "coord_query": "臺北市南港運動中心",
    "coord_match": "南港運動中心, 69, 玉成街, 合成里, 南港區, 潭美, 臺北市, 115, 臺灣",
-   "price_min": {
-    "price": 50,
-    "item": "單次",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "features": null,
+   "fresh": {
+    "address": null,
+    "prices": "2024-01-01"
    },
-   "price_day": {
-    "price": 50,
-    "item": "單次",
-    "per_hour": false
-   },
-   "open_hours": null
+   "stale": [
+    "address",
+    "prices"
+   ],
+   "data_date": "2024-01-01",
+   "status_seed": "營業中"
   },
   {
    "id": "wanhua-sports",
@@ -3724,7 +3641,8 @@
    },
    "verify": [
     "抱石區規模",
-    "營業時間只有 S55（2022，當時由 Camp4 經營）；現在粉專名稱是米開朗基羅攀岩館（蓋亞冒險學校與艾格探險合作）"
+    "營業時間只有 S55（2022，當時由 Camp4 經營）；現在粉專名稱是米開朗基羅攀岩館（蓋亞冒險學校與艾格探險合作）",
+    "Google 地圖上舊的「Camp 4攀岩館-萬華運動中心館」標示永久停業（S79），應該是 Camp4 不再經營、換成米開朗基羅；米開朗基羅現在有沒有營業、營業時間要再確認"
    ],
    "hours": "週一至週五 13:00–21:30；週六、日 09:00–18:00",
    "news": {
@@ -3739,68 +3657,21 @@
    "coord_source": "nominatim:place",
    "coord_query": "臺北市萬華運動中心",
    "coord_match": "萬華運動中心, 6-1, 西寧南路, 福星里, 萬華區, 城內, 臺北市, 10841, 臺灣",
-   "price_min": {
-    "price": 150,
-    "item": "單次",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "hours": "2024-11-01",
+    "prices": "2024-01-01"
    },
-   "price_day": {
-    "price": 150,
-    "item": "單次",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1080
-     ]
-    ]
-   }
+   "stale": [
+    "hours",
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "yonghe-sports",
@@ -3956,16 +3827,8 @@
    "coord_source": "nominatim:place",
    "coord_query": "新北市永和國民運動中心",
    "coord_match": "永和國民運動中心, 永利路, 秀林里, 永和區, 秀朗, 新北市, 234035, 臺灣",
-   "price_min": {
-    "price": 50,
-    "item": "抱石計時（離峰）",
-    "per_hour": true
-   },
-   "price_day": {
-    "price": 200,
-    "item": "全日票（平日）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -4037,7 +3900,19 @@
       1320
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2025-12-19",
+    "hours": "2026-10-01",
+    "prices": null,
+    "features": null
+   },
+   "stale": [
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-01"
   },
   {
    "id": "megastone-xinzhuang",
@@ -4156,16 +4031,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "新北市新莊區中正路",
    "coord_match": "中正路, 思源里, 新莊區, 新庄(海山口), 新北市, 242015, 臺灣",
-   "price_min": {
-    "price": 240,
-    "item": "星光票（當日最後兩小時）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 240,
-    "item": "星光票（當日最後兩小時）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -4217,7 +4084,19 @@
       1200
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-01-26",
+    "phone": "2026-01-26",
+    "hours": "2026-01-26",
+    "prices": "2025-05-01",
+    "features": "2025-05-01"
+   },
+   "stale": [
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-01-26"
   },
   {
    "id": "pogo-xinzhuang",
@@ -4263,7 +4142,20 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null,
+   "fresh": {
+    "address": null,
+    "phone": null,
+    "features": "2022-01-01"
+   },
+   "stale": [
+    "address",
+    "phone",
+    "features"
+   ],
+   "data_date": "2024-11-01"
   },
   {
    "id": "qianshou-taoyuan",
@@ -4276,7 +4168,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "hours": "週一至週五 14:00–22:00；週六 10:00–21:00；週日 10:00–19:00",
    "prices": [
     {
@@ -4357,7 +4249,8 @@
    },
    "verify": [
     "價格來源未標日期",
-    "週日時間：S51 寫週末都到 21:00"
+    "週日時間：S51 寫週末都到 21:00",
+    "所有來源都超過一年（最新的來源是 2024-11-01），不確定現在是否還在營業"
    ],
    "news": {
     "names": [
@@ -4370,68 +4263,24 @@
    "coord_source": "nominatim:road",
    "coord_query": "桃園市桃園區龍壽街",
    "coord_match": "龍壽國小, 30, 龍校街, 尖山腳, 龍壽里, 龜山區, 桃園市, 333, 臺灣",
-   "price_min": {
-    "price": 200,
-    "item": "星光票（閉館前 2 小時）",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "fresh": {
+    "address": "2024-01-01",
+    "hours": "2024-11-01",
+    "prices": "2024-11-01",
+    "features": "2021-01-01"
    },
-   "price_day": {
-    "price": 200,
-    "item": "星光票（閉館前 2 小時）",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1140
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      600,
-      1140
-     ]
-    ]
-   }
+   "stale": [
+    "address",
+    "hours",
+    "prices",
+    "features"
+   ],
+   "data_date": "2024-11-01",
+   "status_seed": "營業中"
   },
   {
    "id": "passion-taoyuan",
@@ -4585,16 +4434,8 @@
     },
     "dist_to_address_m": 344
    },
-   "price_min": {
-    "price": 200,
-    "item": "平日星光（閉館前 2.5 小時）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 200,
-    "item": "平日星光（閉館前 2.5 小時）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [],
@@ -4641,7 +4482,18 @@
       1260
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2025-12-19",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "iclimb-zhubei",
@@ -4741,16 +4593,8 @@
     },
     "dist_to_address_m": 57
    },
-   "price_min": {
-    "price": 320,
-    "item": "全日票（成功館）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 320,
-    "item": "全日票（成功館）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -4802,7 +4646,18 @@
       1260
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "hours": "2025-12-19",
+    "prices": "2024-11-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "iclimb-shengli",
@@ -4948,16 +4803,8 @@
     },
     "dist_to_address_m": 192
    },
-   "price_min": {
-    "price": 299,
-    "item": "離峰票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 299,
-    "item": "離峰票",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -5009,7 +4856,19 @@
       1260
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2025-12-19",
+    "phone": "2025-01-01",
+    "hours": "2026-10-24",
+    "prices": "2025-01-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "phone",
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "babo-hsinchu",
@@ -5115,16 +4974,8 @@
     },
     "dist_to_address_m": 1998
    },
-   "price_min": {
-    "price": 250,
-    "item": "平日離峰 13:30–18:00",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "平日離峰 13:30–18:00",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -5176,7 +5027,19 @@
       1140
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2024-11-01",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "address",
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "bplus-xitun",
@@ -5251,16 +5114,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
    "coord_match": "環中路二段, 西墩里, 西屯區, 臺中七期, 臺中市, 407670, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "全日票",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [],
@@ -5307,7 +5162,19 @@
       1140
      ]
     ]
-   }
+   },
+   "features": null,
+   "fresh": {
+    "address": null,
+    "phone": "2026-10-24",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01"
+   },
+   "stale": [
+    "address",
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "bplus-taiyuan",
@@ -5374,68 +5241,22 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺中市北屯區建和路一段",
    "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣",
-   "price_min": {
-    "price": 350,
-    "item": "全日票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "hours": null,
+    "prices": "2024-11-01",
+    "features": null
    },
-   "price_day": {
-    "price": 350,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1380
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      840,
-      1320
-     ]
-    ]
-   }
+   "stale": [
+    "hours",
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "dapro-nantun",
@@ -5533,16 +5354,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
    "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣",
-   "price_min": {
-    "price": 380,
-    "item": "星光票（21:00 後）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 380,
-    "item": "星光票（21:00 後）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -5594,7 +5407,19 @@
       1200
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-08-05",
+    "phone": null,
+    "hours": "2026-08-05",
+    "prices": "2024-11-01",
+    "features": "2026-03-23"
+   },
+   "stale": [
+    "phone",
+    "prices"
+   ],
+   "data_date": "2026-08-05"
   },
   {
    "id": "erchang-wuri",
@@ -5648,17 +5473,22 @@
    "lat": null,
    "lng": null,
    "coord_source": "none",
-   "price_min": {
-    "price": 200,
-    "item": "個人全票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "fresh": {
+    "address": "2022-01-01",
+    "prices": "2022-01-01",
+    "features": "2022-01-01"
    },
-   "price_day": {
-    "price": 200,
-    "item": "個人全票",
-    "per_hour": false
-   },
-   "open_hours": null
+   "stale": [
+    "address",
+    "prices",
+    "features"
+   ],
+   "data_date": "2024-11-01"
   },
   {
    "id": "panna-taichung",
@@ -5726,16 +5556,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺中市東區進化路",
    "coord_match": "進化路, 錦村里, 北區, 臺中市, 404, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 250,
-    "item": "全日票",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -5787,7 +5609,18 @@
       1380
      ]
     ]
-   }
+   },
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "hours": "2026-08-05",
+    "prices": "2024-11-01"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "depot-taichung",
@@ -5820,7 +5653,17 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "prices": null,
+   "fresh": {
+    "features": null
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": null
   },
   {
    "id": "shabby-yuanlin",
@@ -5834,7 +5677,7 @@
     "bouldering",
     "lead"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "hours": "週一至週五 14:00–22:00；週六 09:30–22:00；週日 09:30–18:00",
    "links": {},
    "osm_keywords": [
@@ -5858,7 +5701,8 @@
     ]
    },
    "verify": [
-    "價格來源未標日期"
+    "價格來源未標日期",
+    "所有來源都超過一年（最新的來源是 2024-11-01），不確定現在是否還在營業"
    ],
    "prices": [
     {
@@ -5886,68 +5730,23 @@
    "coord_source": "nominatim:road",
    "coord_query": "彰化縣員林市新義街",
    "coord_match": "新義街, 新生里, 員林市, 彰化縣, 510018, 臺灣",
-   "price_min": {
-    "price": 280,
-    "item": "全日票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2024-01-01",
+    "hours": "2024-01-01",
+    "prices": "2024-11-01"
    },
-   "price_day": {
-    "price": 280,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       570,
-       1320
-      ]
-     ],
-     [
-      [
-       570,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      570,
-      1080
-     ]
-    ]
-   }
+   "stale": [
+    "address",
+    "hours",
+    "prices"
+   ],
+   "data_date": "2024-11-01",
+   "status_seed": "營業中"
   },
   {
    "id": "chiayi-club",
@@ -5960,7 +5759,7 @@
    "types": [
     "bouldering"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "prices": [
     {
      "item": "單次",
@@ -5995,7 +5794,8 @@
    "verify": [
     "門牌、營業時間",
     "S28（2026-02 Threads）只寫「嘉義唯一的岩館」沒寫館名，價格是否屬於這間待確認",
-    "S27 原文已經 404"
+    "S27 原文已經 404",
+    "所有來源都超過一年（來源都沒有日期），不確定現在是否還在營業"
    ],
    "news": {
     "names": [
@@ -6008,17 +5808,23 @@
    "coord_source": "nominatim:address",
    "coord_query": "嘉義市鐵道藝術村",
    "coord_match": "鐵道藝術村, 博愛路二段, 後驛里, 西區, 北社尾, 嘉義市, 600, 臺灣",
-   "price_min": {
-    "price": 100,
-    "item": "單次",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "fresh": {
+    "address": null,
+    "prices": null,
+    "features": null
    },
-   "price_day": {
-    "price": 100,
-    "item": "單次",
-    "per_hour": false
-   },
-   "open_hours": null
+   "stale": [
+    "address",
+    "prices",
+    "features"
+   ],
+   "data_date": null,
+   "status_seed": "營業中"
   },
   {
    "id": "chiayi-sports-8a",
@@ -6032,7 +5838,7 @@
     "bouldering",
     "lead"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "prices": [
     {
      "item": "單次全票",
@@ -6058,7 +5864,8 @@
     ]
    },
    "verify": [
-    "抱石區規模"
+    "抱石區規模",
+    "所有來源都超過一年（最新的來源是 2024-01-01），不確定現在是否還在營業"
    ],
    "news": {
     "names": [
@@ -6087,17 +5894,22 @@
     },
     "dist_to_address_m": 0
    },
-   "price_min": {
-    "price": 200,
-    "item": "單次全票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "features": null,
+   "fresh": {
+    "address": null,
+    "prices": "2024-01-01"
    },
-   "price_day": {
-    "price": 200,
-    "item": "單次全票",
-    "per_hour": false
-   },
-   "open_hours": null
+   "stale": [
+    "address",
+    "prices"
+   ],
+   "data_date": "2024-01-01",
+   "status_seed": "營業中"
   },
   {
    "id": "highfun-north",
@@ -6199,63 +6011,23 @@
     },
     "dist_to_address_m": 363
    },
-   "price_min": {
-    "price": 200,
-    "item": "平日星光票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "fresh": {
+    "address": "2025-12-19",
+    "phone": null,
+    "hours": "2024-01-01",
+    "prices": "2024-01-01",
+    "features": null
    },
-   "price_day": {
-    "price": 200,
-    "item": "平日星光票",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       600,
-       1080
-      ]
-     ],
-     [
-      [
-       600,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      600,
-      1080
-     ]
-    ]
-   }
+   "stale": [
+    "phone",
+    "hours",
+    "prices",
+    "features"
+   ],
+   "data_date": "2025-12-19"
   },
   {
    "id": "highfun-rende",
@@ -6410,7 +6182,18 @@
       1080
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-24",
+    "phone": "2026-10-24",
+    "hours": "2026-10-24",
+    "prices": "2026-10-24",
+    "features": null
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "btopia-kaohsiung",
@@ -6512,16 +6295,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "高雄市前鎮區文橫三路",
    "coord_match": "文橫三路, 西甲里, 前鎮區, 高雄市, 806, 臺灣",
-   "price_min": {
-    "price": 200,
-    "item": "時段票 15:00–17:00",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 200,
-    "item": "時段票 15:00–17:00",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -6573,7 +6348,19 @@
       1140
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2026-10-13",
+    "hours": "2026-10-13",
+    "prices": "2024-11-01",
+    "features": null
+   },
+   "stale": [
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-13"
   },
   {
    "id": "basecamp-zuoying",
@@ -6703,7 +6490,18 @@
       1170
      ]
     ]
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2026-10-13",
+    "hours": "2026-10-13",
+    "prices": "2026-10-13",
+    "features": "2024-01-01"
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": "2026-10-13"
   },
   {
    "id": "boulderspace-zuoying",
@@ -6793,16 +6591,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "高雄市左營區站前北路",
    "coord_match": "站前北路, 海光二村, 尾北里, 左營區, 高雄市, 813, 臺灣",
-   "price_min": {
-    "price": 230,
-    "item": "平日星光（20:30 後）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 230,
-    "item": "平日星光（20:30 後）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -6854,7 +6644,18 @@
       1320
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-13",
+    "phone": "2026-10-24",
+    "hours": "2026-10-13",
+    "prices": "2024-11-01",
+    "features": "2026-02-01"
+   },
+   "stale": [
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "qingchang-kaohsiung",
@@ -6945,7 +6746,16 @@
      []
     ],
     "holiday": []
-   }
+   },
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2026-10-13",
+    "hours": "2026-10-13",
+    "prices": "2026-10-13"
+   },
+   "stale": [],
+   "data_date": "2026-10-13"
   },
   {
    "id": "jioutau-yilan",
@@ -7038,16 +6848,8 @@
     },
     "dist_to_address_m": 206
    },
-   "price_min": {
-    "price": 300,
-    "item": "入場（平假日相同）",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 300,
-    "item": "入場（平假日相同）",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -7099,7 +6901,19 @@
       1320
      ]
     ]
-   }
+   },
+   "fresh": {
+    "address": "2026-10-24",
+    "phone": "2026-10-24",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01",
+    "features": null
+   },
+   "stale": [
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "wuyan-dongshan",
@@ -7216,7 +7030,16 @@
       1140
      ]
     ]
-   }
+   },
+   "phone": null,
+   "features": null,
+   "fresh": {
+    "address": "2025-12-19",
+    "hours": "2025-12-19",
+    "prices": "2025-12-19"
+   },
+   "stale": [],
+   "data_date": "2025-12-19"
   },
   {
    "id": "yoy-yuanshan",
@@ -7268,63 +7091,23 @@
    "lat": null,
    "lng": null,
    "coord_source": "none",
-   "price_min": {
-    "price": 100,
-    "item": "門票",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "fresh": {
+    "address": null,
+    "hours": null,
+    "prices": null,
+    "features": null
    },
-   "price_day": {
-    "price": 100,
-    "item": "門票",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [],
-     [
-      [
-       1080,
-       1260
-      ]
-     ],
-     [
-      [
-       1080,
-       1260
-      ]
-     ],
-     [
-      [
-       1080,
-       1260
-      ]
-     ],
-     [
-      [
-       1080,
-       1260
-      ]
-     ],
-     [
-      [
-       540,
-       1260
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1080
-     ]
-    ]
-   }
+   "stale": [
+    "address",
+    "hours",
+    "prices",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "yilan-sports",
@@ -7396,7 +7179,16 @@
    },
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "hours": null,
+   "prices": null,
+   "fresh": {
+    "address": "2026-10-24",
+    "phone": "2026-10-24",
+    "features": "2026-10-24"
+   },
+   "stale": [],
+   "data_date": "2026-10-24"
   },
   {
    "id": "bonus-hualien",
@@ -7470,43 +7262,20 @@
    },
    "price_min": null,
    "price_day": null,
-   "open_hours": {
-    "week": [
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     null,
-     null
-    ],
-    "holiday": null
-   }
+   "open_hours": null,
+   "phone": null,
+   "prices": null,
+   "fresh": {
+    "address": "2022-01-01",
+    "hours": "2022-01-01",
+    "features": "2022-01-01"
+   },
+   "stale": [
+    "address",
+    "hours",
+    "features"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "bplus-hualien",
@@ -7590,16 +7359,8 @@
    "coord_source": "nominatim:road",
    "coord_query": "花蓮縣吉安鄉自強路",
    "coord_match": "自強路, 勝利, 北昌村, 吉安鄉, 花蓮縣, 973, 臺灣",
-   "price_min": {
-    "price": 220,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 220,
-    "item": "全日票",
-    "per_hour": false
-   },
+   "price_min": null,
+   "price_day": null,
    "open_hours": {
     "week": [
      [
@@ -7641,7 +7402,19 @@
      null
     ],
     "holiday": null
-   }
+   },
+   "phone": null,
+   "fresh": {
+    "address": "2024-11-01",
+    "hours": "2026-10-24",
+    "prices": "2024-11-01",
+    "features": "2026-10-24"
+   },
+   "stale": [
+    "address",
+    "prices"
+   ],
+   "data_date": "2026-10-24"
   },
   {
    "id": "hejiang-taitung",
@@ -7654,7 +7427,7 @@
    "types": [
     "lead"
    ],
-   "status": "營業中",
+   "status": "待確認",
    "features": "結合體驗教育，上攀 6 公尺，採預約制（沒有抱石）",
    "links": {},
    "osm_keywords": [
@@ -7678,7 +7451,8 @@
     ]
    },
    "verify": [
-    "S55 標為抱石館，和 features 寫的「沒有抱石」不一致"
+    "S55 標為抱石館，和 features 寫的「沒有抱石」不一致",
+    "所有來源都超過一年（最新的來源是 2024-11-01），不確定現在是否還在營業"
    ],
    "hours": "10:00–21:00（預約制）",
    "prices": [
@@ -7706,68 +7480,24 @@
    "coord_source": "nominatim:road",
    "coord_query": "臺東縣臺東市中興路四段",
    "coord_match": "中興路四段, 披山新村, 豐田里, 臺東市, 臺東縣, 950, 臺灣",
-   "price_min": {
-    "price": 250,
-    "item": "全日",
-    "per_hour": false
+   "price_min": null,
+   "price_day": null,
+   "open_hours": null,
+   "phone": null,
+   "fresh": {
+    "address": "2024-01-01",
+    "hours": "2024-11-01",
+    "prices": "2024-11-01",
+    "features": "2024-01-01"
    },
-   "price_day": {
-    "price": 250,
-    "item": "全日",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ],
-     [
-      [
-       600,
-       1260
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      600,
-      1260
-     ]
-    ]
-   }
+   "stale": [
+    "address",
+    "hours",
+    "prices",
+    "features"
+   ],
+   "data_date": "2024-11-01",
+   "status_seed": "營業中"
   },
   {
    "id": "jiayi-closed",
@@ -7800,7 +7530,17 @@
    "coord_source": "none",
    "price_min": null,
    "price_day": null,
-   "open_hours": null
+   "open_hours": null,
+   "phone": null,
+   "hours": null,
+   "prices": null,
+   "fresh": {
+    "features": null
+   },
+   "stale": [
+    "features"
+   ],
+   "data_date": "2024-01-01"
   }
  ],
  "osm_unmatched": [
