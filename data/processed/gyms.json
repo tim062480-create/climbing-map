@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-27 00:43",
+ "generated": "2026-10-28 15:24",
  "checked": "2026-10-24",
  "osm_ok": false,
  "sources": {
@@ -393,6 +393,11 @@
    "title": "Instagram：內湖心流抱石館 @flowboulderinggym",
    "url": "https://www.instagram.com/flowboulderinggym/",
    "published": "官方帳號（2026-10-24 讀取）；有「2026心流攀岩隊」精選動態"
+  },
+  "S79": {
+   "title": "Google 地圖（使用者手機截圖）：Camp 4攀岩館-萬華運動中心館：標示「Permanently closed」（永久停業），4.2 星 16 則評論",
+   "url": "https://www.google.com/maps/search/?api=1&query=Camp%204%E6%94%80%E5%B2%A9%E9%A4%A8-%E8%90%AC%E8%8F%AF%E9%81%8B%E5%8B%95%E4%B8%AD%E5%BF%83%E9%A4%A8",
+   "published": "2026-10-28 讀取"
   }
  },
  "gyms": [
@@ -849,7 +854,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": "2026-10-01",
     "phone": "2026-01-26",
@@ -1383,7 +1387,6 @@
     "per_hour": false
    },
    "open_hours": null,
-   "features": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -1848,7 +1851,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -1926,8 +1928,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -2560,8 +2560,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2025-12-19",
@@ -2923,7 +2921,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": "2026-10-01",
     "phone": "2026-01-26",
@@ -3225,7 +3222,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": "2026-01-26",
     "phone": "2026-01-26",
@@ -3520,7 +3516,6 @@
     ],
     "holiday": null
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2026-10-24",
@@ -3583,9 +3578,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "features": null,
    "fresh": {
     "address": null,
     "prices": "2024-01-01"
@@ -3660,8 +3652,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2024-11-01",
@@ -3901,7 +3891,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2026-10-01",
@@ -4143,8 +4132,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -4266,7 +4253,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2024-01-01",
     "hours": "2024-11-01",
@@ -4483,7 +4469,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2026-10-24",
@@ -4647,7 +4632,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2025-12-19",
@@ -5028,7 +5012,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2024-11-01",
     "hours": "2026-10-24",
@@ -5163,7 +5146,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": null,
     "phone": "2026-10-24",
@@ -5244,7 +5226,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": null,
@@ -5476,8 +5457,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
    "fresh": {
     "address": "2022-01-01",
     "prices": "2022-01-01",
@@ -5610,8 +5589,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2026-08-05",
@@ -5654,9 +5631,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "features": null
    },
@@ -5733,8 +5707,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2024-01-01",
     "hours": "2024-01-01",
@@ -5811,8 +5783,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
    "fresh": {
     "address": null,
     "prices": null,
@@ -5897,9 +5867,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "features": null,
    "fresh": {
     "address": null,
     "prices": "2024-01-01"
@@ -6349,7 +6316,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -6491,7 +6457,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -6747,8 +6712,6 @@
     ],
     "holiday": []
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -7031,8 +6994,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2025-12-19",
@@ -7094,7 +7055,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": null,
     "hours": null,
@@ -7180,8 +7140,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "address": "2026-10-24",
     "phone": "2026-10-24",
@@ -7263,8 +7221,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "prices": null,
    "fresh": {
     "address": "2022-01-01",
     "hours": "2022-01-01",
@@ -7403,7 +7359,6 @@
     ],
     "holiday": null
    },
-   "phone": null,
    "fresh": {
     "address": "2024-11-01",
     "hours": "2026-10-24",
@@ -7483,7 +7438,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2024-01-01",
     "hours": "2024-11-01",
@@ -7531,9 +7485,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "features": null
    },
