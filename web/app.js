@@ -27,9 +27,9 @@ const MIN_LISTED = 5;          // 範圍內不到這麼多間時，補列範圍�
 const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json";
 
 const state = {
-  gyms: [], sources: {}, osmExtra: [], checked: "",
+  gyms: [], sources: {}, checked: "",
   live: undefined,
-  me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(),
   favs: new Set(), news: {}, newsUpdated: "",
 };
 
@@ -77,7 +77,6 @@ async function init() {
   if (!data) { setStatus("資料載入失敗，請重新整理。", true); return; }
   state.gyms = data.gyms;
   state.sources = data.sources || {};
-  state.osmExtra = data.osm_unmatched || [];
   state.checked = data.checked || "";
   state.favs = loadFavs();
   // 國定假日行事曆在背景讀；今天剛好是國定假日或補班日時，清單和打開的館重畫一次
@@ -96,9 +95,6 @@ async function init() {
     m.on("click", () => openDetail(g.id));
     state.markers.set(g.id, m);
   }
-  state.osmLayer = L.layerGroup(state.osmExtra.filter((p) => p.lat != null).map((p) =>
-    L.circleMarker([p.lat, p.lng], { radius: 5, color: "#868e96", fillOpacity: 0.6, weight: 1 })
-      .bindPopup(`<b>${esc(p.name || "（無名稱）")}</b><br>OpenStreetMap 上的攀岩地點，未人工確認<br><a href="${esc(p.url)}" target="_blank" rel="noopener">OSM</a>`)));
 
   buildPlaceIndex();
   $("q").value = new URLSearchParams(location.search).get("q") ?? loadQuery();
@@ -377,7 +373,6 @@ const Q_RE = {
   lead: /上攀|先鋒|綁繩|top\s*rope|lead/gi,
   open: /現在有開|現在營業|營業中|有開/g,
   day: /全日|整天|不限時|包日/g,
-  osm: /osm/gi,
 };
 const CN_NUM = { 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 const toNum = (s) => (/^\d+$/.test(s) ? Number(s) : s.length === 2 && s[0] === "十" ? 10 + CN_NUM[s[1]] : s.length === 2 && s[1] === "十" ? CN_NUM[s[0]] * 10 : CN_NUM[s] || 0);
@@ -403,7 +398,7 @@ const normalizeQuery = (q) => q
 // 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
 function parseQuery(q) {
   let s = normalizeQuery(q);
-  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, osm: false, fav: false, chips: [] };
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, fav: false, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
   take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
@@ -416,7 +411,6 @@ function parseQuery(q) {
   take(Q_RE.lead, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
   take(Q_RE.open, (raw) => { c.openNow = true; c.chips.push({ raw, label: "現在有開" }); });
   take(Q_RE.day, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
-  take(Q_RE.osm, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
   // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
   for (const p of PLACES) {
     if (!s.includes(p.key)) continue;
@@ -688,7 +682,6 @@ function render() {
 
   const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
-  c.osm ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
     (c.fav && !state.favs.size ? `<li class="sub">${auth.enabled && !auth.user ? "登入 Google 帳號後，按館的「☆ 加入最愛」就會出現在這裡。" : "還沒有最愛。打開館的詳細資訊，按「☆ 加入最愛」就會出現在這裡。"}</li>` : `<li class="sub">沒有符合條件的館。</li>`)) +
