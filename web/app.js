@@ -370,6 +370,10 @@ const Q_RE = {
   limit: /前\s*(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)?|(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)/g,
   cheap: /最?便宜|價格|低價|划算|省錢/g,
   near: /最近|附近|離我|距離/g,
+  // 營業時間：「8:00 前開」「早上 9 點前開門」「開到 22:00」「晚上 10 點後還有開」（時間可以加早上／下午／晚上）
+  openBy: /(早上|上午|中午|下午|晚上)?\s*(\d{1,2})(?:\s*[:：點]\s*(\d{2})?)?\s*(?:以前|之前|前)(?:\s*[（(]?包?含[）)]?)?\s*(?:就|有|會)?\s*開(?:門|館|始)?/g,
+  closeTo: /(?:開到|營業到|開館到)\s*(早上|上午|中午|下午|晚上)?\s*(\d{1,2})(?:\s*[:：點]\s*(\d{2})?)?\s*(?:以後|之後|後)?/g,
+  closeAfter: /(早上|上午|中午|下午|晚上)?\s*(\d{1,2})(?:\s*[:：點]\s*(\d{2})?)?\s*(?:以後|之後|後)\s*(?:還|也)?\s*(?:有)?\s*開/g,
   open: /現在有開|現在營業|營業中|有開/g,
   // 哪天（先比，「假日票」「平日星光」才不會被票種拆錯）
   weekday: /平日票?|週間|上班日|(?:禮拜|星期|週)[一二三四五]/g,
@@ -416,10 +420,14 @@ const normalizeQuery = (q) => q
 function parseQuery(q) {
   let s = normalizeQuery(q);
   const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, openNow: false, fav: false,
-    weekday: false, weekend: false, ticket: null, student: false, facilities: [], chips: [] };
+    weekday: false, weekend: false, ticket: null, student: false, facilities: [], openBy: null, closeAfter: null, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
   take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
+  take(Q_RE.openBy, (raw, pre, h, m) => { c.openBy = clockMin(pre, h, m); c.chips.push({ raw, label: `${hm(c.openBy)} 前開門` }); });
+  const close = (raw, pre, h, m) => { c.closeAfter = clockMin(pre, h, m); c.chips.push({ raw, label: `開到 ${hm(c.closeAfter)} 以後` }); };
+  take(Q_RE.closeTo, close);
+  take(Q_RE.closeAfter, close);
   take(Q_RE.budget, (raw, a, b) => { c.budget = Number(a || b); c.chips.push({ raw, label: `$${c.budget} 以下` }); });
   take(Q_RE.km, (raw, n) => { c.radius = Number(n); c.chips.push({ raw, label: `${n} 公里內` }); });
   take(Q_RE.anywhere, (raw) => { c.radius = 0; c.chips.push({ raw, label: "不限距離" }); });
@@ -508,6 +516,10 @@ function suggestGroups() {
       { label: "不限距離", on: (c, q) => toRe("不限").test(q) }] },
     { title: "票種", one: Object.keys(TICKETS).map((k) => Q_RE[k]), items: Object.entries(TICKETS).map(([, [kind, name]]) =>
       ({ label: name, on: (c) => c.ticket === kind })) },
+    { title: "幾點前開門", one: [Q_RE.openBy], items: [7, 8, 9, 10, 12].map((h) =>
+      ({ label: `${h}:00 前開`, on: (c) => c.openBy === h * 60 })) },
+    { title: "開到幾點", one: [Q_RE.closeTo, Q_RE.closeAfter], items: [21, 22, 23].map((h) =>
+      ({ label: `開到 ${h}:00`, on: (c) => c.closeAfter === h * 60 })) },
     { title: "哪天去", one: [Q_RE.weekday, Q_RE.weekend], items: [
       { label: "平日", on: (c) => c.weekday }, { label: "假日", on: (c) => c.weekend }] },
     { title: "設施・服務", items: Object.entries(FACILITY_LABEL).map(([key, label]) =>
@@ -722,6 +734,41 @@ function ticketFor(g, o, allowOld = false) {
 }
 const minPrice = (g) => (priceOf(g) ? priceOf(g).price : null);
 
+// 「早上 8 點」「晚上 10:30」→ 一天裡的第幾分鐘
+function clockMin(pre, h, m) {
+  let hour = Number(h);
+  if (/下午|晚上/.test(pre || "") && hour < 12) hour += 12;
+  return Math.min(hour, 24) * 60 + Number(m || 0);
+}
+
+// 搜「幾點前開門」「開到幾點」：看要去的那幾天（平日、假日或整週）有沒有一天符合（開門和打烊要同一天）
+// → { days: 符合的星期（0 = 週一）, open: 最早開門, close: 最晚打烊, old: 營業時間超過一年 }；不符合回傳 null
+const WD_NAME = "一二三四五六日";
+function hoursMatch(g, c) {
+  const oh = g.open_hours || g.open_hours_old;
+  if (!oh) return null;
+  const want = c.weekday ? [0, 1, 2, 3, 4] : c.weekend ? [5, 6] : [0, 1, 2, 3, 4, 5, 6];
+  const days = [];
+  let open = Infinity, close = -1;
+  for (const i of want) {
+    const iv = oh.week[i];
+    if (!iv || !iv.length) continue;
+    const o = Math.min(...iv.map(([a]) => a)), cl = Math.max(...iv.map(([, b]) => b));
+    if ((c.openBy != null && o > c.openBy) || (c.closeAfter != null && cl < c.closeAfter)) continue;
+    days.push(i);
+    open = Math.min(open, o);
+    close = Math.max(close, cl);
+  }
+  return days.length ? { days, open, close, old: !g.open_hours } : null;
+}
+
+function hoursText(h) {
+  const d = h.days.join("");
+  const days = d === "0123456" ? "每天" : d === "01234" ? "平日" : d === "56" ? "假日" : `週${h.days.map((i) => WD_NAME[i]).join("、")}`;
+  const parts = [state.openBy != null ? `${hm(h.open)} 開` : "", state.closeAfter != null ? `開到 ${hm(h.close)}` : ""].filter(Boolean);
+  return `${days} ${parts.join("、")}${h.old ? "（營業時間超過一年，未確認）" : ""}`;
+}
+
 // 地點、館名、預算、類型、狀態：這幾個條件不需要定位
 function visibleGyms(c) {
   return state.gyms.filter((g) =>
@@ -731,6 +778,7 @@ function visibleGyms(c) {
     c.facilities.every((f) => FACILITY_TEST[f](g)) &&
     (!c.ticket || ticketFor(g, state, true) != null) &&   // 價格超過一年的館也列（排在最後，註明未確認）
     (!c.openNow || (g.status === "營業中" && (openState(g) || {}).open)) &&
+    ((c.openBy == null && c.closeAfter == null) || hoursMatch(g, c)) &&
     (!c.cities.length || c.cities.includes(g.city)) &&
     (!c.districts.length || c.districts.includes(g.district)) &&
     c.names.every((t) => gymText(g).includes(t)) &&
@@ -748,13 +796,16 @@ const SORTERS = {
 
 function render() {
   const c = parseQuery($("q").value);
-  Object.assign(state, { ticket: c.ticket, weekday: c.weekday, weekend: c.weekend, student: c.student });
+  Object.assign(state, { ticket: c.ticket, weekday: c.weekday, weekend: c.weekend, student: c.student, openBy: c.openBy, closeAfter: c.closeAfter });
   const radiusKm = c.radius, limit = c.limit;
   const gyms = visibleGyms(c);
   const withCoord = gyms.filter((g) => g.lat != null);
   let shown = withCoord.map((g) => ({ g, d: state.me ? distM(state.me, g) : null }));
   const sortBy = c.sort === "price" ? "price" : state.me ? "dist" : "city";   // 預設有定位依距離，沒定位依縣市
   shown.sort(SORTERS[sortBy]);
+  if (c.openBy != null || c.closeAfter != null) {   // 營業時間超過一年的排在後面
+    shown = [...shown.filter((x) => !hoursMatch(x.g, c).old), ...shown.filter((x) => hoursMatch(x.g, c).old)];
+  }
   let outside = [];   // 範圍內太少時，補列範圍外最近的館（一樣要符合其他條件）
   if (state.me && radiusKm > 0) {
     const inRange = shown.filter((x) => x.d <= radiusKm * 1000);
@@ -803,7 +854,8 @@ function listItem(g, d) {
     : customPrice() ? `${p.item} $${p.price}${p.per_hour && !/小時/.test(p.item) ? "／小時" : ""}`
     : `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起`;
   const os = g.status === "營業中" ? openState(g) : null;
-  const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : os ? (os.open ? "營業中" : "已打烊") : ""]
+  const hmatch = state.openBy != null || state.closeAfter != null ? hoursMatch(g, state) : null;
+  const sub = [g.city + (g.district || ""), hmatch ? hoursText(hmatch) : "", price, g.status !== "營業中" ? g.status : os ? (os.open ? "營業中" : "已打烊") : ""]
     .filter(Boolean).join("・");
   const n = freshNews(g);
   return `<li data-id="${esc(g.id)}"><span class="dot ${cls}"></span><div><div class="name">${state.favs.has(g.id) ? "⭐ " : ""}${esc(g.name)}</div>` +

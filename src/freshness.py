@@ -94,8 +94,8 @@ def annotate(g, dates, today=None, checks=None):
     g["stale"] = stale
     g["data_date"] = latest_all.isoformat() if latest_all else None
 
-    if "hours" in stale:
-        g["open_hours"] = None
+    if "hours" in stale:   # 留在 open_hours_old：搜「8 點前開」時還是列出來，註明未確認
+        g["open_hours_old"], g["open_hours"] = g.get("open_hours"), None
     if "prices" in stale:
         g["price_min"] = g["price_day"] = None
     if g.get("status") == "營業中" and (latest_all is None or latest_all < cutoff):
@@ -118,6 +118,7 @@ def main():
             for k in ("name", "status", "verify", "src", "address", "phone", "hours", "prices", "features"):
                 g[k] = s.get(k)
             g.pop("status_seed", None)
+            g.pop("open_hours_old", None)
         hours_prices.annotate(g)
         g["price_min"] = enrich.price_min(g)
         g["price_day"] = enrich.price_min(g, hourly=False)

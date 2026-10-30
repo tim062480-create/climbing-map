@@ -875,7 +875,8 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "features": null
   },
   {
    "id": "tup-wanhua",
@@ -1068,7 +1069,59 @@
     "hours",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       600,
+       1380
+      ]
+     ],
+     [
+      [
+       600,
+       1380
+      ]
+     ],
+     [
+      [
+       600,
+       1380
+      ]
+     ],
+     [
+      [
+       600,
+       1380
+      ]
+     ],
+     [
+      [
+       600,
+       1380
+      ]
+     ],
+     [
+      [
+       540,
+       1260
+      ]
+     ],
+     [
+      [
+       540,
+       1260
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      540,
+      1260
+     ]
+    ]
+   }
   },
   {
    "id": "tup-mingde",
@@ -1263,7 +1316,59 @@
     "hours",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       600,
+       1320
+      ]
+     ],
+     [
+      [
+       600,
+       1320
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      600,
+      1320
+     ]
+    ]
+   }
   },
   {
    "id": "tup-nangang",
@@ -1429,7 +1534,60 @@
     "phone",
     "hours"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "features": null,
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       540,
+       1260
+      ]
+     ],
+     [
+      [
+       540,
+       1260
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      540,
+      1260
+     ]
+    ]
+   }
   },
   {
    "id": "tup-zhonghe",
@@ -1633,7 +1791,59 @@
     "hours",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       720,
+       1380
+      ]
+     ],
+     [
+      [
+       540,
+       1320
+      ]
+     ],
+     [
+      [
+       540,
+       1320
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      540,
+      1320
+     ]
+    ]
+   }
   },
   {
    "id": "tup-xindian",
@@ -1799,7 +2009,59 @@
     "hours",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       660,
+       1380
+      ]
+     ],
+     [
+      [
+       660,
+       1380
+      ]
+     ],
+     [
+      [
+       660,
+       1380
+      ]
+     ],
+     [
+      [
+       660,
+       1380
+      ]
+     ],
+     [
+      [
+       660,
+       1380
+      ]
+     ],
+     [
+      [
+       660,
+       1320
+      ]
+     ],
+     [
+      [
+       660,
+       1290
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      660,
+      1290
+     ]
+    ]
+   }
   },
   {
    "id": "tup-a19",
@@ -1903,7 +2165,8 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-24"
+   "data_date": "2026-10-24",
+   "hours": null
   },
   {
    "id": "tup-yangmei",
@@ -1978,7 +2241,9 @@
     "phone",
     "features"
    ],
-   "data_date": "2024-11-01"
+   "data_date": "2024-11-01",
+   "hours": null,
+   "prices": null
   },
   {
    "id": "civic-nangang",
@@ -2614,7 +2879,9 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "features": null
   },
   {
    "id": "double8-datong",
@@ -3131,7 +3398,8 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "features": null
   },
   {
    "id": "neihu-sports",
@@ -3432,7 +3700,8 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "yonghe-sports",
@@ -3673,7 +3942,8 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "megastone-xinzhuang",
@@ -3915,7 +4185,9 @@
     "phone",
     "features"
    ],
-   "data_date": "2024-11-01"
+   "data_date": "2024-11-01",
+   "hours": null,
+   "prices": null
   },
   {
    "id": "qianshou-taoyuan",
@@ -4038,7 +4310,60 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1140
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      600,
+      1140
+     ]
+    ]
+   }
   },
   {
    "id": "passion-taoyuan",
@@ -4258,7 +4583,8 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "iclimb-zhubei",
@@ -4429,7 +4755,8 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "iclimb-shengli",
@@ -4826,7 +5153,8 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "bplus-xitun",
@@ -4961,7 +5289,8 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "features": null
   },
   {
    "id": "bplus-taiyuan",
@@ -5043,7 +5372,60 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       1080,
+       1380
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      840,
+      1320
+     ]
+    ]
+   }
   },
   {
    "id": "dapro-nantun",
@@ -5274,7 +5656,9 @@
     "prices",
     "features"
    ],
-   "data_date": "2024-11-01"
+   "data_date": "2024-11-01",
+   "phone": null,
+   "hours": null
   },
   {
    "id": "panna-taichung",
@@ -5405,7 +5789,9 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "features": null
   },
   {
    "id": "depot-taichung",
@@ -5445,7 +5831,10 @@
    "stale": [
     "features"
    ],
-   "data_date": null
+   "data_date": null,
+   "phone": null,
+   "hours": null,
+   "prices": null
   },
   {
    "id": "chiayi-club",
@@ -5682,7 +6071,54 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "open_hours_old": {
+    "week": [
+     [],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       600,
+       1080
+      ]
+     ],
+     [
+      [
+       600,
+       1080
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      600,
+      1080
+     ]
+    ]
+   }
   },
   {
    "id": "highfun-rende",
@@ -6016,7 +6452,8 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "basecamp-zuoying",
@@ -6157,7 +6594,8 @@
    "stale": [
     "features"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "boulderspace-zuoying",
@@ -6415,7 +6853,9 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "features": null
   },
   {
    "id": "jioutau-yilan",
@@ -6706,7 +7146,9 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null,
+   "features": null
   },
   {
    "id": "yoy-yuanshan",
@@ -6773,7 +7215,55 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-24"
+   "data_date": "2026-10-24",
+   "phone": null,
+   "open_hours_old": {
+    "week": [
+     [],
+     [
+      [
+       1080,
+       1260
+      ]
+     ],
+     [
+      [
+       1080,
+       1260
+      ]
+     ],
+     [
+      [
+       1080,
+       1260
+      ]
+     ],
+     [
+      [
+       1080,
+       1260
+      ]
+     ],
+     [
+      [
+       540,
+       1260
+      ]
+     ],
+     [
+      [
+       540,
+       1080
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      540,
+      1080
+     ]
+    ]
+   }
   },
   {
    "id": "bonus-hualien",
@@ -6859,7 +7349,46 @@
     "hours",
     "features"
    ],
-   "data_date": "2026-10-29"
+   "data_date": "2026-10-29",
+   "phone": null,
+   "prices": null,
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       1080,
+       1320
+      ]
+     ],
+     [
+      [
+       1080,
+       1320
+      ]
+     ],
+     [
+      [
+       840,
+       1320
+      ]
+     ],
+     [
+      [
+       1080,
+       1320
+      ]
+     ],
+     [
+      [
+       1080,
+       1320
+      ]
+     ],
+     null,
+     null
+    ],
+    "holiday": null
+   }
   },
   {
    "id": "bplus-hualien",
@@ -6998,7 +7527,8 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30"
+   "data_date": "2026-10-30",
+   "phone": null
   },
   {
    "id": "hejiang-taitung",
@@ -7088,7 +7618,60 @@
     "hours",
     "prices"
    ],
-   "data_date": "2026-10-29"
+   "data_date": "2026-10-29",
+   "phone": null,
+   "open_hours_old": {
+    "week": [
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ],
+     [
+      [
+       600,
+       1260
+      ]
+     ]
+    ],
+    "holiday": [
+     [
+      600,
+      1260
+     ]
+    ]
+   }
   },
   {
    "id": "jiayi-closed",
@@ -7128,7 +7711,10 @@
    "stale": [
     "features"
    ],
-   "data_date": "2024-01-01"
+   "data_date": "2024-01-01",
+   "phone": null,
+   "hours": null,
+   "prices": null
   }
  ],
  "osm_unmatched": [
