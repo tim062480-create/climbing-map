@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-30 22:46",
+ "generated": "2026-10-30 23:13",
  "checked": "2026-10-24",
  "osm_ok": true,
  "sources": {
@@ -572,14 +572,14 @@
      "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
      "phone": "+886 225218233"
     },
-    "dist_to_address_m": 249
+    "dist_to_address_m": 716
    },
    "coord_check": {
-    "lat": 25.0591497,
-    "lng": 121.5230267,
+    "lat": 25.0633884,
+    "lng": 121.5224858,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 中山北路婚紗街, 聚盛里, 中山區, 南西商圈, 臺北市, 104418, 臺灣"
+    "coord_match": "中山北路二段, 中山北路婚紗街, 恆安里, 中山區, 雙連, 臺北市, 104226, 臺灣"
    },
    "price_min": {
     "price": 250,
@@ -875,8 +875,7 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30",
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "tup-wanhua",
@@ -1282,14 +1281,14 @@
      "phone": "+886 2 28219988",
      "website": "https://www.tupclimbing.tw/"
     },
-    "dist_to_address_m": 102
+    "dist_to_address_m": 90
    },
    "coord_check": {
-    "lat": 25.1087094,
-    "lng": 121.5133136,
+    "lat": 25.1087774,
+    "lng": 121.5134959,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市北投區文林北路",
-    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112051, 臺灣"
+    "coord_match": "文林北路, 文林里, 北投區, 蘭雅, 臺北市, 112051, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1506,11 +1505,11 @@
     "branch": "南港",
     "climb": true
    },
-   "lat": 25.0539817,
-   "lng": 121.5978492,
+   "lat": 25.053377,
+   "lng": 121.6002303,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區南港路二段",
-   "coord_match": "南港路二段, 東明里, 南港區, 潭美, 臺北市, 11573, 臺灣",
+   "coord_match": "南港路二段, 東明里, 南港區, 三重埔, 臺北市, 115029, 臺灣",
    "price_min": {
     "price": 280,
     "item": "平日下午 12:00–18:00",
@@ -1535,7 +1534,6 @@
     "hours"
    ],
    "data_date": "2026-10-30",
-   "features": null,
    "open_hours_old": {
     "week": [
      [
@@ -2165,8 +2163,7 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-24",
-   "hours": null
+   "data_date": "2026-10-24"
   },
   {
    "id": "tup-yangmei",
@@ -2241,9 +2238,7 @@
     "phone",
     "features"
    ],
-   "data_date": "2024-11-01",
-   "hours": null,
-   "prices": null
+   "data_date": "2024-11-01"
   },
   {
    "id": "civic-nangang",
@@ -2350,8 +2345,8 @@
     ],
     "climb": false
    },
-   "lat": 25.0533556,
-   "lng": 121.6075017,
+   "lat": 25.053307,
+   "lng": 121.6075113,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區市民大道八段",
    "coord_match": "市民大道八段, 南港里, 南港區, 三重埔, 臺北市, 115011, 臺灣",
@@ -2879,9 +2874,7 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null,
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "double8-datong",
@@ -2980,11 +2973,11 @@
     "branch": "大稻埕",
     "climb": false
    },
-   "lat": 25.0618103,
-   "lng": 121.5092395,
+   "lat": 25.0553267,
+   "lng": 121.5100443,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市大同區迪化街一段",
-   "coord_match": "迪化街一段, 南芳里, 大同區, 大稻埕, 臺北市, 103221, 臺灣",
+   "coord_match": "迪化街一段, 永樂里, 大同區, 大稻埕, 臺北市, 103003, 臺灣",
    "price_min": {
     "price": 250,
     "item": "入場（平日）",
@@ -3185,14 +3178,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 579
+    "dist_to_address_m": 938
    },
    "coord_check": {
-    "lat": 25.1136378,
-    "lng": 121.5320517,
+    "lat": 25.1163267,
+    "lng": 121.5341003,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市士林區忠誠路二段",
-    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 111035, 臺灣"
+    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11154, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -3331,11 +3324,11 @@
     "branch": "Y17",
     "climb": true
    },
-   "lat": 25.0247879,
-   "lng": 121.5055599,
+   "lat": 25.0259114,
+   "lng": 121.5054085,
    "coord_source": "nominatim:place",
    "coord_query": "臺北市青年局",
-   "coord_match": "民間劇場, 青年路, 騰雲里, 萬華區, 東園, 臺北市, 10877, 臺灣",
+   "coord_match": "康之友藥局, 青年路, 新和里, 萬華區, 東園, 臺北市, 10877, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -3398,8 +3391,7 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30",
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "neihu-sports",
@@ -3492,11 +3484,11 @@
     ],
     "climb": true
    },
-   "lat": 25.0772346,
-   "lng": 121.5753648,
+   "lat": 25.07848,
+   "lng": 121.57493,
    "coord_source": "nominatim:place",
    "coord_query": "臺北市內湖運動中心",
-   "coord_match": "內湖運動中心, 港墘路, 港墘里, 內湖區, 下塔悠, 臺北市, 114063, 臺灣",
+   "coord_match": "內湖運動中心, 洲子街, 港墘里, 內湖區, 下塔悠, 臺北市, 114064, 臺灣",
    "price_min": {
     "price": 50,
     "item": "室內抱石區",
@@ -3700,8 +3692,7 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "yonghe-sports",
@@ -3942,8 +3933,7 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "megastone-xinzhuang",
@@ -4185,9 +4175,7 @@
     "phone",
     "features"
    ],
-   "data_date": "2024-11-01",
-   "hours": null,
-   "prices": null
+   "data_date": "2024-11-01"
   },
   {
    "id": "qianshou-taoyuan",
@@ -4311,7 +4299,6 @@
     "features"
    ],
    "data_date": "2026-10-30",
-   "phone": null,
    "open_hours_old": {
     "week": [
      [
@@ -4515,14 +4502,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 344
+    "dist_to_address_m": 227
    },
    "coord_check": {
-    "lat": 25.0188514,
-    "lng": 121.3020336,
+    "lat": 25.0197821,
+    "lng": 121.3015002,
     "coord_source": "nominatim:road",
     "coord_query": "桃園市桃園區新埔七街",
-    "coord_match": "新埔七街, 新埔里, 桃園區, 桃園市, 330, 臺灣"
+    "coord_match": "新埔七街, 莊敬里, 桃園區, 桃園市, 330, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -4583,8 +4570,7 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "iclimb-zhubei",
@@ -4755,8 +4741,7 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "iclimb-shengli",
@@ -5153,8 +5138,7 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "bplus-xitun",
@@ -5224,11 +5208,11 @@
     "branch": "西屯",
     "climb": false
    },
-   "lat": 24.1853648,
-   "lng": 120.6370415,
+   "lat": 24.1791542,
+   "lng": 120.6347984,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
-   "coord_match": "環中路二段, 西墩里, 西屯區, 水湳經貿園區, 臺中市, 407110, 臺灣",
+   "coord_match": "環中路二段, 西墩里, 西屯區, 臺中七期, 臺中市, 407670, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5289,8 +5273,7 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "bplus-taiyuan",
@@ -5352,8 +5335,8 @@
     "branch": "太原",
     "climb": false
    },
-   "lat": 24.1640524,
-   "lng": 120.7225341,
+   "lat": 24.1604027,
+   "lng": 120.7200175,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市北屯區建和路一段",
    "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣",
@@ -5373,7 +5356,6 @@
     "features"
    ],
    "data_date": "2026-10-30",
-   "phone": null,
    "open_hours_old": {
     "week": [
      [
@@ -5518,11 +5500,11 @@
     ],
     "climb": false
    },
-   "lat": 24.1424284,
-   "lng": 120.6338892,
+   "lat": 24.1304329,
+   "lng": 120.6301684,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
-   "coord_match": "永春東七路, 永定里, 南屯區, 田心, 臺中市, 408474, 臺灣",
+   "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5656,9 +5638,7 @@
     "prices",
     "features"
    ],
-   "data_date": "2024-11-01",
-   "phone": null,
-   "hours": null
+   "data_date": "2024-11-01"
   },
   {
    "id": "panna-taichung",
@@ -5789,9 +5769,7 @@
    "stale": [
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null,
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "depot-taichung",
@@ -5831,10 +5809,7 @@
    "stale": [
     "features"
    ],
-   "data_date": null,
-   "phone": null,
-   "hours": null,
-   "prices": null
+   "data_date": null
   },
   {
    "id": "chiayi-club",
@@ -6452,8 +6427,7 @@
     "prices",
     "features"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "basecamp-zuoying",
@@ -6594,8 +6568,7 @@
    "stale": [
     "features"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "boulderspace-zuoying",
@@ -6680,8 +6653,8 @@
     ],
     "climb": false
    },
-   "lat": 22.6884726,
-   "lng": 120.3072642,
+   "lat": 22.6866861,
+   "lng": 120.305458,
    "coord_source": "nominatim:road",
    "coord_query": "高雄市左營區站前北路",
    "coord_match": "站前北路, 海光二村, 尾北里, 左營區, 高雄市, 813, 臺灣",
@@ -6853,9 +6826,7 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30",
-   "phone": null,
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "jioutau-yilan",
@@ -6927,34 +6898,11 @@
     "branch": "宜蘭",
     "climb": true
    },
-   "lat": 24.7527054,
-   "lng": 121.7496109,
-   "coord_source": "osm",
-   "osm": {
-    "id": "node/7282088085",
-    "url": "https://www.openstreetmap.org/node/7282088085",
-    "name": "久淘攀岩館",
-    "tags": {
-     "addr:city": "宜蘭縣",
-     "addr:district": "宜蘭市",
-     "addr:full": "宜蘭縣宜蘭市健康路三段66號",
-     "addr:housenumber": "66",
-     "addr:street": "健康路三段",
-     "contact:facebook": "https://www.facebook.com/103456138038782",
-     "leisure": "sports_centre",
-     "phone": "+886 0986567929",
-     "sport": "climbing",
-     "website": "https://www.portaly.cc/jioutauclimbimg"
-    },
-    "dist_to_address_m": 206
-   },
-   "coord_check": {
-    "lat": 24.7509237,
-    "lng": 121.7501518,
-    "coord_source": "nominatim:road",
-    "coord_query": "宜蘭縣宜蘭市健康路三段",
-    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
-   },
+   "lat": 24.7509237,
+   "lng": 121.7501518,
+   "coord_source": "nominatim:road",
+   "coord_query": "宜蘭縣宜蘭市健康路三段",
+   "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -7146,9 +7094,7 @@
     "status": "2026-10-30"
    },
    "stale": [],
-   "data_date": "2026-10-30",
-   "phone": null,
-   "features": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "yoy-yuanshan",
@@ -7216,7 +7162,6 @@
     "features"
    ],
    "data_date": "2026-10-24",
-   "phone": null,
    "open_hours_old": {
     "week": [
      [],
@@ -7329,10 +7274,9 @@
      "addr:full": "花蓮縣花蓮市國民一街38號三樓",
      "addr:housenumber": "38",
      "addr:street": "國民一街",
-     "climbing:boulder": "yes",
      "leisure": "sports_centre",
      "phone": "+886 966 475 655",
-     "sport": "climbing",
+     "sport": "climbing;bouldering",
      "website": "https://hualienbonus.tw/"
     }
    },
@@ -7350,8 +7294,6 @@
     "features"
    ],
    "data_date": "2026-10-29",
-   "phone": null,
-   "prices": null,
    "open_hours_old": {
     "week": [
      [
@@ -7467,11 +7409,11 @@
     ],
     "climb": false
    },
-   "lat": 23.9871563,
-   "lng": 121.5922603,
+   "lat": 23.9800867,
+   "lng": 121.5871968,
    "coord_source": "nominatim:road",
    "coord_query": "花蓮縣吉安鄉自強路",
-   "coord_match": "自強路, 勝利, 北昌村, 吉安鄉, 花蓮縣, 973, 臺灣",
+   "coord_match": "自強路, 勝安村, 吉安鄉, 花蓮縣, 973, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -7527,8 +7469,7 @@
     "address",
     "prices"
    ],
-   "data_date": "2026-10-30",
-   "phone": null
+   "data_date": "2026-10-30"
   },
   {
    "id": "hejiang-taitung",
@@ -7619,7 +7560,6 @@
     "prices"
    ],
    "data_date": "2026-10-29",
-   "phone": null,
    "open_hours_old": {
     "week": [
      [
@@ -7711,10 +7651,7 @@
    "stale": [
     "features"
    ],
-   "data_date": "2024-01-01",
-   "phone": null,
-   "hours": null,
-   "prices": null
+   "data_date": "2024-01-01"
   }
  ],
  "osm_unmatched": [
@@ -7913,6 +7850,14 @@
    "tags": {}
   },
   {
+   "osm": "node/11261775537",
+   "url": "https://www.openstreetmap.org/node/11261775537",
+   "name": "抱石巨木",
+   "lat": 23.5117999,
+   "lng": 120.7952365,
+   "tags": {}
+  },
+  {
    "osm": "node/13417522409",
    "url": "https://www.openstreetmap.org/node/13417522409",
    "name": "原岩攀岩館-明德店",
@@ -7939,16 +7884,6 @@
    "tags": {
     "leisure": "sports_centre",
     "sport": "climbing"
-   }
-  },
-  {
-   "osm": "node/14272888127",
-   "url": "https://www.openstreetmap.org/node/14272888127",
-   "name": "階梯攀岩區",
-   "lat": 23.0307128,
-   "lng": 120.1973901,
-   "tags": {
-    "leisure": "playground"
    }
   },
   {
@@ -8260,35 +8195,6 @@
     "fee": "no",
     "opening_hours": "24/7",
     "phone": "+886 2 2232 8586",
-    "sport": "climbing"
-   }
-  },
-  {
-   "osm": "way/1536509589",
-   "url": "https://www.openstreetmap.org/way/1536509589",
-   "name": "嘉義市國民運動中心",
-   "lat": 23.471551,
-   "lng": 120.4628704,
-   "tags": {
-    "addr:city": "嘉義市",
-    "addr:district": "東區",
-    "addr:full": "600嘉義市東區彌陀路327巷15號",
-    "addr:housenumber": "15",
-    "addr:street": "彌陀路327巷",
-    "fee": "yes",
-    "leisure": "sports_centre",
-    "opening_hours": "Mo-Su 06:00-22:00",
-    "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
-   }
-  },
-  {
-   "osm": "way/1567346215",
-   "url": "https://www.openstreetmap.org/way/1567346215",
-   "name": "",
-   "lat": 25.0517309,
-   "lng": 121.6074871,
-   "tags": {
-    "leisure": "pitch",
     "sport": "climbing"
    }
   },
