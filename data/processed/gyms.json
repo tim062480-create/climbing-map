@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-30 08:39",
+ "generated": "2026-10-30 08:42",
  "checked": "2026-10-24",
  "osm_ok": false,
  "sources": {
