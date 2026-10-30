@@ -359,7 +359,7 @@ const QUERY_KEY = "climbing-map:q";
 const DEFAULT_RADIUS_KM = 10;   // 沒指定地點、館名、範圍時，有定位就先看附近這麼遠
 const CITY_ORDER = ["基隆市", "臺北市", "新北市", "桃園市", "新竹市", "新竹縣", "苗栗縣", "臺中市", "彰化縣", "南投縣", "雲林縣",
   "嘉義市", "嘉義縣", "臺南市", "高雄市", "屏東縣", "宜蘭縣", "花蓮縣", "臺東縣", "澎湖縣", "金門縣", "連江縣"];
-const SUGGESTIONS = ["最愛", "最近 5 間", "最便宜", "300 以下", "台北", "台中", "高雄"];
+const SUGGESTIONS = ["最愛", "最近 5 間", "最便宜", "星光票", "300 以下", "台北", "台中", "高雄"];
 const STOPWORDS = /抱石館|攀岩館|攀岩場|抱石|攀岩|岩館|我想|想要|幫我|找|的|在|有|和|跟|與|及|或|以及/g;
 // 搜尋框認得的關鍵字（解析和下拉選單共用）
 const Q_RE = {
@@ -370,12 +370,25 @@ const Q_RE = {
   limit: /前\s*(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)?|(\d+|[一二兩三四五六七八九十]{1,2})\s*(?:間|家|個)/g,
   cheap: /最?便宜|價格|低價|划算|省錢/g,
   near: /最近|附近|離我|距離/g,
-  lead: /上攀|先鋒|綁繩|top\s*rope|lead/gi,
   open: /現在有開|現在營業|營業中|有開/g,
-  day: /全日|整天|不限時|包日/g,
-  weekend: /假日|週末|周末|(?:禮拜|星期|週)[六日天]/g,
-  student: /學生票?|學生價/g,
+  // 哪天（先比，「假日票」「平日星光」才不會被票種拆錯）
+  weekday: /平日票?|週間|上班日|(?:禮拜|星期|週)[一二三四五]/g,
+  weekend: /假日票?|週末|周末|(?:禮拜|星期|週)[六日天]/g,
+  // 票種：只看有這種票的館，價格用這種票裡最便宜的
+  tDay: /單日票|一日票|全日票|全天票|日票|單日|全日|全天|整天|不限時|包日/g,
+  tHour: /小時票|計時票|計時|按時計費/g,
+  tNight: /星光票|星光|夜間票?|晚鳥|晚上|夜貓/g,
+  tOff: /離峰票|離峰|白天票?|早鳥|時段票|下午/g,
+  student: /學生票?|學生價|學生/g,
+  // 設施、服務
+  lead: /上攀|先鋒|綁繩|頂繩|top\s*rope|lead/gi,
+  autobelay: /自動確保|自確|auto\s*belay/gi,
+  speed: /速度攀岩?|速度攀|速度|速攀|speed/gi,
+  rental: /租岩鞋|租鞋|岩鞋|租吊帶|租借|租裝備/g,
+  lesson: /新手體驗|新手|體驗|教練|課程|教學|上課|入門/g,
+  kids: /親子|兒童|小孩|孩童|小朋友|兒少/g,
 };
+const TICKETS = { tDay: ["day", "單日票"], tHour: ["hour", "小時票"], tNight: ["night", "星光票"], tOff: ["off", "離峰票"] };
 const CN_NUM = { 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 const toNum = (s) => (/^\d+$/.test(s) ? Number(s) : s.length === 2 && s[0] === "十" ? 10 + CN_NUM[s[1]] : s.length === 2 && s[1] === "十" ? CN_NUM[s[0]] * 10 : CN_NUM[s] || 0);
 
@@ -400,7 +413,8 @@ const normalizeQuery = (q) => q
 // 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
 function parseQuery(q) {
   let s = normalizeQuery(q);
-  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, fav: false, chips: [] };
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, openNow: false, fav: false,
+    weekday: false, weekend: false, ticket: null, student: false, facilities: [], chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
   take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
@@ -410,11 +424,16 @@ function parseQuery(q) {
   take(Q_RE.limit, (raw, a, b) => { c.limit = toNum(a || b); if (c.limit) c.chips.push({ raw, label: `前 ${c.limit} 間` }); });
   take(Q_RE.cheap, (raw) => { c.sort = "price"; c.chips.push({ raw, label: "價格低到高" }); });
   take(Q_RE.near, (raw) => { c.sort = "dist"; c.chips.push({ raw, label: "距離近到遠" }); });
-  take(Q_RE.lead, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
   take(Q_RE.open, (raw) => { c.openNow = true; c.chips.push({ raw, label: "現在有開" }); });
-  take(Q_RE.day, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
+  take(Q_RE.weekday, (raw) => { c.weekday = true; c.chips.push({ raw, label: "平日的票價" }); });
   take(Q_RE.weekend, (raw) => { c.weekend = true; c.chips.push({ raw, label: "假日的票價" }); });
+  for (const [key, [kind, name]] of Object.entries(TICKETS)) {
+    take(Q_RE[key], (raw) => { c.ticket = kind; c.chips.push({ raw, label: `只看有${name}的館` }); });
+  }
   take(Q_RE.student, (raw) => { c.student = true; c.chips.push({ raw, label: "含學生票" }); });
+  for (const [key, label] of Object.entries(FACILITY_LABEL)) {
+    take(Q_RE[key], (raw) => { c.facilities.push(key); c.chips.push({ raw, label }); });
+  }
   // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
   for (const p of PLACES) {
     if (!s.includes(p.key)) continue;
@@ -485,12 +504,15 @@ function suggestGroups() {
     { title: "距離（開定位後）", one: [Q_RE.km, Q_RE.anywhere], items: [
       ...[3, 5, 10, 30].map((n) => ({ label: `${n} 公里`, on: (c) => !c.radiusAuto && c.radius === n })),
       { label: "不限距離", on: (c, q) => toRe("不限").test(q) }] },
+    { title: "票種", one: Object.keys(TICKETS).map((k) => Q_RE[k]), items: Object.entries(TICKETS).map(([, [kind, name]]) =>
+      ({ label: name, on: (c) => c.ticket === kind })) },
+    { title: "哪天去", one: [Q_RE.weekday, Q_RE.weekend], items: [
+      { label: "平日", on: (c) => c.weekday }, { label: "假日", on: (c) => c.weekend }] },
+    { title: "設施・服務", items: Object.entries(FACILITY_LABEL).map(([key, label]) =>
+      ({ label: FACILITY_OPT[key], re: Q_RE[key], on: (c) => c.facilities.includes(key), title: label })) },
     { title: "其他", items: [
       { label: "最愛", re: Q_RE.fav, count: state.favs.size, on: (c) => c.fav },
       { label: "現在有開", re: Q_RE.open, on: (c) => c.openNow },
-      { label: "上攀", re: Q_RE.lead, on: (c) => c.lead },
-      { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly },
-      { label: "假日", re: Q_RE.weekend, on: (c) => c.weekend },
       { label: "學生", re: Q_RE.student, on: (c) => c.student }] },
     // 短名稱（台北）重複時（新竹市、新竹縣）用全名
     { title: "地區", items: cities.map((city) => {
@@ -637,21 +659,50 @@ function onPosition(pos) {
 }
 
 // ---------- 清單 ----------
-// 價格用 price_min（含計時，以 1 小時算）；搜尋「全日」時改用 price_day（只看一次入場的票）。
-// 搜尋「假日」「學生」時改在網頁上從票價表重算（ticketFor）
-const priceOf = (g) => (state.weekend || state.student ? ticketFor(g, state) : (state.dayOnly ? g.price_day : g.price_min) || null);
+// 價格用 price_min（含計時，以 1 小時算）；搜尋票種、平日／假日、學生時改在網頁上從票價表重算（ticketFor）
+const customPrice = () => Boolean(state.ticket || state.weekday || state.weekend || state.student);
+const priceOf = (g) => (customPrice() ? ticketFor(g, state) : g.price_min || null);
+
+// 票的種類（可能不只一種）：hour 計時、night 星光／晚上、off 離峰／白天時段、day 單日（不限時段）
+function ticketKinds(p) {
+  const item = p.item || "", k = new Set();
+  const hour = p.kind === "hourly" || /／\s*小?時|\/\s*h/i.test(String(p.price)) || /計時|小時/.test(item);
+  if (hour) k.add("hour");
+  if (/星光|晚上|夜|晚鳥/.test(item)) k.add("night");
+  else if (/離峰|白天|下午|早鳥|時段票|前入場/.test(item) ||
+    (Array.isArray(p.when) && p.when.some((c) => c.from != null || c.to != null || c.before_close != null))) k.add("off");
+  if (!k.size) k.add("day");
+  return k;
+}
+
+// 設施、服務：看館的類型、介紹、票價表
+const FACILITY_LABEL = { lead: "有上攀", autobelay: "有自動確保", speed: "有速度攀", rental: "可租鞋", lesson: "有新手體驗、課程", kids: "親子、兒童" };
+const FACILITY_OPT = { lead: "上攀", autobelay: "自動確保", speed: "速度攀", rental: "租鞋", lesson: "新手體驗", kids: "親子" };
+const gymAllText = (g) => [g.features, ...(g.prices || []).map((p) => `${p.item} ${p.note || ""}`)].join(" ");
+const FACILITY_TEST = {
+  lead: (g) => (g.types || []).includes("lead"),
+  autobelay: (g) => (g.types || []).includes("autobelay") || /自動確保/.test(gymAllText(g)),
+  speed: (g) => (g.types || []).includes("speed") || /速度/.test(gymAllText(g)),
+  rental: (g) => /租/.test(gymAllText(g)),
+  lesson: (g) => /新手|體驗|教練|課程|教學/.test(gymAllText(g)),
+  kids: (g) => /兒童|親子|小孩|孩童|兒少|幼/.test(gymAllText(g)),
+};
 
 // 不算入場票的項目（跟 src/enrich.py 的 NOT_ENTRY 一樣，但學生票另外看）
 const NOT_ENTRY_RE = /租|體驗|課|入會|會費|陪同|兒童|幼兒|起價|三個月|包場|持照/;
 
-// 這張票假日能不能用：有解析出時段就看時段，沒有就看名稱裡有沒有只寫「平日」
+// 這張票假日／平日能不能用：有解析出時段就看時段，沒有就看名稱裡有沒有只寫「平日」或「假日」
 function weekendOK(p) {
   if (Array.isArray(p.when)) return !p.when.length || p.when.some((c) => c.days == null || c.days === "we" || (Array.isArray(c.days) && c.days.some((d) => d >= 5)));
   return !/平日/.test(p.item || "") || /假日|週末|[六日]/.test((p.item || "").replace(/平日/g, ""));
 }
+function weekdayOK(p) {
+  if (Array.isArray(p.when)) return !p.when.length || p.when.some((c) => c.days == null || c.days === "wd" || (Array.isArray(c.days) && c.days.some((d) => d < 5)));
+  return !/假日|週末/.test(p.item || "") || /平日/.test(p.item || "");
+}
 
-// 依搜尋條件找最便宜的票 → { price, item, per_hour, student }；o.weekend 只看假日能用的票，
-// o.student 把學生票也算進去（學生也能買一般票，所以取全部裡最便宜的），o.dayOnly 不算計時
+// 依搜尋條件找最便宜的票 → { price, item, per_hour, student }；o.ticket 只看這種票，o.weekday／o.weekend 只看那天能用的票，
+// o.student 把學生票也算進去（學生也能買一般票，所以取全部裡最便宜的）
 function ticketFor(g, o) {
   if (isOld(g, "prices")) return null;
   let best = null;
@@ -659,8 +710,8 @@ function ticketFor(g, o) {
     const item = p.item || "", student = /學生/.test(item);
     if (student ? !o.student : p.kind === "other") continue;
     if (NOT_ENTRY_RE.test(item)) continue;
-    const perHour = p.kind === "hourly" || /／\s*小?時|\/\s*h/i.test(String(p.price)) || /計時/.test(item);
-    if ((o.dayOnly && perHour) || (o.weekend && !weekendOK(p))) continue;
+    const kinds = ticketKinds(p), perHour = kinds.has("hour");
+    if ((o.ticket && !kinds.has(o.ticket)) || (o.weekend && !weekendOK(p)) || (o.weekday && !weekdayOK(p))) continue;
     const m = String(p.price ?? "").match(/\d+/);
     if (m && (!best || Number(m[0]) < best.price)) best = { price: Number(m[0]), item, per_hour: perHour, student };
   }
@@ -673,7 +724,9 @@ function visibleGyms(c) {
   return state.gyms.filter((g) =>
     g.status !== "已停業" &&
     (!c.fav || state.favs.has(g.id)) &&
-    (c.lead || c.fav || hasBoulder(g)) &&   // 最愛的館就算只有上攀也列出來
+    (c.facilities.includes("lead") || c.fav || hasBoulder(g)) &&   // 最愛的館、搜「上攀」時，只有上攀的館也列出來
+    c.facilities.every((f) => FACILITY_TEST[f](g)) &&
+    (!c.ticket || priceOf(g) != null) &&
     (!c.openNow || (g.status === "營業中" && (openState(g) || {}).open)) &&
     (!c.cities.length || c.cities.includes(g.city)) &&
     (!c.districts.length || c.districts.includes(g.district)) &&
@@ -692,9 +745,7 @@ const SORTERS = {
 
 function render() {
   const c = parseQuery($("q").value);
-  state.dayOnly = Boolean(c.dayOnly);
-  state.weekend = Boolean(c.weekend);
-  state.student = Boolean(c.student);
+  Object.assign(state, { ticket: c.ticket, weekday: c.weekday, weekend: c.weekend, student: c.student });
   const radiusKm = c.radius, limit = c.limit;
   const gyms = visibleGyms(c);
   const withCoord = gyms.filter((g) => g.lat != null);
@@ -741,8 +792,10 @@ function listItem(g, d) {
   const cls = STATUS_CLASS[g.status] || "warn";
   const first = !isOld(g, "prices") && (g.prices || [])[0];   // 超過一年的價格不列在清單上
   const p = priceOf(g);
-  const what = p && p.student ? "學生" : state.weekend ? "假日入場" : "入場";
-  const price = p ? `${what} $${p.price}${p.per_hour ? "／小時" : ""} 起` : first && !state.weekend && !state.student ? `${first.item} ${fmtPrice(first.price)}` : "";
+  // 選了票種、平日／假日、學生時，直接寫是哪張票
+  const price = !p ? (first && !customPrice() ? `${first.item} ${fmtPrice(first.price)}` : "")
+    : customPrice() ? `${p.item} $${p.price}${p.per_hour && !/小時/.test(p.item) ? "／小時" : ""}`
+    : `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起`;
   const os = g.status === "營業中" ? openState(g) : null;
   const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : os ? (os.open ? "營業中" : "已打烊") : ""]
     .filter(Boolean).join("・");
