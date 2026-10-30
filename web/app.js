@@ -396,6 +396,8 @@ let PLACES = [];   // [{ key: 比對用的字, city?, district? }]，長的先�
 function buildPlaceIndex() {
   const add = (key, v) => { if (key.length >= 2) PLACES.push({ key, ...v }); };
   CITY_ORDER.forEach((c) => { add(c, { city: c }); add(c.slice(0, 2), { city: c }); });
+  // 「台北」一般指雙北（永和、板橋也算），只要臺北市就打「台北市」
+  for (const key of ["臺北", "雙北", "大臺北"]) ["臺北市", "新北市"].forEach((city) => add(key, { city }));
   for (const g of state.gyms) {
     if (!g.district) continue;
     add(g.district, { district: g.district });
@@ -515,11 +517,12 @@ function suggestGroups() {
       { label: "現在有開", re: Q_RE.open, on: (c) => c.openNow },
       { label: "學生", re: Q_RE.student, on: (c) => c.student }] },
     // 短名稱（台北）重複時（新竹市、新竹縣）用全名
-    { title: "地區", items: cities.map((city) => {
-      const short = cities.filter((x) => x.slice(0, 2) === city.slice(0, 2)).length > 1 ? city : city.slice(0, 2);
+    { title: "地區", items: [{ label: "雙北", re: /雙北|大臺北/g, on: (c) => c.cities.includes("臺北市") && c.cities.includes("新北市") }, ...cities.map((city) => {
+      // 「台北」會同時選到新北市，所以臺北市用全名
+      const short = city === "臺北市" || cities.filter((x) => x.slice(0, 2) === city.slice(0, 2)).length > 1 ? city : city.slice(0, 2);
       return { label: short.replace("臺", "台"), count: count[city], re: new RegExp(short === city ? city : `${short}(?:${city.slice(2)})?`, "g"),
         on: (c) => c.cities.includes(city) };
-    }) },
+    })] },
   ];
 }
 
@@ -703,8 +706,8 @@ function weekdayOK(p) {
 
 // 依搜尋條件找最便宜的票 → { price, item, per_hour, student }；o.ticket 只看這種票，o.weekday／o.weekend 只看那天能用的票，
 // o.student 把學生票也算進去（學生也能買一般票，所以取全部裡最便宜的）
-function ticketFor(g, o) {
-  if (isOld(g, "prices")) return null;
+function ticketFor(g, o, allowOld = false) {
+  if (isOld(g, "prices") && !allowOld) return null;
   let best = null;
   for (const p of g.prices || []) {
     const item = p.item || "", student = /學生/.test(item);
@@ -726,7 +729,7 @@ function visibleGyms(c) {
     (!c.fav || state.favs.has(g.id)) &&
     (c.facilities.includes("lead") || c.fav || hasBoulder(g)) &&   // 最愛的館、搜「上攀」時，只有上攀的館也列出來
     c.facilities.every((f) => FACILITY_TEST[f](g)) &&
-    (!c.ticket || priceOf(g) != null) &&
+    (!c.ticket || ticketFor(g, state, true) != null) &&   // 價格超過一年的館也列（排在最後，註明未確認）
     (!c.openNow || (g.status === "營業中" && (openState(g) || {}).open)) &&
     (!c.cities.length || c.cities.includes(g.city)) &&
     (!c.districts.length || c.districts.includes(g.district)) &&
@@ -793,7 +796,10 @@ function listItem(g, d) {
   const first = !isOld(g, "prices") && (g.prices || [])[0];   // 超過一年的價格不列在清單上
   const p = priceOf(g);
   // 選了票種、平日／假日、學生時，直接寫是哪張票
-  const price = !p ? (first && !customPrice() ? `${first.item} ${fmtPrice(first.price)}` : "")
+  // 價格超過一年：不拿來排序、篩預算，但選了票種等條件時還是寫出來，註明未確認
+  const oldP = !p && customPrice() && isOld(g, "prices") ? ticketFor(g, state, true) : null;
+  const price = oldP ? `${oldP.item} $${oldP.price}（超過一年，未確認）`
+    : !p ? (first && !customPrice() ? `${first.item} ${fmtPrice(first.price)}` : "")
     : customPrice() ? `${p.item} $${p.price}${p.per_hour && !/小時/.test(p.item) ? "／小時" : ""}`
     : `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起`;
   const os = g.status === "營業中" ? openState(g) : null;
