@@ -1,8 +1,8 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-30 08:31",
+ "generated": "2026-10-30 08:39",
  "checked": "2026-10-24",
- "osm_ok": true,
+ "osm_ok": false,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -574,13 +574,6 @@
     },
     "dist_to_address_m": 716
    },
-   "coord_check": {
-    "lat": 25.0633884,
-    "lng": 121.5224858,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 中山北路婚紗街, 恆安里, 中山區, 雙連, 臺北市, 104226, 臺灣"
-   },
    "price_min": {
     "price": 250,
     "item": "平日 10:00–12:00",
@@ -1015,13 +1008,6 @@
     },
     "dist_to_address_m": 309
    },
-   "coord_check": {
-    "lat": 25.0345218,
-    "lng": 121.4999759,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市萬華區大理街",
-    "coord_match": "大理街, 富福里, 萬華區, 下崁, 臺北市, 108220, 臺灣"
-   },
    "price_min": {
     "price": 320,
     "item": "平日星光 20:30–23:00",
@@ -1245,13 +1231,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 512
-   },
-   "coord_check": {
-    "lat": 25.1050597,
-    "lng": 121.5178912,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市北投區文林北路",
-    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112047, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1689,13 +1668,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 42
-   },
-   "coord_check": {
-    "lat": 25.0060804,
-    "lng": 121.4864657,
-    "coord_source": "nominatim:road",
-    "coord_query": "新北市中和區立言街",
-    "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -2944,153 +2916,6 @@
    }
   },
   {
-   "id": "camp4-taipei",
-   "name": "Camp4 達文西攀岩館（北投運動中心）",
-   "name_en": "Camp4 (Taipei Beitou Sports Center)",
-   "brand": "Camp4",
-   "city": "臺北市",
-   "district": "北投區",
-   "address": "臺北市北投區石牌路一段39巷100號2樓（北投運動中心）",
-   "types": [
-    "bouldering",
-    "lead"
-   ],
-   "status": "營業中",
-   "links": {},
-   "osm_keywords": [
-    [
-     "Camp4"
-    ],
-    [
-     "Camp",
-     "4"
-    ],
-    [
-     "達文西"
-    ],
-    [
-     "北投運動中心"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "name": [
-     "S01",
-     "S02",
-     "S15",
-     "S44",
-     "S07",
-     "S64"
-    ],
-    "address": [
-     "S52",
-     "S55",
-     "S56"
-    ],
-    "phone": [
-     "S56"
-    ],
-    "hours": [
-     "S56"
-    ],
-    "prices": [
-     "S52",
-     "S55"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：有營業時間，但 101 則評論最新一則 4 個月前，3 個月內沒有評論",
-    "是否有抱石區（S55 標為上攀館）",
-    "平日開館時間：S56 寫 13:00，S52 寫 10:00"
-   ],
-   "phone": "02-2823-7808",
-   "hours": "週一至週五 13:00–22:00；週六、日 09:00–18:00",
-   "prices": [
-    {
-     "item": "綜合攀登",
-     "price": "約 160–190",
-     "note": "S55（2022）寫 160，S52 寫 190 起",
-     "kind": "entry",
-     "when": []
-    }
-   ],
-   "news": {
-    "names": [
-     "Camp4",
-     "達文西攀岩",
-     "北投運動中心"
-    ],
-    "climb": true
-   },
-   "lat": 25.11666,
-   "lng": 121.50962,
-   "coord_source": "nominatim:place",
-   "coord_query": "臺北市北投運動中心",
-   "coord_match": "北投運動中心, 石牌路一段39巷, 吉利里, 北投區, 奇岩, 臺北市, 112034, 臺灣",
-   "price_min": {
-    "price": 160,
-    "item": "綜合攀登",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 160,
-    "item": "綜合攀登",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1080
-     ]
-    ]
-   }
-  },
-  {
    "id": "littlerock-tianmu",
    "name": "小岩館",
    "name_en": "The Little Rock",
@@ -3186,13 +3011,6 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 769
-   },
-   "coord_check": {
-    "lat": 25.1151277,
-    "lng": 121.5329879,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺北市士林區忠誠路二段",
-    "coord_match": "忠誠路二段, 天福里, 士林區, 蘭雅, 臺北市, 11154, 臺灣"
    },
    "price_min": {
     "price": 200,
@@ -3672,192 +3490,6 @@
      null
     ],
     "holiday": null
-   }
-  },
-  {
-   "id": "nangang-sports",
-   "name": "南港運動中心攀岩場",
-   "name_en": "Nangang Sports Center Climbing",
-   "brand": "運動中心",
-   "city": "臺北市",
-   "district": "南港區",
-   "address": "臺北市南港運動中心",
-   "types": [
-    "lead"
-   ],
-   "status": "營業中",
-   "prices": [
-    {
-     "item": "單次",
-     "price": "約 50",
-     "note": "需持確保卡",
-     "kind": "entry",
-     "when": []
-    }
-   ],
-   "links": {},
-   "osm_keywords": [
-    [
-     "南港運動中心"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "prices": [
-     "S05"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：攀岩場沒有自己的地點，只有「臺北市南港運動中心」（有營業中），評論有提到攀岩場；攀岩場本身開放與否要另外確認",
-    "是否有抱石區"
-   ],
-   "news": {
-    "names": [
-     "南港運動中心"
-    ],
-    "climb": true
-   },
-   "lat": 25.0489041,
-   "lng": 121.5818903,
-   "coord_source": "nominatim:address",
-   "coord_query": "臺北市南港運動中心",
-   "coord_match": "南港運動中心, 69, 玉成街, 合成里, 南港區, 潭美, 臺北市, 115, 臺灣",
-   "price_min": {
-    "price": 50,
-    "item": "單次",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 50,
-    "item": "單次",
-    "per_hour": false
-   },
-   "open_hours": null
-  },
-  {
-   "id": "wanhua-sports",
-   "name": "萬華運動中心攀岩場（米開朗基羅攀岩館）",
-   "name_en": "Wanhua Sports Center Climbing",
-   "brand": "運動中心",
-   "city": "臺北市",
-   "district": "萬華區",
-   "address": "臺北市萬華區西寧南路6-1號4樓（萬華運動中心）",
-   "types": [
-    "lead",
-    "bouldering"
-   ],
-   "status": "待確認",
-   "prices": [
-    {
-     "item": "單次",
-     "price": "約 150",
-     "kind": "entry",
-     "when": []
-    }
-   ],
-   "links": {},
-   "osm_keywords": [
-    [
-     "萬華運動中心"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "prices": [
-     "S05"
-    ],
-    "address": [
-     "S64"
-    ],
-    "hours": [
-     "S55"
-    ],
-    "name": [
-     "S64"
-    ],
-    "status": [
-     "S79"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：唯一的攀岩地點是「Camp 4攀岩館-萬華運動中心館」，16 則評論、最新一則 4 年前，沒有營業時間；3 個月內沒有評論，要打電話或看粉專確認還有沒有開",
-    "抱石區規模",
-    "營業時間只有 S55（2022，當時由 Camp4 經營）；現在粉專名稱是米開朗基羅攀岩館（蓋亞冒險學校與艾格探險合作）"
-   ],
-   "hours": "週一至週五 13:00–21:30；週六、日 09:00–18:00",
-   "news": {
-    "names": [
-     "萬華運動中心",
-     "米開朗基羅攀岩"
-    ],
-    "climb": true
-   },
-   "lat": 25.0474308,
-   "lng": 121.5065669,
-   "coord_source": "nominatim:place",
-   "coord_query": "臺北市萬華運動中心",
-   "coord_match": "萬華運動中心, 6-1, 西寧南路, 福星里, 萬華區, 城內, 臺北市, 10841, 臺灣",
-   "price_min": {
-    "price": 150,
-    "item": "單次",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 150,
-    "item": "單次",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       780,
-       1290
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ],
-     [
-      [
-       540,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      540,
-      1080
-     ]
-    ]
    }
   },
   {
@@ -4643,13 +4275,6 @@
     },
     "dist_to_address_m": 227
    },
-   "coord_check": {
-    "lat": 25.0197821,
-    "lng": 121.3015002,
-    "coord_source": "nominatim:road",
-    "coord_query": "桃園市桃園區新埔七街",
-    "coord_match": "新埔七街, 莊敬里, 桃園區, 桃園市, 330, 臺灣"
-   },
    "price_min": {
     "price": 200,
     "item": "平日星光（閉館前 2.5 小時）",
@@ -4805,13 +4430,6 @@
      "website": "www.iclimb.com.tw"
     },
     "dist_to_address_m": 57
-   },
-   "coord_check": {
-    "lat": 24.8195605,
-    "lng": 121.0246494,
-    "coord_source": "nominatim:road",
-    "coord_query": "新竹縣竹北市成功二街",
-    "coord_match": "成功二街, 鹿場, 鹿場里, 竹北市, 新竹縣, 30264, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -5020,13 +4638,6 @@
     },
     "dist_to_address_m": 192
    },
-   "coord_check": {
-    "lat": 24.8289099,
-    "lng": 121.0295922,
-    "coord_source": "nominatim:road",
-    "coord_query": "新竹縣竹北市勝利十五街",
-    "coord_match": "勝利十五街, 田厝, 北興里, 竹北市, 新竹縣, 30543, 臺灣"
-   },
    "price_min": {
     "price": 299,
     "item": "離峰票",
@@ -5193,13 +4804,6 @@
      "website": "https://linktr.ee/babopapak"
     },
     "dist_to_address_m": 1998
-   },
-   "coord_check": {
-    "lat": 24.7894074,
-    "lng": 120.9660941,
-    "coord_source": "nominatim:road",
-    "coord_query": "新竹市東區南大路",
-    "coord_match": "南大路, 光鎮里, 東區, 新竹市, 300035, 臺灣"
    },
    "price_min": {
     "price": 250,
@@ -5909,137 +5513,6 @@
    "open_hours": null
   },
   {
-   "id": "shabby-yuanlin",
-   "name": "破舊工廠 Shabby Factory",
-   "name_en": "Shabby Factory",
-   "brand": "破舊工廠",
-   "city": "彰化縣",
-   "district": "員林市",
-   "address": "彰化縣員林市新義街104號",
-   "types": [
-    "bouldering",
-    "lead"
-   ],
-   "status": "待確認",
-   "hours": "週一至週五 14:00–22:00；週六 09:30–22:00；週日 09:30–18:00",
-   "links": {},
-   "osm_keywords": [
-    [
-     "破舊工廠"
-    ],
-    [
-     "Shabby"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "address": [
-     "S05"
-    ],
-    "hours": [
-     "S05"
-    ],
-    "prices": [
-     "S55"
-    ],
-    "status": [
-     "S79"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：搜不到「破舊工廠」；同一個門牌（新義街104號）現在是「岩途攀岩」（1 則評論、1 週前，沒有營業時間），可能換手或改名，要確認後改館名、價格、營業時間",
-    "價格來源未標日期"
-   ],
-   "prices": [
-    {
-     "item": "全日票",
-     "price": "280",
-     "kind": "entry",
-     "when": []
-    },
-    {
-     "item": "租岩鞋",
-     "price": "50",
-     "kind": "other",
-     "when": null
-    }
-   ],
-   "news": {
-    "names": [
-     "破舊工廠",
-     "Shabby Factory"
-    ],
-    "climb": true
-   },
-   "lat": 23.9584466,
-   "lng": 120.5677345,
-   "coord_source": "nominatim:road",
-   "coord_query": "彰化縣員林市新義街",
-   "coord_match": "新義街, 新生里, 員林市, 彰化縣, 510018, 臺灣",
-   "price_min": {
-    "price": 280,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 280,
-    "item": "全日票",
-    "per_hour": false
-   },
-   "open_hours": {
-    "week": [
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       840,
-       1320
-      ]
-     ],
-     [
-      [
-       570,
-       1320
-      ]
-     ],
-     [
-      [
-       570,
-       1080
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      570,
-      1080
-     ]
-    ]
-   }
-  },
-  {
    "id": "chiayi-club",
    "name": "嘉義攀岩會館",
    "name_en": "",
@@ -6146,96 +5619,6 @@
    }
   },
   {
-   "id": "chiayi-sports-8a",
-   "name": "嘉義市國民運動中心 8a 攀岩場",
-   "name_en": "",
-   "brand": "運動中心",
-   "city": "嘉義市",
-   "district": "",
-   "address": "嘉義市國民運動中心",
-   "types": [
-    "bouldering",
-    "lead"
-   ],
-   "status": "待確認",
-   "prices": [
-    {
-     "item": "單次全票",
-     "price": "約 200",
-     "kind": "entry",
-     "when": []
-    }
-   ],
-   "links": {},
-   "osm_keywords": [
-    [
-     "嘉義",
-     "運動中心"
-    ],
-    [
-     "8a"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "prices": [
-     "S05"
-    ],
-    "status": [
-     "S79"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：只找到「8a 攀岩場」在友直街11號（不是運動中心），3 則評論、最新一則 9 年前，沒有營業時間；運動中心裡還有沒有攀岩場要確認",
-    "抱石區規模"
-   ],
-   "news": {
-    "names": [
-     "嘉義市國民運動中心",
-     "8a攀岩"
-    ],
-    "climb": true
-   },
-   "lat": 23.471551,
-   "lng": 120.4628704,
-   "coord_source": "osm",
-   "osm": {
-    "id": "way/1536509589",
-    "url": "https://www.openstreetmap.org/way/1536509589",
-    "name": "嘉義市國民運動中心",
-    "tags": {
-     "addr:city": "嘉義市",
-     "addr:district": "東區",
-     "addr:full": "600嘉義市東區彌陀路327巷15號",
-     "addr:housenumber": "15",
-     "addr:street": "彌陀路327巷",
-     "fee": "yes",
-     "leisure": "sports_centre",
-     "opening_hours": "Mo-Su 06:00-22:00",
-     "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
-    },
-    "dist_to_address_m": 0
-   },
-   "coord_check": {
-    "lat": 23.471551,
-    "lng": 120.4628704,
-    "coord_source": "nominatim:address",
-    "coord_query": "嘉義市國民運動中心",
-    "coord_match": "嘉義市國民運動中心, 15, 彌陀路327巷, 新開里, 東區, 草地尾, 嘉義市, 600, 臺灣"
-   },
-   "price_min": {
-    "price": 200,
-    "item": "單次全票",
-    "per_hour": false
-   },
-   "price_day": {
-    "price": 200,
-    "item": "單次全票",
-    "per_hour": false
-   },
-   "open_hours": null
-  },
-  {
    "id": "highfun-north",
    "name": "High Fun 嗨翻綜合體能館",
    "name_en": "High Fun",
@@ -6334,13 +5717,6 @@
      "website": "https://highfun2017.com/"
     },
     "dist_to_address_m": 363
-   },
-   "coord_check": {
-    "lat": 23.0145341,
-    "lng": 120.1894238,
-    "coord_source": "nominatim:road",
-    "coord_query": "臺南市北區大和路",
-    "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣"
    },
    "price_min": {
     "price": 200,
@@ -7185,13 +6561,6 @@
     },
     "dist_to_address_m": 206
    },
-   "coord_check": {
-    "lat": 24.7509237,
-    "lng": 121.7501518,
-    "coord_source": "nominatim:road",
-    "coord_query": "宜蘭縣宜蘭市健康路三段",
-    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
-   },
    "price_min": {
     "price": 300,
     "item": "入場（平假日相同）",
@@ -7476,139 +6845,6 @@
      [
       540,
       1080
-     ]
-    ]
-   }
-  },
-  {
-   "id": "yilan-sports",
-   "name": "宜蘭運動中心攀岩館",
-   "name_en": "",
-   "brand": "運動中心",
-   "city": "宜蘭縣",
-   "district": "宜蘭市",
-   "address": "宜蘭縣宜蘭市公園路66號（宜蘭國民運動中心）",
-   "types": [
-    "lead"
-   ],
-   "status": "待確認",
-   "features": "宜蘭第一座對外開放的上攀場，8 公尺高，偏重上攀與課程",
-   "links": {
-    "facebook": "https://www.facebook.com/yilan.climbing.gym/"
-   },
-   "osm_keywords": [
-    [
-     "宜蘭",
-     "運動中心"
-    ]
-   ],
-   "youtube": [],
-   "src": {
-    "features": [
-     "S33",
-     "S60"
-    ],
-    "address": [
-     "S60"
-    ],
-    "phone": [
-     "S60"
-    ],
-    "hours": [
-     "S79"
-    ],
-    "status": [
-     "S79"
-    ]
-   },
-   "verify": [
-    "S79（2026-10-29 Google 地圖）：「宜蘭運動中心攀岩館」有列營業時間，但 35 則評論最新一則是 6 年前，3 個月內沒有評論",
-    "營業時間只有 Google 地圖（S79），粉專沒有設定",
-    "是否有抱石區（粉專只寫 8 米上攀）",
-    "粉專看得到的最新貼文是 2022-05-06，是否仍營業",
-    "電話和久淘官網的電話相同，經營者可能是同一個"
-   ],
-   "phone": "0986-567-929",
-   "hours": "週二至週五 18:00–22:00；週六 13:00–22:00；週日 13:00–17:00；週一公休",
-   "news": {
-    "names": [
-     "宜蘭運動中心",
-     "宜蘭國民運動中心"
-    ],
-    "climb": true
-   },
-   "lat": 24.7389332,
-   "lng": 121.7557822,
-   "coord_source": "osm",
-   "osm": {
-    "id": "relation/20671094",
-    "url": "https://www.openstreetmap.org/relation/20671094",
-    "name": "宜蘭國民運動中心",
-    "tags": {
-     "addr:city": "宜蘭縣",
-     "addr:district": "宜蘭市",
-     "addr:full": "宜蘭縣宜蘭市公園路66號",
-     "addr:housenumber": "66",
-     "addr:street": "公園路",
-     "leisure": "sports_centre",
-     "sport": "swimming;climbing;cycling;table_tennis",
-     "website": "https://yilansports.com.tw/"
-    },
-    "dist_to_address_m": 1
-   },
-   "coord_check": {
-    "lat": 24.7389283,
-    "lng": 121.7557927,
-    "coord_source": "nominatim:place",
-    "coord_query": "宜蘭縣宜蘭國民運動中心",
-    "coord_match": "宜蘭國民運動中心, 66, 公園路, 四鬮一, 建業里, 宜蘭市, 宜蘭縣, 260011, 臺灣"
-   },
-   "price_min": null,
-   "price_day": null,
-   "open_hours": {
-    "week": [
-     [],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       1080,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1320
-      ]
-     ],
-     [
-      [
-       780,
-       1020
-      ]
-     ]
-    ],
-    "holiday": [
-     [
-      780,
-      1020
      ]
     ]
    }
