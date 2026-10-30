@@ -1,8 +1,8 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-10-30 08:42",
+ "generated": "2026-10-30 22:46",
  "checked": "2026-10-24",
- "osm_ok": false,
+ "osm_ok": true,
  "sources": {
   "S01": {
    "title": "Twosevenths：Taiwan's Best Climbing Gyms（26 間）",
@@ -572,7 +572,14 @@
      "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
      "phone": "+886 225218233"
     },
-    "dist_to_address_m": 716
+    "dist_to_address_m": 249
+   },
+   "coord_check": {
+    "lat": 25.0591497,
+    "lng": 121.5230267,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市中山區中山北路二段",
+    "coord_match": "中山北路二段, 中山北路婚紗街, 聚盛里, 中山區, 南西商圈, 臺北市, 104418, 臺灣"
    },
    "price_min": {
     "price": 250,
@@ -860,7 +867,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": "2026-10-01",
     "phone": "2026-01-26",
@@ -1028,7 +1034,14 @@
      "phone": "+886 2 23088250",
      "website": "https://tupclimbing.tw"
     },
-    "dist_to_address_m": 309
+    "dist_to_address_m": 60
+   },
+   "coord_check": {
+    "lat": 25.0340843,
+    "lng": 121.4963684,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市萬華區大理街",
+    "coord_match": "大理街, 糖廍里, 萬華區, 下崁, 臺北市, 10856, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1198,25 +1211,32 @@
     "branch": "明德",
     "climb": true
    },
-   "lat": 25.1082592,
-   "lng": 121.5142392,
+   "lat": 25.1082962,
+   "lng": 121.5142184,
    "coord_source": "osm",
    "osm": {
-    "id": "node/13417522409",
-    "url": "https://www.openstreetmap.org/node/13417522409",
+    "id": "node/13447526001",
+    "url": "https://www.openstreetmap.org/node/13447526001",
     "name": "原岩攀岩館-明德店",
     "tags": {
      "addr:city": "臺北市",
      "addr:district": "北投區",
-     "addr:full": "112臺北市北投區文林北路222號B1樓",
+     "addr:full": "臺北市北投區文林北路222號B1樓",
      "addr:housenumber": "222",
      "addr:street": "文林北路",
-     "fee": "yes",
-     "leisure": "sports_centre",
-     "opening_hours": "Mo-Fr 12:00-23:00",
-     "sport": "climbing"
+     "leisure": "fitness_centre",
+     "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 10:00-22:00",
+     "phone": "+886 2 28219988",
+     "website": "https://www.tupclimbing.tw/"
     },
-    "dist_to_address_m": 512
+    "dist_to_address_m": 102
+   },
+   "coord_check": {
+    "lat": 25.1087094,
+    "lng": 121.5133136,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市北投區文林北路",
+    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112051, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1397,7 +1417,6 @@
     "per_hour": false
    },
    "open_hours": null,
-   "features": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -1581,6 +1600,13 @@
      "sport": "climbing"
     },
     "dist_to_address_m": 42
+   },
+   "coord_check": {
+    "lat": 25.0060804,
+    "lng": 121.4864657,
+    "coord_source": "nominatim:road",
+    "coord_query": "新北市中和區立言街",
+    "coord_match": "立言街, 中原里, 中和區, 穗和, 新北市, 235017, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1865,7 +1891,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -1943,8 +1968,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -2062,11 +2085,11 @@
     ],
     "climb": false
    },
-   "lat": 25.0540704,
-   "lng": 121.6137469,
+   "lat": 25.0533556,
+   "lng": 121.6075017,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區市民大道八段",
-   "coord_match": "市民大道八段, 南港里, 南港區, 三重埔, 臺北市, 115002, 臺灣",
+   "coord_match": "市民大道八段, 南港里, 南港區, 三重埔, 臺北市, 115011, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -2375,11 +2398,11 @@
     "branch": "士林",
     "climb": false
    },
-   "lat": 25.0791213,
-   "lng": 121.5213957,
+   "lat": 25.0902764,
+   "lng": 121.5173712,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
-   "coord_match": "承德路四段, 明勝里, 士林區, 大龍峒, 臺北市, 11166, 臺灣",
+   "coord_match": "承德路四段, 後港里, 士林區, 社子, 臺北市, 11169, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -2582,8 +2605,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2025-12-19",
@@ -2692,11 +2713,11 @@
     "branch": "大稻埕",
     "climb": false
    },
-   "lat": 25.0553267,
-   "lng": 121.5100443,
+   "lat": 25.0618103,
+   "lng": 121.5092395,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市大同區迪化街一段",
-   "coord_match": "迪化街一段, 迪化街商圈, 永樂里, 大同區, 大稻埕, 臺北市, 103003, 臺灣",
+   "coord_match": "迪化街一段, 南芳里, 大同區, 大稻埕, 臺北市, 103221, 臺灣",
    "price_min": {
     "price": 250,
     "item": "入場（平日）",
@@ -2897,7 +2918,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 769
+    "dist_to_address_m": 579
+   },
+   "coord_check": {
+    "lat": 25.1136378,
+    "lng": 121.5320517,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺北市士林區忠誠路二段",
+    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 111035, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -3095,7 +3123,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": "2026-01-26",
     "phone": "2026-01-26",
@@ -3197,11 +3224,11 @@
     ],
     "climb": true
    },
-   "lat": 25.07848,
-   "lng": 121.57493,
+   "lat": 25.0772346,
+   "lng": 121.5753648,
    "coord_source": "nominatim:place",
    "coord_query": "臺北市內湖運動中心",
-   "coord_match": "內湖運動中心, 洲子街, 港墘里, 內湖區, 下塔悠, 臺北市, 114064, 臺灣",
+   "coord_match": "內湖運動中心, 港墘路, 港墘里, 內湖區, 下塔悠, 臺北市, 114063, 臺灣",
    "price_min": {
     "price": 50,
     "item": "室內抱石區",
@@ -3395,7 +3422,6 @@
     ],
     "holiday": null
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2026-10-24",
@@ -3636,7 +3662,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2026-10-01",
@@ -3762,11 +3787,11 @@
     ],
     "climb": false
    },
-   "lat": 25.0414462,
-   "lng": 121.4644744,
+   "lat": 25.0405741,
+   "lng": 121.4630293,
    "coord_source": "nominatim:road",
    "coord_query": "新北市新莊區中正路",
-   "coord_match": "中正路, 思源里, 新莊區, 頭前, 新北市, 242015, 臺灣",
+   "coord_match": "中正路, 思源里, 新莊區, 新庄(海山口), 新北市, 242015, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -3880,8 +3905,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "address": null,
     "phone": null,
@@ -4002,7 +4025,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2024-01-01",
     "hours": "2024-11-01",
@@ -4168,7 +4190,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 227
+    "dist_to_address_m": 344
+   },
+   "coord_check": {
+    "lat": 25.0188514,
+    "lng": 121.3020336,
+    "coord_source": "nominatim:road",
+    "coord_query": "桃園市桃園區新埔七街",
+    "coord_match": "新埔七街, 新埔里, 桃園區, 桃園市, 330, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -4219,7 +4248,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2026-10-24",
@@ -4330,6 +4358,13 @@
     },
     "dist_to_address_m": 57
    },
+   "coord_check": {
+    "lat": 24.8195605,
+    "lng": 121.0246494,
+    "coord_source": "nominatim:road",
+    "coord_query": "新竹縣竹北市成功二街",
+    "coord_match": "成功二街, 鹿場, 鹿場里, 竹北市, 新竹縣, 30264, 臺灣"
+   },
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -4384,7 +4419,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2025-12-19",
@@ -4540,6 +4574,13 @@
      "addr:street": "勝利十五街"
     },
     "dist_to_address_m": 192
+   },
+   "coord_check": {
+    "lat": 24.8289099,
+    "lng": 121.0295922,
+    "coord_source": "nominatim:road",
+    "coord_query": "新竹縣竹北市勝利十五街",
+    "coord_match": "勝利十五街, 田厝, 北興里, 竹北市, 新竹縣, 30543, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -4713,6 +4754,13 @@
     },
     "dist_to_address_m": 1998
    },
+   "coord_check": {
+    "lat": 24.7894074,
+    "lng": 120.9660941,
+    "coord_source": "nominatim:road",
+    "coord_query": "新竹市東區南大路",
+    "coord_match": "南大路, 光鎮里, 東區, 新竹市, 300035, 臺灣"
+   },
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -4767,7 +4815,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2024-11-01",
     "hours": "2026-10-24",
@@ -4849,11 +4896,11 @@
     "branch": "西屯",
     "climb": false
    },
-   "lat": 24.1791415,
-   "lng": 120.6348499,
+   "lat": 24.1853648,
+   "lng": 120.6370415,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
-   "coord_match": "環中路二段, 西墩里, 西屯區, 臺中七期, 臺中市, 407670, 臺灣",
+   "coord_match": "環中路二段, 西墩里, 西屯區, 水湳經貿園區, 臺中市, 407110, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -4903,7 +4950,6 @@
      ]
     ]
    },
-   "features": null,
    "fresh": {
     "address": null,
     "phone": "2026-10-24",
@@ -4977,15 +5023,14 @@
     "branch": "太原",
     "climb": false
    },
-   "lat": 24.165916,
-   "lng": 120.7236858,
+   "lat": 24.1640524,
+   "lng": 120.7225341,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市北屯區建和路一段",
    "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": null,
@@ -5091,11 +5136,11 @@
     ],
     "climb": false
    },
-   "lat": 24.1304329,
-   "lng": 120.6301684,
+   "lat": 24.1424284,
+   "lng": 120.6338892,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
-   "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣",
+   "coord_match": "永春東七路, 永定里, 南屯區, 田心, 臺中市, 408474, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5219,8 +5264,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
    "fresh": {
     "address": "2022-01-01",
     "prices": "2022-01-01",
@@ -5294,11 +5337,11 @@
     ],
     "climb": false
    },
-   "lat": 24.1504232,
-   "lng": 120.6944403,
+   "lat": 24.145162,
+   "lng": 120.6944444,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市東區進化路",
-   "coord_match": "進化路, 合作里, 東區, 臺中市, 401, 臺灣",
+   "coord_match": "進化路, 東南里, 東區, 臺中市, 401, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5353,8 +5396,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2026-10-24",
     "hours": "2026-08-05",
@@ -5398,9 +5439,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "features": null
    },
@@ -5477,11 +5515,11 @@
     ],
     "climb": false
    },
-   "lat": 23.4766156,
-   "lng": 120.4315668,
+   "lat": 23.4861136,
+   "lng": 120.4061855,
    "coord_source": "nominatim:road",
    "coord_query": "嘉義市西區高鐵大道",
-   "coord_match": "高鐵大道, 西平里, 西區, 北社尾, 嘉義市, 600, 臺灣",
+   "coord_match": "高鐵大道, 大溪里, 西區, 大溪厝, 嘉義市, 600, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5619,6 +5657,13 @@
      "website": "https://highfun2017.com/"
     },
     "dist_to_address_m": 363
+   },
+   "coord_check": {
+    "lat": 23.0145341,
+    "lng": 120.1894238,
+    "coord_source": "nominatim:road",
+    "coord_query": "臺南市北區大和路",
+    "coord_match": "大和路, 大和里, 北區, 大港寮, 臺南市, 704, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -5960,7 +6005,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -6103,7 +6147,6 @@
      ]
     ]
    },
-   "phone": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -6365,8 +6408,6 @@
     ],
     "holiday": []
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2026-10-13",
     "hours": "2026-10-13",
@@ -6466,6 +6507,13 @@
      "website": "https://www.portaly.cc/jioutauclimbimg"
     },
     "dist_to_address_m": 206
+   },
+   "coord_check": {
+    "lat": 24.7509237,
+    "lng": 121.7501518,
+    "coord_source": "nominatim:road",
+    "coord_query": "宜蘭縣宜蘭市健康路三段",
+    "coord_match": "健康路三段, 民族里, 宜蘭市, 宜蘭縣, 26051, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -6651,8 +6699,6 @@
      ]
     ]
    },
-   "phone": null,
-   "features": null,
    "fresh": {
     "address": "2025-12-19",
     "hours": "2025-12-19",
@@ -6715,7 +6761,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": null,
     "hours": null,
@@ -6804,8 +6849,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "prices": null,
    "fresh": {
     "address": "2022-01-01",
     "hours": "2022-01-01",
@@ -6944,7 +6987,6 @@
     ],
     "holiday": null
    },
-   "phone": null,
    "fresh": {
     "address": "2024-11-01",
     "hours": "2026-10-24",
@@ -7035,7 +7077,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
    "fresh": {
     "address": "2024-01-01",
     "hours": "2024-11-01",
@@ -7081,9 +7122,6 @@
    "price_min": null,
    "price_day": null,
    "open_hours": null,
-   "phone": null,
-   "hours": null,
-   "prices": null,
    "fresh": {
     "features": null
    },
@@ -7289,6 +7327,24 @@
    "tags": {}
   },
   {
+   "osm": "node/13417522409",
+   "url": "https://www.openstreetmap.org/node/13417522409",
+   "name": "原岩攀岩館-明德店",
+   "lat": 25.1082592,
+   "lng": 121.5142392,
+   "tags": {
+    "addr:city": "臺北市",
+    "addr:district": "北投區",
+    "addr:full": "112臺北市北投區文林北路222號B1樓",
+    "addr:housenumber": "222",
+    "addr:street": "文林北路",
+    "fee": "yes",
+    "leisure": "sports_centre",
+    "opening_hours": "Mo-Fr 12:00-23:00",
+    "sport": "climbing"
+   }
+  },
+  {
    "osm": "node/13437893337",
    "url": "https://www.openstreetmap.org/node/13437893337",
    "name": "",
@@ -7297,24 +7353,6 @@
    "tags": {
     "leisure": "sports_centre",
     "sport": "climbing"
-   }
-  },
-  {
-   "osm": "node/13447526001",
-   "url": "https://www.openstreetmap.org/node/13447526001",
-   "name": "原岩攀岩館-明德店",
-   "lat": 25.1082962,
-   "lng": 121.5142184,
-   "tags": {
-    "addr:city": "臺北市",
-    "addr:district": "北投區",
-    "addr:full": "臺北市北投區文林北路222號B1樓",
-    "addr:housenumber": "222",
-    "addr:street": "文林北路",
-    "leisure": "fitness_centre",
-    "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 10:00-22:00",
-    "phone": "+886 2 28219988",
-    "website": "https://www.tupclimbing.tw/"
    }
   },
   {
@@ -7640,6 +7678,24 @@
    }
   },
   {
+   "osm": "way/1536509589",
+   "url": "https://www.openstreetmap.org/way/1536509589",
+   "name": "嘉義市國民運動中心",
+   "lat": 23.471551,
+   "lng": 120.4628704,
+   "tags": {
+    "addr:city": "嘉義市",
+    "addr:district": "東區",
+    "addr:full": "600嘉義市東區彌陀路327巷15號",
+    "addr:housenumber": "15",
+    "addr:street": "彌陀路327巷",
+    "fee": "yes",
+    "leisure": "sports_centre",
+    "opening_hours": "Mo-Su 06:00-22:00",
+    "sport": "swimming;table_tennis;badminton;billiards;basketball;climbing;fitness"
+   }
+  },
+  {
    "osm": "way/1567346215",
    "url": "https://www.openstreetmap.org/way/1567346215",
    "name": "",
@@ -7659,6 +7715,23 @@
    "tags": {
     "leisure": "sports_centre",
     "sport": "climbing"
+   }
+  },
+  {
+   "osm": "relation/20671094",
+   "url": "https://www.openstreetmap.org/relation/20671094",
+   "name": "宜蘭國民運動中心",
+   "lat": 24.7389332,
+   "lng": 121.7557822,
+   "tags": {
+    "addr:city": "宜蘭縣",
+    "addr:district": "宜蘭市",
+    "addr:full": "宜蘭縣宜蘭市公園路66號",
+    "addr:housenumber": "66",
+    "addr:street": "公園路",
+    "leisure": "sports_centre",
+    "sport": "swimming;climbing;cycling;table_tennis",
+    "website": "https://yilansports.com.tw/"
    }
   }
  ]
