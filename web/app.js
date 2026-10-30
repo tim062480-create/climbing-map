@@ -117,6 +117,7 @@ async function init() {
   setupAuth();
   setupPanel();
   $("closeDetail").addEventListener("click", closeDetail);
+  $("clearRoute").addEventListener("click", clearRoute);
   window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id) openDetail(id, false); });
 
   render();
@@ -1054,7 +1055,7 @@ function openDetail(id, pushHash = true) {
 
 function closeDetail() {
   $("detail").hidden = true;
-  state.detailId = null;   // 地圖上的路線留著，按「在地圖上看路線」就是要看它
+  state.detailId = null;   // 按「在地圖上看路線」畫的路線留著，要拿掉按地圖上的「✕ 收起路線」
   history.replaceState(null, "", location.pathname + location.search);
 }
 
@@ -1088,6 +1089,11 @@ const LEG_STYLE = {
   car: { color: "#d9480f", weight: 6 },
 };
 const routeLayer = L.layerGroup().addTo(map);
+// 路線只在按「在地圖上看路線」時才畫，地圖右上角的「✕ 收起路線」可以拿掉
+function clearRoute() {
+  routeLayer.clearLayers();
+  $("clearRoute").hidden = true;
+}
 const routeCache = new Map();
 
 // profile：foot／bike／car；pts：[{lat,lng}, …]。失敗回傳 null
@@ -1270,7 +1276,7 @@ function stationCounts(s, live) {
 async function enhanceTransit(g) {
   const tl = $("transitLocate");
   if (tl) tl.addEventListener("click", locate);
-  routeLayer.clearLayers();
+  clearRoute();
   if (!state.me || g.lat == null || !document.querySelector("#transit .modes")) return;
   const me = { ...state.me };
   const live = await tryLive();
@@ -1333,7 +1339,6 @@ async function youbikePlan(g, me, live) {
 function showMode(g, plans, mode) {
   document.querySelectorAll("#transit [data-mode]").forEach((b) => b.setAttribute("aria-selected", b.dataset.mode === mode));
   const p = plans[mode], body = $("modeBody");
-  routeLayer.clearLayers();
   if (mode === "transit") {
     const relay = (window.CLIMBING_CONFIG || {}).transitRelay;
     body.innerHTML = `<div id="tdxBox">${relay ? `<p class="note">正在查公車、捷運路線…</p>` : `<div class="plan">
@@ -1374,13 +1379,15 @@ function showMode(g, plans, mode) {
     <p class="note">${estimated ? "路線服務暫時連不到，以直線距離估算。" : "路線：OpenStreetMap（FOSSGIS OSRM），實際以現場為準。"}</p>
   </div>${mode === "youbike" ? ybNearGymHTML(p, new Date(Date.now() + p.minutes * 60000)) : ""}`;
 
-  // 地圖上畫路線：步行虛線、騎車綠線、開車橘線，借還車站標出來
-  for (const l of p.legs) L.polyline(l.coords, LEG_STYLE[l.profile]).addTo(routeLayer);
-  if (mode === "youbike") {
-    [[p.a, "借"], [p.b, "還"]].forEach(([s, t]) => L.marker([s.lat, s.lng], {
-      icon: L.divIcon({ className: "", html: `<div class="yb-pin">${t}</div>`, iconSize: [24, 24] }) }).bindTooltip(s.name).addTo(routeLayer));
-  }
   $("showRoute").addEventListener("click", () => {
+    // 地圖上畫路線：步行虛線、騎車綠線、開車橘線，借還車站標出來
+    clearRoute();
+    for (const l of p.legs) L.polyline(l.coords, LEG_STYLE[l.profile]).addTo(routeLayer);
+    if (mode === "youbike") {
+      [[p.a, "借"], [p.b, "還"]].forEach(([s, t]) => L.marker([s.lat, s.lng], {
+        icon: L.divIcon({ className: "", html: `<div class="yb-pin">${t}</div>`, iconSize: [24, 24] }) }).bindTooltip(s.name).addTo(routeLayer));
+    }
+    $("clearRoute").hidden = false;
     closeDetail();
     const panel = $("panel");
     const covered = getComputedStyle(panel).position === "absolute" ? panel.offsetHeight : 0;

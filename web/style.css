@@ -100,6 +100,8 @@ a { color: var(--accent); }
 
 .layout { flex: 1; display: flex; min-height: 0; position: relative; }
 #map { flex: 1; min-height: 0; z-index: 0; }
+.clear-route { position: absolute; top: 10px; right: 10px; z-index: 500; background: var(--bg); box-shadow: 0 1px 6px rgba(0, 0, 0, .25); }
+.clear-route[hidden] { display: none; }
 
 /* 手機：清單是下方可拉起的面板；桌機：左側欄 */
 .panel {
