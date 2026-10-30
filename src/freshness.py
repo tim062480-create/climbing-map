@@ -7,6 +7,7 @@
   - 超過一年、或來源沒寫日期（「未標示」「官網」「較舊」…）、或這個欄位沒有來源 → 不相信
 日期只取看得懂的：2026-10-24、2025-05、2026 年 2 月、2026（只有年、月時取最早的那天，寧可算舊）。
 「2024-04 發布，2025-12-19 更新」這種取最新的那個。
+營業狀態另外參考 data/raw/gmaps_check/ 的逐館 Google 地圖確認記錄（有營業時間才算）。
 
 加到 gyms.json 每間館：
   fresh       {欄位: "YYYY-MM-DD" 最新來源日期，或 null}
@@ -29,6 +30,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "data" / "manual" / "gyms_seed.json"
 SOURCES = ROOT / "data" / "raw" / "sources.csv"
+GMAPS_CHECK = ROOT / "data" / "raw" / "gmaps_check"   # 逐館看 Google 地圖的結果，檔名是日期
 OUT = ROOT / "data" / "processed" / "gyms.json"
 
 MAX_AGE_DAYS = 365
@@ -53,7 +55,22 @@ def load_source_dates():
         return {r["代號"]: source_date(r["日期時間"]) for r in csv.DictReader(f)}
 
 
-def annotate(g, dates, today=None):
+def load_check_dates():
+    """data/raw/gmaps_check/日期*.csv → {館 id: 最近一次在 Google 地圖確認還在營業的日期}
+    （2026-10-29 那份要 latest_review 有值、has_hours 是 yes；其他份有列到就算）"""
+    out = {}
+    for f in sorted(GMAPS_CHECK.glob("*.csv")) if GMAPS_CHECK.exists() else []:
+        d = source_date(f.stem)
+        with open(f, encoding="utf-8-sig") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("has_hours", "yes").lower() not in ("yes", "y"):
+                    continue
+                if d and (r["id"] not in out or out[r["id"]] < d):
+                    out[r["id"]] = d
+    return out
+
+
+def annotate(g, dates, today=None, checks=None):
     """在一間館（gyms.json 的格式，status 已經是 seed 的值）加上 fresh、stale、data_date；
     不相信的營業時間、價格不拿來算 open_hours、price_min、price_day"""
     today = today or date.today()
@@ -69,6 +86,9 @@ def annotate(g, dates, today=None):
         if latest is None or latest < cutoff:
             stale.append(field)
     all_dates = [d for ids in src.values() for d in (dates.get(s) for s in ids) if d]
+    if checks and checks.get(g["id"]):   # 在 Google 地圖確認過還在營業，也算營業狀態的來源
+        all_dates.append(checks[g["id"]])
+        fresh["status"] = checks[g["id"]].isoformat()
     latest_all = max(all_dates, default=None)
     g["fresh"] = fresh
     g["stale"] = stale
@@ -91,6 +111,7 @@ def main():
     data = json.loads(OUT.read_text(encoding="utf-8"))
     seed = {g["id"]: g for g in json.loads(SEED.read_text(encoding="utf-8"))["gyms"]}
     dates = load_source_dates()
+    checks = load_check_dates()
     for g in data["gyms"]:
         s = seed.get(g["id"])
         if s:   # 文字欄位以 seed 為準，再重算營業時間規則和最低價，重跑也不會疊加
@@ -100,7 +121,7 @@ def main():
         hours_prices.annotate(g)
         g["price_min"] = enrich.price_min(g)
         g["price_day"] = enrich.price_min(g, hourly=False)
-        annotate(g, dates)
+        annotate(g, dates, checks=checks)
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
 
     undated = sorted(k for k, v in dates.items() if v is None)

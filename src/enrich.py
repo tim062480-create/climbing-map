@@ -247,6 +247,7 @@ def main():
             json.dumps(elements, ensure_ascii=False), encoding="utf-8")
     places = [osm_place(e) for e in elements] if elements is not None else None
     source_dates = freshness.load_source_dates()
+    check_dates = freshness.load_check_dates()
     used = set()
     gyms = []
     for g in seed["gyms"]:
@@ -276,7 +277,7 @@ def main():
         g["price_min"] = price_min(g)                  # 含計時（1 小時）
         g["price_day"] = price_min(g, hourly=False)    # 只看一次入場的票，搜尋「全日」時用
         hours_prices.annotate(g)                       # 營業時間、票價適用時段 → 網頁算「現在有沒有開、現在多少錢」
-        freshness.annotate(g, source_dates)            # 來源超過一年的欄位不相信（見 src/freshness.py）
+        freshness.annotate(g, source_dates, checks=check_dates)            # 來源超過一年的欄位不相信（見 src/freshness.py）
         gyms.append(g)
         print(f"{g['id']:24s} {g.get('coord_source')}")
 

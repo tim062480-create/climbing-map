@@ -44,7 +44,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 6. 網頁（`index.html`、`web/app.js`）：
    - 沒有建置步驟，Leaflet 和 OSM 底圖從 unpkg 載入。
    - 改了 `web/` 的 JS 或 CSS，要一起改 `index.html` 裡的 `?v=日期` 版本號，不然手機可能拿到新 HTML 配舊 JS（GitHub Pages 會快取 10 分鐘）。
-   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「OSM」，空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。點搜尋框會展開下拉選單（`renderSuggest`）列出可選條件，打字時改列符合的地區和館名；關鍵字的正規表示式統一放在 `Q_RE`，解析和選單共用。搜尋字串存在網址 `?q=` 和 localStorage。
+   - 上方一個搜尋框輸入所有條件（`parseQuery`）：地點（縣市、行政區）、館名、預算（「300 以下」）、排序（「最便宜」「最近」）、間數（「5 間」）、範圍（「3 公里」「不限距離」）、「上攀」「營業中」「全日」（價格不算計時）「假日」（只比假日能用的票）「學生」（學生票也算進去，`ticketFor` 在網頁上重算），空白隔開可以疊加，解析結果顯示成可以按 ✕ 拿掉的標籤。點搜尋框會展開下拉選單（`renderSuggest`）列出可選條件，打字時改列符合的地區和館名；關鍵字的正規表示式統一放在 `Q_RE`，解析和選單共用。搜尋字串存在網址 `?q=` 和 localStorage。
    - 沒指定地點、館名、範圍時，有定位就只列 10 公里內；範圍內不到 5 間時補列範圍外最近的館。
    - 交通分頁（YouBike／步行／開車／大眾運輸）：前三種用 FOSSGIS 的 OSRM（`routing.openstreetmap.de`，免金鑰、可跨網域，只在打開館的詳細資訊時呼叫）算實際路線、時間和中文轉彎步驟，畫在地圖上；連不到時退回直線距離 ×1.3 估算。大眾運輸用交通部 TDX 旅運規劃（`/api/maas/routing`），經過 `relay/tdx-worker.js`（Cloudflare Worker，金鑰存在 Cloudflare 加密變數，不進 repo）；`web/config.js` 的 `transitRelay` 空著時只粗估時間，路線交給 Google 地圖網址（`/maps/dir/?api=1&travelmode=...`）。設定步驟見 `docs/TDX大眾運輸設定步驟.md`。改了 Worker 要手動貼到 Cloudflare 重新部署。
    - 最愛：`web/config.js` 的 `firebase` 空著時，最愛存在瀏覽器 localStorage（`climbing-map:fav`）。填好後用 Firebase 做 Google 登入（`setupAuth`，SDK 從 gstatic 動態 import），最愛存在 Firestore `users/{uid}` 的 `favorites`；沒登入可以照常使用，按 ☆ 或「最愛」時跳出登入框（`showLogin`）。第一次登入會把這台裝置的 localStorage 最愛併進帳號。Firebase 設定是公開值，安全靠 Firestore 規則，設定步驟見 `docs/Google登入設定步驟.md`。使用的 Firebase 專案是 `climbing-map-25afd`（另一個 `climbing-map-4041c` 是多建的，沒用到）。`measurementId` 有填時載入 Google Analytics 算匿名瀏覽人數，並記錄事件 `open_gym`（`gym_id`、`gym_name`）和 `search`（`search_term`，停止打字 2 秒才記）；只在 https 上，本機不算，網頁下方有註明。搜尋「最愛」只列最愛。
@@ -56,8 +56,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 雲端開發環境常連不到 OSM、YouBike、Google，需要外部資料的步驟交給 Actions 跑。
 
 ## 原則（使用者確認過的）
-- 只收室內館，以抱石為主。
+- 只收室內館，以抱石為主。只有戶外岩場的不收；網頁也不顯示 OSM 上未確認的攀岩地點（多是戶外岩場、樹抱石，2026-10-29 拿掉）。
 - 不爬 Google 地圖（違反使用條款），只附搜尋連結讓人手動對照。要顯示 Google 評論、照片需要 Places API 金鑰，使用者還沒申請。
+- 營業中的判斷（2026-10-30）：Google 地圖上要有營業時間，且最新評論在 3 個月內；評論超過 3 個月的館從 seed 刪掉（已停業的留著當紀錄，網站不顯示）。只看該館自己的區塊，不要抓到「其他人也搜尋了」。
 - 不能確認的資料寫進 `verify`，不要猜。
 - 資料要有一年內的來源才相信（2026-10-28）：`src/freshness.py` 依 `sources.csv` 的「日期時間」判斷，超過一年或沒寫日期的欄位網頁標「超過一年」，不拿來算現在有沒有開、價格排序和預算；所有來源都超過一年的營業中館改成「待確認」。新增來源時「日期時間」要寫看得懂的日期（例如「2026-10-28 讀取」）。
 - 機密資訊（API 金鑰等）放 .env，不寫進程式碼、不 commit。

@@ -27,9 +27,9 @@ const MIN_LISTED = 5;          // 範圍內不到這麼多間時，補列範圍�
 const LIVE_URL = "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json";
 
 const state = {
-  gyms: [], sources: {}, osmExtra: [], checked: "",
+  gyms: [], sources: {}, checked: "",
   live: undefined,
-  me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(), osmLayer: null,
+  me: null, geoError: "", listed: [], detailId: null, typing: false, firstFix: true, watchId: null, markers: new Map(),
   favs: new Set(), news: {}, newsUpdated: "",
 };
 
@@ -77,7 +77,6 @@ async function init() {
   if (!data) { setStatus("資料載入失敗，請重新整理。", true); return; }
   state.gyms = data.gyms;
   state.sources = data.sources || {};
-  state.osmExtra = data.osm_unmatched || [];
   state.checked = data.checked || "";
   state.favs = loadFavs();
   // 國定假日行事曆在背景讀；今天剛好是國定假日或補班日時，清單和打開的館重畫一次
@@ -96,9 +95,6 @@ async function init() {
     m.on("click", () => openDetail(g.id));
     state.markers.set(g.id, m);
   }
-  state.osmLayer = L.layerGroup(state.osmExtra.filter((p) => p.lat != null).map((p) =>
-    L.circleMarker([p.lat, p.lng], { radius: 5, color: "#868e96", fillOpacity: 0.6, weight: 1 })
-      .bindPopup(`<b>${esc(p.name || "（無名稱）")}</b><br>OpenStreetMap 上的攀岩地點，未人工確認<br><a href="${esc(p.url)}" target="_blank" rel="noopener">OSM</a>`)));
 
   buildPlaceIndex();
   $("q").value = new URLSearchParams(location.search).get("q") ?? loadQuery();
@@ -377,7 +373,8 @@ const Q_RE = {
   lead: /上攀|先鋒|綁繩|top\s*rope|lead/gi,
   open: /現在有開|現在營業|營業中|有開/g,
   day: /全日|整天|不限時|包日/g,
-  osm: /osm/gi,
+  weekend: /假日|週末|周末|(?:禮拜|星期|週)[六日天]/g,
+  student: /學生票?|學生價/g,
 };
 const CN_NUM = { 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
 const toNum = (s) => (/^\d+$/.test(s) ? Number(s) : s.length === 2 && s[0] === "十" ? 10 + CN_NUM[s[1]] : s.length === 2 && s[1] === "十" ? CN_NUM[s[0]] * 10 : CN_NUM[s] || 0);
@@ -403,7 +400,7 @@ const normalizeQuery = (q) => q
 // 把搜尋字串拆成條件；chips 是畫面上顯示的標籤，每個都記得自己來自哪段文字（raw），按 ✕ 就把那段拿掉
 function parseQuery(q) {
   let s = normalizeQuery(q);
-  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, osm: false, fav: false, chips: [] };
+  const c = { cities: [], districts: [], names: [], budget: 0, radius: null, limit: 0, sort: null, lead: false, openNow: false, fav: false, chips: [] };
   const take = (re, fn) => { s = s.replace(re, (...m) => { fn(...m); return " "; }); };
 
   take(Q_RE.fav, (raw) => { c.fav = true; c.chips.push({ raw, label: "⭐ 只看最愛" }); });
@@ -416,7 +413,8 @@ function parseQuery(q) {
   take(Q_RE.lead, (raw) => { c.lead = true; c.chips.push({ raw, label: "含只有上攀的館" }); });
   take(Q_RE.open, (raw) => { c.openNow = true; c.chips.push({ raw, label: "現在有開" }); });
   take(Q_RE.day, (raw) => { c.dayOnly = true; c.chips.push({ raw, label: "價格不算計時" }); });
-  take(Q_RE.osm, (raw) => { c.osm = true; c.chips.push({ raw, label: "顯示 OSM 上其他攀岩地點" }); });
+  take(Q_RE.weekend, (raw) => { c.weekend = true; c.chips.push({ raw, label: "假日的票價" }); });
+  take(Q_RE.student, (raw) => { c.student = true; c.chips.push({ raw, label: "含學生票" }); });
   // 地名先比（可以黏在一起打，例如「臺中西屯」，長的地名先比），再刪「的、和」這類贅字，不然「永和」會被拆掉
   for (const p of PLACES) {
     if (!s.includes(p.key)) continue;
@@ -491,7 +489,9 @@ function suggestGroups() {
       { label: "最愛", re: Q_RE.fav, count: state.favs.size, on: (c) => c.fav },
       { label: "現在有開", re: Q_RE.open, on: (c) => c.openNow },
       { label: "上攀", re: Q_RE.lead, on: (c) => c.lead },
-      { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly }] },
+      { label: "全日", re: Q_RE.day, on: (c) => c.dayOnly },
+      { label: "假日", re: Q_RE.weekend, on: (c) => c.weekend },
+      { label: "學生", re: Q_RE.student, on: (c) => c.student }] },
     // 短名稱（台北）重複時（新竹市、新竹縣）用全名
     { title: "地區", items: cities.map((city) => {
       const short = cities.filter((x) => x.slice(0, 2) === city.slice(0, 2)).length > 1 ? city : city.slice(0, 2);
@@ -637,8 +637,35 @@ function onPosition(pos) {
 }
 
 // ---------- 清單 ----------
-// 價格用 price_min（含計時，以 1 小時算）；搜尋「全日」時改用 price_day（只看一次入場的票）
-const priceOf = (g) => (state.dayOnly ? g.price_day : g.price_min) || null;
+// 價格用 price_min（含計時，以 1 小時算）；搜尋「全日」時改用 price_day（只看一次入場的票）。
+// 搜尋「假日」「學生」時改在網頁上從票價表重算（ticketFor）
+const priceOf = (g) => (state.weekend || state.student ? ticketFor(g, state) : (state.dayOnly ? g.price_day : g.price_min) || null);
+
+// 不算入場票的項目（跟 src/enrich.py 的 NOT_ENTRY 一樣，但學生票另外看）
+const NOT_ENTRY_RE = /租|體驗|課|入會|會費|陪同|兒童|幼兒|起價|三個月|包場|持照/;
+
+// 這張票假日能不能用：有解析出時段就看時段，沒有就看名稱裡有沒有只寫「平日」
+function weekendOK(p) {
+  if (Array.isArray(p.when)) return !p.when.length || p.when.some((c) => c.days == null || c.days === "we" || (Array.isArray(c.days) && c.days.some((d) => d >= 5)));
+  return !/平日/.test(p.item || "") || /假日|週末|[六日]/.test((p.item || "").replace(/平日/g, ""));
+}
+
+// 依搜尋條件找最便宜的票 → { price, item, per_hour, student }；o.weekend 只看假日能用的票，
+// o.student 把學生票也算進去（學生也能買一般票，所以取全部裡最便宜的），o.dayOnly 不算計時
+function ticketFor(g, o) {
+  if (isOld(g, "prices")) return null;
+  let best = null;
+  for (const p of g.prices || []) {
+    const item = p.item || "", student = /學生/.test(item);
+    if (student ? !o.student : p.kind === "other") continue;
+    if (NOT_ENTRY_RE.test(item)) continue;
+    const perHour = p.kind === "hourly" || /／\s*小?時|\/\s*h/i.test(String(p.price)) || /計時/.test(item);
+    if ((o.dayOnly && perHour) || (o.weekend && !weekendOK(p))) continue;
+    const m = String(p.price ?? "").match(/\d+/);
+    if (m && (!best || Number(m[0]) < best.price)) best = { price: Number(m[0]), item, per_hour: perHour, student };
+  }
+  return best;
+}
 const minPrice = (g) => (priceOf(g) ? priceOf(g).price : null);
 
 // 地點、館名、預算、類型、狀態：這幾個條件不需要定位
@@ -666,6 +693,8 @@ const SORTERS = {
 function render() {
   const c = parseQuery($("q").value);
   state.dayOnly = Boolean(c.dayOnly);
+  state.weekend = Boolean(c.weekend);
+  state.student = Boolean(c.student);
   const radiusKm = c.radius, limit = c.limit;
   const gyms = visibleGyms(c);
   const withCoord = gyms.filter((g) => g.lat != null);
@@ -688,7 +717,6 @@ function render() {
 
   const ids = new Set([...shown, ...outside].map((x) => x.g.id));
   state.markers.forEach((m, id) => (ids.has(id) ? m.addTo(map) : m.remove()));
-  c.osm ? state.osmLayer.addTo(map) : state.osmLayer.remove();
 
   $("list").innerHTML = (shown.map(({ g, d }) => listItem(g, d)).join("") ||
     (c.fav && !state.favs.size ? `<li class="sub">${auth.enabled && !auth.user ? "登入 Google 帳號後，按館的「☆ 加入最愛」就會出現在這裡。" : "還沒有最愛。打開館的詳細資訊，按「☆ 加入最愛」就會出現在這裡。"}</li>` : `<li class="sub">沒有符合條件的館。</li>`)) +
@@ -713,7 +741,8 @@ function listItem(g, d) {
   const cls = STATUS_CLASS[g.status] || "warn";
   const first = !isOld(g, "prices") && (g.prices || [])[0];   // 超過一年的價格不列在清單上
   const p = priceOf(g);
-  const price = p ? `入場 $${p.price}${p.per_hour ? "／小時" : ""} 起` : first ? `${first.item} ${fmtPrice(first.price)}` : "";
+  const what = p && p.student ? "學生" : state.weekend ? "假日入場" : "入場";
+  const price = p ? `${what} $${p.price}${p.per_hour ? "／小時" : ""} 起` : first && !state.weekend && !state.student ? `${first.item} ${fmtPrice(first.price)}` : "";
   const os = g.status === "營業中" ? openState(g) : null;
   const sub = [g.city + (g.district || ""), price, g.status !== "營業中" ? g.status : os ? (os.open ? "營業中" : "已打烊") : ""]
     .filter(Boolean).join("・");
