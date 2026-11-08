@@ -1,6 +1,6 @@
 {
  "_說明": "由 src/enrich.py 產生，不要手動改；要改資料請改 data/manual/gyms_seed.json 或 data/raw/sources.csv",
- "generated": "2026-11-02 06:05",
+ "generated": "2026-11-09 06:09",
  "checked": "2026-10-24",
  "osm_ok": true,
  "sources": {
@@ -572,14 +572,14 @@
      "opening_hours": "Mo-Th 10:00-23:00; Fr-Su 09:00-21:00",
      "phone": "+886 225218233"
     },
-    "dist_to_address_m": 716
+    "dist_to_address_m": 506
    },
    "coord_check": {
-    "lat": 25.0633884,
-    "lng": 121.5224858,
+    "lat": 25.0614803,
+    "lng": 121.5230193,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市中山區中山北路二段",
-    "coord_match": "中山北路二段, 中山北路婚紗街, 恆安里, 中山區, 雙連, 臺北市, 104226, 臺灣"
+    "coord_match": "中山北路二段, 中山北路婚紗街, 聚葉里, 中山區, 雙連, 臺北市, 104226, 臺灣"
    },
    "price_min": {
     "price": 250,
@@ -1281,14 +1281,14 @@
      "opening_hours": "Mo-Fr 12:00-23:00",
      "sport": "climbing"
     },
-    "dist_to_address_m": 512
+    "dist_to_address_m": 272
    },
    "coord_check": {
-    "lat": 25.1050597,
-    "lng": 121.5178912,
+    "lat": 25.1064636,
+    "lng": 121.5160666,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市北投區文林北路",
-    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 112047, 臺灣"
+    "coord_match": "文林北路, 建民里, 北投區, 蘭雅, 臺北市, 11287, 臺灣"
    },
    "price_min": {
     "price": 320,
@@ -1505,11 +1505,11 @@
     "branch": "南港",
     "climb": true
    },
-   "lat": 25.0542847,
-   "lng": 121.596696,
+   "lat": 25.0544721,
+   "lng": 121.5941981,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市南港區南港路二段",
-   "coord_match": "南港路二段, 東明里, 南港區, 潭美, 臺北市, 11573, 臺灣",
+   "coord_match": "南港路二段, 西新里, 南港區, 潭美, 臺北市, 11551, 臺灣",
    "price_min": {
     "price": 280,
     "item": "平日下午 12:00–18:00",
@@ -2658,11 +2658,11 @@
     "branch": "士林",
     "climb": false
    },
-   "lat": 25.0797889,
-   "lng": 121.5220826,
+   "lat": 25.0904048,
+   "lng": 121.5174523,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市士林區承德路四段",
-   "coord_match": "承德路四段, 明勝里, 士林區, 大龍峒, 臺北市, 11166, 臺灣",
+   "coord_match": "承德路四段, 後港里, 士林區, 社子, 臺北市, 11169, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -2973,11 +2973,11 @@
     "branch": "大稻埕",
     "climb": false
    },
-   "lat": 25.0618103,
-   "lng": 121.5092395,
+   "lat": 25.0553267,
+   "lng": 121.5100443,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市大同區迪化街一段",
-   "coord_match": "迪化街一段, 南芳里, 大同區, 大稻埕, 臺北市, 103221, 臺灣",
+   "coord_match": "迪化街一段, 迪化街商圈, 永樂里, 大同區, 大稻埕, 臺北市, 103003, 臺灣",
    "price_min": {
     "price": 250,
     "item": "入場（平日）",
@@ -3178,14 +3178,14 @@
      "leisure": "sports_centre",
      "sport": "climbing"
     },
-    "dist_to_address_m": 579
+    "dist_to_address_m": 938
    },
    "coord_check": {
-    "lat": 25.1136378,
-    "lng": 121.5320517,
+    "lat": 25.1163267,
+    "lng": 121.5341003,
     "coord_source": "nominatim:road",
     "coord_query": "臺北市士林區忠誠路二段",
-    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 111035, 臺灣"
+    "coord_match": "忠誠路二段, 三玉里, 士林區, 蘭雅, 臺北市, 11153, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -3638,11 +3638,11 @@
     ],
     "climb": false
    },
-   "lat": 25.0785344,
-   "lng": 121.5701591,
+   "lat": 25.0757568,
+   "lng": 121.5759626,
    "coord_source": "nominatim:road",
    "coord_query": "臺北市內湖區瑞光路",
-   "coord_match": "瑞光路, 港墘里, 內湖區, 臺北市, 11492, 臺灣",
+   "coord_match": "瑞光路, 港墘里, 內湖區, 下塔悠, 臺北市, 11491, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -4047,11 +4047,11 @@
     ],
     "climb": false
    },
-   "lat": 25.0414462,
-   "lng": 121.4644744,
+   "lat": 25.0403809,
+   "lng": 121.4629107,
    "coord_source": "nominatim:road",
    "coord_query": "新北市新莊區中正路",
-   "coord_match": "中正路, 思源里, 新莊區, 頭前, 新北市, 242015, 臺灣",
+   "coord_match": "中正路, 文明里, 新莊區, 新庄(海山口), 新北市, 242015, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5064,14 +5064,14 @@
      "sport": "climbing",
      "website": "https://linktr.ee/babopapak"
     },
-    "dist_to_address_m": 1998
+    "dist_to_address_m": 112
    },
    "coord_check": {
-    "lat": 24.7894074,
-    "lng": 120.9660941,
+    "lat": 24.802636,
+    "lng": 120.977812,
     "coord_source": "nominatim:road",
     "coord_query": "新竹市東區南大路",
-    "coord_match": "南大路, 光鎮里, 東區, 新竹市, 300035, 臺灣"
+    "coord_match": "南大路, 公園里, 東區, 新竹市, 300, 臺灣"
    },
    "price_min": null,
    "price_day": null,
@@ -5208,8 +5208,8 @@
     "branch": "西屯",
     "climb": false
    },
-   "lat": 24.1990479,
-   "lng": 120.6535152,
+   "lat": 24.1987852,
+   "lng": 120.6541662,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市西屯區環中路二段",
    "coord_match": "環中路二段, 港尾里, 西屯區, 水湳經貿園區, 臺中市, 407012, 臺灣",
@@ -5335,8 +5335,8 @@
     "branch": "太原",
     "climb": false
    },
-   "lat": 24.1640524,
-   "lng": 120.7225341,
+   "lat": 24.1604027,
+   "lng": 120.7200175,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市北屯區建和路一段",
    "coord_match": "建和路一段, 廍子里, 北屯區, 臺中市, 406, 臺灣",
@@ -5500,11 +5500,11 @@
     ],
     "climb": false
    },
-   "lat": 24.1304329,
-   "lng": 120.6301684,
+   "lat": 24.1352126,
+   "lng": 120.6320601,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市南屯區永春東七路",
-   "coord_match": "永春東七路, 鎮平里, 南屯區, 楓樹脚, 臺中市, 408004, 臺灣",
+   "coord_match": "永春東七路, 鎮平里, 南屯區, 田心, 臺中市, 40842, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5701,11 +5701,11 @@
     ],
     "climb": false
    },
-   "lat": 24.1418589,
-   "lng": 120.6943029,
+   "lat": 24.145333,
+   "lng": 120.6943667,
    "coord_source": "nominatim:road",
    "coord_query": "臺中市東區進化路",
-   "coord_match": "進化路, 干城里, 東區, 臺中市, 401, 臺灣",
+   "coord_match": "進化路, 東南里, 東區, 臺中市, 401, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -5879,11 +5879,11 @@
     ],
     "climb": false
    },
-   "lat": 23.4861779,
-   "lng": 120.4056259,
+   "lat": 23.4886649,
+   "lng": 120.3977229,
    "coord_source": "nominatim:road",
    "coord_query": "嘉義市西區高鐵大道",
-   "coord_match": "高鐵大道, 大溪里, 西區, 埤鄉里, 嘉義市, 嘉義縣, 612, 臺灣",
+   "coord_match": "高鐵大道, 大溪里, 西區, 竹子腳, 嘉義市, 600, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -6653,8 +6653,8 @@
     ],
     "climb": false
    },
-   "lat": 22.6884726,
-   "lng": 120.3072642,
+   "lat": 22.6866861,
+   "lng": 120.305458,
    "coord_source": "nominatim:road",
    "coord_query": "高雄市左營區站前北路",
    "coord_match": "站前北路, 海光二村, 尾北里, 左營區, 高雄市, 813, 臺灣",
@@ -7433,11 +7433,11 @@
     ],
     "climb": false
    },
-   "lat": 23.9800867,
-   "lng": 121.5871968,
+   "lat": 23.9849658,
+   "lng": 121.5905191,
    "coord_source": "nominatim:road",
    "coord_query": "花蓮縣吉安鄉自強路",
-   "coord_match": "自強路, 勝安村, 吉安鄉, 花蓮縣, 973, 臺灣",
+   "coord_match": "自強路, 吉昌村, 吉安鄉, 花蓮縣, 973, 臺灣",
    "price_min": null,
    "price_day": null,
    "open_hours": {
@@ -7564,8 +7564,8 @@
     ],
     "climb": true
    },
-   "lat": 22.7745057,
-   "lng": 121.0877917,
+   "lat": 22.7741584,
+   "lng": 121.0965638,
    "coord_source": "nominatim:road",
    "coord_query": "臺東縣臺東市中興路四段",
    "coord_match": "中興路四段, 披山新村, 豐田里, 臺東市, 臺東縣, 950, 臺灣",
