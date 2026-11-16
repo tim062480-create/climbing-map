@@ -1,8 +1,42 @@
 {
  "_說明": "由 src/fetch_news.py 產生，不要手動改；只存日期、來源、標題、網址",
- "updated": "2026-11-01 15:58",
+ "updated": "2026-11-16 16:29",
  "gyms": {
+  "tup-wanhua": [
+   {
+    "date": "2026-11-11",
+    "title": "2027原岩攀岩冬令營",
+    "url": "https://tupclimbing.tw/news/activity/600",
+    "kind": "website",
+    "source": "原岩官網"
+   }
+  ],
+  "tup-mingde": [
+   {
+    "date": "2026-11-11",
+    "title": "2027原岩攀岩冬令營",
+    "url": "https://tupclimbing.tw/news/activity/600",
+    "kind": "website",
+    "source": "原岩官網"
+   }
+  ],
+  "tup-nangang": [
+   {
+    "date": "2026-11-11",
+    "title": "2027原岩攀岩冬令營",
+    "url": "https://tupclimbing.tw/news/activity/600",
+    "kind": "website",
+    "source": "原岩官網"
+   }
+  ],
   "tup-zhonghe": [
+   {
+    "date": "2026-11-11",
+    "title": "2027原岩攀岩冬令營",
+    "url": "https://tupclimbing.tw/news/activity/600",
+    "kind": "website",
+    "source": "原岩官網"
+   },
    {
     "date": "2026-10-09",
     "title": "全國運動攀登錦標賽開放報名！",
@@ -18,7 +52,23 @@
     "source": "原岩官網"
    }
   ],
+  "tup-xindian": [
+   {
+    "date": "2026-11-11",
+    "title": "2027原岩攀岩冬令營",
+    "url": "https://tupclimbing.tw/news/activity/600",
+    "kind": "website",
+    "source": "原岩官網"
+   }
+  ],
   "babo-hsinchu": [
+   {
+    "date": "2026-11-03",
+    "title": "秉軒教練動態班 專班給學員報名（其他人勿點選）",
+    "url": "https://babo.climbrock.vip/courses/114",
+    "kind": "website",
+    "source": "官網活動與課程"
+   },
    {
     "date": "2026-10-24",
     "title": "2027兒童冬令攀岩營(1/25-1/29五日早上半日營)",
@@ -65,13 +115,6 @@
     "date": "2026-10-16",
     "title": "抱石技巧班Lv2 十一月周三 兩人小班",
     "url": "https://babo.climbrock.vip/courses/103",
-    "kind": "website",
-    "source": "官網活動與課程"
-   },
-   {
-    "date": "2026-10-16",
-    "title": "抱石動態調整/進階技巧課 十一月週三團班",
-    "url": "https://babo.climbrock.vip/courses/108",
     "kind": "website",
     "source": "官網活動與課程"
    }
